@@ -1,6 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
+from student_class import StudentClass
 
-
+students_classes = StudentClass.__table__
 
 class Class(db.Model):
     __tablename__ = 'classes'
@@ -17,7 +18,7 @@ class Class(db.Model):
     period = db.Column(db.Integer, nullable=False)
 
     teacher = db.relationship("Teacher", uselist=False, back_populates="classes")
-    students = db.relationship("Student", uselist=True, secondary='students_classes', back_populates="classes")
+    students = db.relationship("Student", uselist=True, secondary=students_classes, back_populates="classes")
     assignments = db.relationship("Assignment", uselist=True, back_populates="class_", cascade="all, delete-orphan")
 
     def teacher_dash(self):
