@@ -14,7 +14,7 @@ class Teacher(db.Model):
     primary_subject = db.Column(db.String(50), nullable=False)
 
     user = db.relationship("User", back_populates="teacher")
-    classes = db.relationship("Teacher", uselist=True, back_populates="teacher", cascade="all, delete-orphan")
+    classes = db.relationship("Class", uselist=True, back_populates="teacher", cascade="all, delete-orphan")
 
     def to_dict(self):
         return {
