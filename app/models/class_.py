@@ -1,5 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-from student_class import StudentClass
+from .student_class import StudentClass
 
 students_classes = StudentClass.__table__
 
