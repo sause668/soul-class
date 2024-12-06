@@ -18,7 +18,7 @@ class Class(db.Model):
 
     teacher = db.relationship("Teacher", uselist=False, back_populates="classes")
     students = db.relationship("Student", uselist=True, secondary='students_classes', back_populates="classes")
-    assignments = db.relationship("Assignment", uselist=True, back_populates="assignments", cascade="all, delete-orphan")
+    assignments = db.relationship("Assignment", uselist=True, back_populates="class_", cascade="all, delete-orphan")
 
     def teacher_dash(self):
         return {
