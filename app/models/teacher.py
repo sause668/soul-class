@@ -23,3 +23,13 @@ class Teacher(db.Model):
             'primary_grade': self.primary_grade,
             'primary_subject': self.primary_subject
         }
+    
+    def info(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'primary_grade': self.primary_grade,
+            'primary_subject': self.primary_subject,
+            'first_name': self.user.first_name,
+            'last_name': self.user.last_name
+        }

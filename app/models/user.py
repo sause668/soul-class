@@ -52,5 +52,14 @@ class User(db.Model, UserMixin):
                 'type': self.type,
                 'student': self.student.to_dict()
             }
+        
+    def signup_id(self):
+        return self.id
+    
+    def full_name(self):
+        return {
+            'first_name': self.first_name,
+            'last_name': self.last_name
+        }
     
     

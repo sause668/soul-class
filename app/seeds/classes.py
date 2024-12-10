@@ -103,7 +103,7 @@ def seed_classes():
             'period': 4
         },
         {
-            'teacher_id': 1,
+            'teacher_id': 4,
             'name': 'U.S. History',
             'subject': 'Social Studies',
             'grade': 8,
@@ -111,7 +111,7 @@ def seed_classes():
             'period': 1
         },
         {
-            'teacher_id': 1,
+            'teacher_id': 4,
             'name': 'U.S. History',
             'subject': 'Social Studies',
             'grade': 8,
@@ -119,7 +119,7 @@ def seed_classes():
             'period': 2
         },
         {
-            'teacher_id': 1,
+            'teacher_id': 4,
             'name': 'U.S. History',
             'subject': 'Social Studies',
             'grade': 8,
@@ -127,7 +127,7 @@ def seed_classes():
             'period': 3
         },
         {
-            'teacher_id': 1,
+            'teacher_id': 4,
             'name': 'U.S. History',
             'subject': 'Social Studies',
             'grade': 8,
