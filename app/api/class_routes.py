@@ -48,12 +48,13 @@ def get_class_by_id(class_id):
         return jsonify(class_.grades(current_user.student.id))
 
     
-@class_routes.route('/', methods=['POST'])
+@class_routes.route('', methods=['POST'])
 @login_required
 def create_class():
     """
     Create a class
     """
+    print(current_user)
     if current_user.type != 'teacher':
         return jsonify({"message": "Teacher Authorization Required"}), 401
     
@@ -70,6 +71,9 @@ def create_class():
 
     db.session.add(class_new)
     db.session.commit()
+
+    classes = Class.query.filter_by(teacher_id=current_user.teacher.id).all()
+    return jsonify([class_.teacher_dash() for class_ in classes]), 201
 
     return jsonify(class_new.teacher_dash()), 201
 
@@ -99,6 +103,9 @@ def edit_class(class_id):
 
     db.session.commit()
 
+    classes = Class.query.filter_by(teacher_id=current_user.teacher.id).all()
+    return jsonify([class_.teacher_dash() for class_ in classes]), 201
+
     return jsonify(class_edit.teacher_dash()), 201
     
     
@@ -119,6 +126,9 @@ def delete_class(class_id):
     
     db.session.delete(class_delete)
     db.session.commit()
+
+    classes = Class.query.filter_by(teacher_id=current_user.teacher.id).all()
+    return jsonify([class_.teacher_dash() for class_ in classes]), 200
 
     return jsonify({'message': "Delete Successful"}), 200
     
