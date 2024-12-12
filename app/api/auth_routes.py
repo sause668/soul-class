@@ -16,6 +16,8 @@ def authenticate():
     # if not current_user.get_id():
     #     return {'errors': {'message': 'No User'}}, 200
 
+
+    print(current_user.get_id(), 'bah')
     if not current_user.is_authenticated:
         return {'errors': {'message': 'Unauthorized'}}, 401
     

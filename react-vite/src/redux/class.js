@@ -1,3 +1,5 @@
+import { csrfFetch } from "./csrf";
+
 const SET_CLASS = 'class/setClass';
 const REMOVE_CLASS = 'class/removeClass';
 const SET_CLASSES = 'class/setClasses';
@@ -51,14 +53,14 @@ export const createClass = (params) => async (dispatch) => {
         body: JSON.stringify(params)
       });
     const data = await response.json();
-    dispatch(setClass(data));
+    dispatch(setClasses(data));
     return data;
 };
 
 export const editClass = (params) => async (dispatch) => {
     const { classId, name, subject, grade, period, room } = params;
 	const response = await fetch(`/api/classes/${classId}`, {
-        method: "POST",
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             name,
@@ -69,7 +71,7 @@ export const editClass = (params) => async (dispatch) => {
         })
       });
     const data = await response.json();
-    dispatch(removeClass());
+    dispatch(setClasses(data));
     return data;
 };
 
@@ -79,7 +81,7 @@ export const deleteClass = (params) => async (dispatch) => {
         method: "DELETE"
       });
     const data = await response.json();
-    dispatch(removeClass());
+    dispatch(setClasses(data));
     return data;
 };
 
