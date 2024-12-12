@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField
+from wtforms import StringField, IntegerField
 from wtforms.validators import DataRequired, Email, ValidationError
 from app.models import User
 
@@ -20,8 +20,32 @@ def username_exists(form, field):
         raise ValidationError('Username is already in use.')
 
 
-class SignUpForm(FlaskForm):
-    username = StringField(
-        'username', validators=[DataRequired(), username_exists])
+class SignUpFormTeacher(FlaskForm):
+    username = StringField('username', validators=[DataRequired(), username_exists])
     email = StringField('email', validators=[DataRequired(), user_exists])
+    first_name = StringField('first_name', validators=[DataRequired()])
+    last_name = StringField('last_name', validators=[DataRequired()])
+    type = StringField('type', validators=[DataRequired()])
+    primary_grade = IntegerField('type', validators=[DataRequired()])
+    primary_subject = StringField('type', validators=[DataRequired()])
+    password = StringField('password', validators=[DataRequired()])
+
+class SignUpFormStudent(FlaskForm):
+    username = StringField('username', validators=[DataRequired(), username_exists])
+    email = StringField('email', validators=[DataRequired(), user_exists])
+    first_name = StringField('first_name', validators=[DataRequired()])
+    last_name = StringField('last_name', validators=[DataRequired()])
+    type = StringField('type', validators=[DataRequired()])
+    grade = IntegerField('type', validators=[DataRequired()])
+    password = StringField('password', validators=[DataRequired()])
+
+class SignUpForm(FlaskForm):
+    username = StringField('username', validators=[DataRequired(), username_exists])
+    email = StringField('email', validators=[DataRequired(), user_exists])
+    first_name = StringField('first_name', validators=[DataRequired()])
+    last_name = StringField('last_name', validators=[DataRequired()])
+    type = StringField('type', validators=[DataRequired()])
+    primary_grade = StringField('type', validators=[DataRequired()])
+    primary_subject = StringField('type', validators=[DataRequired()])
+    grade = StringField('type', validators=[DataRequired()])
     password = StringField('password', validators=[DataRequired()])
