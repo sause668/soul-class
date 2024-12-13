@@ -35,7 +35,7 @@ function Dashboard() {
       <Navigation/>
       <h1>Dashboard</h1>
       {isLoaded && (
-        <>
+        <div className="mainCon">
           <div id='profileSide'>
             <div id="profileCon">
               <div id="profilePicCon">
@@ -98,7 +98,7 @@ function Dashboard() {
             
             
           </ul>
-        </>
+        </div>
       )}
     </>
   );
