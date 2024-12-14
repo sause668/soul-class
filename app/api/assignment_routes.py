@@ -26,7 +26,9 @@ def edit_assignment(assignment_id):
     assignment_edit.name = req_body['name']
     assignment_edit.type = req_body['type']
     assignment_edit.quarter = req_body['quarter']
-    assignment_edit.due_date = datetime.now()
+
+    due_date = req_body['due_date'].split('-')
+    assignment_edit.due_date = datetime(int(due_date[0]), int(due_date[1]), int(due_date[2]))
     
 
     db.session.commit()

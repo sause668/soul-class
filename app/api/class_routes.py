@@ -210,13 +210,15 @@ def create_assignment(class_id):
             return jsonify({"message": "Class not found"}), 404
     
     req_body = json.loads(request.data)
+
+    due_date = req_body['due_date'].split('-')
     
     assignment_new = Assignment(
         class_id=class_id,
         name=req_body['name'],
         type=req_body['type'],
         quarter=req_body['quarter'],
-        due_date= datetime.now() # Needs edit
+        due_date= datetime(int(due_date[0]), int(due_date[1]), int(due_date[2]))
     )
 
     db.session.add(assignment_new)

@@ -1,21 +1,24 @@
 import { useDispatch, } from "react-redux"
 import { useModal } from "../../context/Modal";
-import "./Dashboard.css";
-import { deleteClass } from "../../redux/class";
+import "./GradeBook.css";
+import { deleteClass, removeStudent } from "../../redux/class";
 
 
-const DeleteClassModal = ({classDelete}) => {
+const RemoveStudentModal = ({classId, student}) => {
     const dispatch = useDispatch()
     const {closeModal} = useModal();
 
     const handleDelete = async () => {
-        dispatch(deleteClass({classId: classDelete.id}));
+        dispatch(removeStudent({
+          classId, 
+          studentId: student.id
+        }));
         closeModal();
     }
     
     return (
         <>
-            <h3>{`Are you sure you want to delete ${classDelete.name}?`}</h3>
+            <h3>{`Are you sure you want to remove ${student.first_name} ${student.last_name}?`}</h3>
             <div >
                 <button onClick={handleDelete} className="submitButton yes">Yes</button>
                 <button onClick={closeModal} className="submitButton no">No</button>
@@ -26,4 +29,4 @@ const DeleteClassModal = ({classDelete}) => {
     )
 }
 
-export default DeleteClassModal
+export default RemoveStudentModal
