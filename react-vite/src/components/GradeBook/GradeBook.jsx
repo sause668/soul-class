@@ -6,6 +6,13 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { fetchClass } from "../../redux/class";
 import OpenModalButton from "../OpenModalButton/OpenModalButton";
 import AddStudentModal from "./AddStudentModal";
+import NewAssignmentModal from "./NewAssignmentModal";
+import OpenModalCell from "../OpenModalTableCell/OpenModalTableCell";
+import EditAssignmentModal from "./EditAssignmentModal copy";
+import RemoveStudentModal from "./RemoveStudentModal";
+import CreateGradeModal from "./CreateGradeModal";
+import EditGradeModal from "./EditGradeModal";
+import StudentInfoModal from "./StudentInfoModal";
 
 function GradeBook() {
   const dispatch = useDispatch();
@@ -61,14 +68,21 @@ function GradeBook() {
             </div>
             <div id="optionsCon">
               <OpenModalButton
-                buttonText={'New Student'}
+                buttonText={'Add Student'}
                 modalComponent={<AddStudentModal 
                   classId={classId} 
                   currentStudentIds={class_.students.map(student => student.id)} 
                 />}
-                cssClasses={'gradeBookButton newStudent'}
+                cssClasses={'gradeBookButton addStudent'}
               />
-              <button className="gradeBookButton newAssignment">New Assignment</button>
+              <OpenModalButton
+                buttonText={'New Assignment'}
+                modalComponent={<NewAssignmentModal 
+                  classId={classId} 
+                  quarter={quarter} 
+                />}
+                cssClasses={'gradeBookButton newAssignment'}
+              />
               <select name="quarter" id="quarter" value={quarter} onChange={(e) => setQuarter(parseInt(e.target.value))}>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -83,7 +97,13 @@ function GradeBook() {
                 <tr>
                   <td>Students</td>
                   {class_.assignments.filter(a => a.quarter == quarter).map((assignment, index) => (
-                    <td key={`assignHead${index}`}>{assignment.name}</td>
+                    // <td key={`assignHead${index}`}>{assignment.name}</td>
+                    <OpenModalCell
+                      cellText={assignment.name}
+                      modalComponent={<EditAssignmentModal assignment={assignment}/>}
+                      cssClasses={''}
+                      key={`assignHead${index}`}
+                    />
                   ))}
                   <td>Final</td>
                 </tr>
@@ -91,13 +111,33 @@ function GradeBook() {
               <tbody>
                 {class_.students.map((student, iStudent) => (
                   <tr key={`studentName${iStudent}`}>
-                    <td >{student.last_name}, {student.first_name}</td>
+                    <OpenModalCell
+                      cellText={`${student.last_name}, ${student.first_name}`}
+                      modalComponent={<StudentInfoModal
+                        classId={class_.id}
+                        student={student}
+                        cssClasses={''}
+                      />}
+                    />
                     {class_.assignments.filter(a => a.quarter === quarter).map((assignment, iAssignment) => {
                       let grade = assignment.grades.find((grade) => {
                         return grade.student_id == student.id
                       })
-                      if (grade) return <td key={`grade${iStudent}${iAssignment}`}>{grade.grade}</td>
-                      return <td key={`grade${iStudent}${iAssignment}`}></td>
+                      if (grade) return <OpenModalCell
+                        cellText={grade.grade}
+                        key={`grade${iStudent}${iAssignment}`}
+                        cssClasses={''}
+                        modalComponent={<EditGradeModal grade={grade}/>}
+                      />
+                      return <OpenModalCell
+                        cellText={''}
+                        key={`grade${iStudent}${iAssignment}`}
+                        cssClasses={''}
+                        modalComponent={<CreateGradeModal
+                          assignmentId={assignment.id}
+                          studentId={student.id}
+                        />}
+                      />
                     })}
                     <td>work on</td>
                   </tr>

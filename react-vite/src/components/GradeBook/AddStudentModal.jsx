@@ -7,13 +7,9 @@ import { addStudent } from "../../redux/class";
 
 function AddStudentModal({classId, currentStudentIds}) {
   const dispatch = useDispatch();
-  const students = useSelector((state) => state.student.students);
+  const students = useSelector((state) => state.student.students).filter(student => !currentStudentIds.includes(student.id));
   const [isLoaded, setIsLoaded] = useState(false);
-  const [newStudent, setNewStudent] = useState('');
-  const [subject, setSubject] = useState('');
-  const [grade, setGrade] = useState(6);
-  const [room, setRoom] = useState(103);
-  const [period, setPeriod] = useState(1);
+  const [newStudent, setNewStudent] = useState((typeof students == 'object') && `${students[0].last_name}, ${students[0].first_name}`);
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
@@ -46,16 +42,15 @@ function AddStudentModal({classId, currentStudentIds}) {
                 <h1 className='inputTitle'>Add Student</h1>
                 <form onSubmit={handleSubmit}>
                 <div className='inputCon'>
-                <select 
-                    name="newStudent" 
-                    id="newStudent" 
-                    // value={`${newStudent.last_name}, ${newStudent.first_name}`} 
-                    value={newStudent} 
-                    onChange={(e) => setNewStudent(e.target.value)}
-                >
-                    {students.filter(student => !currentStudentIds.includes(student.id)).map((student, index) => (
-                        <option value={`${student.last_name}, ${student.first_name}`} key={`newStudent${index}`}>{student.last_name}, {student.first_name}</option>
-                    ))}
+                    <select 
+                        name="newStudent" 
+                        id="newStudent" 
+                        value={newStudent} 
+                        onChange={(e) => setNewStudent(e.target.value)}
+                    >
+                        {students.map((student, index) => (
+                            <option value={`${student.last_name}, ${student.first_name}`} key={`newStudent${index}`}>{student.last_name}, {student.first_name}</option>
+                        ))}
                     </select>
                 </div>
                 <button

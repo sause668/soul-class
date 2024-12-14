@@ -193,7 +193,7 @@ export const editGrade = (params) => async (dispatch) => {
 export const deleteGrade = (params) => async (dispatch) => {
     const { assignmentId, studentId } = params;
 	const response = await fetch(`/api/assignments/${assignmentId}/grades`, {
-        method: "PUT",
+        method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             student_id: studentId
