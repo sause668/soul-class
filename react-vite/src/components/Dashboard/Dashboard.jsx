@@ -10,6 +10,7 @@ import OpenModalButton from "../OpenModalButton/OpenModalButton";
 import CreateClassModal from "./CreateClassModal";
 import DeleteClassModal from "./DeleteClassModal";
 import { useNavigate } from "react-router-dom";
+import { calcFinalGradeStudent } from "../../utils/Grading";
 
 function Dashboard() {
   const dispatch = useDispatch();
@@ -95,7 +96,7 @@ function Dashboard() {
                     <h4 className="classInfo">{class_.teacher.last_name}, {class_.teacher.first_name}</h4>
                     <h4 className="classInfo">Room - {class_.room}</h4>
                     <div className="classGradeCon">
-                      <h4 className="currentGrade">Current Grade: {class_.current_grade}</h4>
+                      <h4 className="currentGrade">Current Grade: {calcFinalGradeStudent(class_.assignments)}</h4>
                       <button 
                         onClick={() => handleGrades(class_.id)} 
                         className="classButton grades"

@@ -13,6 +13,7 @@ import RemoveStudentModal from "./RemoveStudentModal";
 import CreateGradeModal from "./CreateGradeModal";
 import EditGradeModal from "./EditGradeModal";
 import StudentInfoModal from "./StudentInfoModal";
+import { calcFinalGradeStudent, calcFinalGradeTeacher } from "../../utils/Grading";
 
 function GradeBook() {
   const dispatch = useDispatch();
@@ -139,7 +140,7 @@ function GradeBook() {
                         />}
                       />
                     })}
-                    <td>work on</td>
+                    <td>{calcFinalGradeTeacher(class_.assignments, student.id)}</td>
                   </tr>
                 ))}
 

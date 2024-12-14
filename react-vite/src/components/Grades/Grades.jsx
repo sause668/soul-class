@@ -4,6 +4,7 @@ import "./Grades.css";
 import Navigation from "../Navigation/Navigation";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { fetchClass } from "../../redux/class";
+import { calcFinalGradeStudent } from "../../utils/Grading";
 
 function Grades() {
   const dispatch = useDispatch();
@@ -15,11 +16,17 @@ function Grades() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [errors, setErrors] = useState({});
 
-  if (!user || user.type != 'student') return <Navigate to="/" replace={true} />;
+  
+
+
+
+  
 
   useEffect(() => {
     dispatch(fetchClass({classId})).then(() => setIsLoaded(true));
-  }, [dispatch]);
+  }, [dispatch, classId]);
+
+  if (!user || user.type != 'student') return <Navigate to="/" replace={true} />;
 
   return (
     <>
@@ -33,7 +40,7 @@ function Grades() {
               <h4 className="classRoom">Room - {class_.room}</h4>
             </div>
             <div className="classGradeCon">
-              <h4 className="currentGrade">Current Grade: {class_.current_grade}</h4>
+              <h4 className="currentGrade">Current Grade: {calcFinalGradeStudent(class_.assignments.filter(a => a.quarter == quarter))}</h4>
               <select name="quarter" id="quarter" value={quarter} onChange={(e) => setQuarter(parseInt(e.target.value))}>
                 <option value="1">1</option>
                 <option value="2">2</option>
