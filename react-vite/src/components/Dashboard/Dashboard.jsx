@@ -23,6 +23,10 @@ function Dashboard() {
     navigate(`/gradebook/${classId}`)
   }
 
+  const handleGrades = (classId) => {
+    navigate(`/grades/${classId}`)
+  }
+
   useEffect(() => {
     dispatch(fetchClasses()).then(() => setIsLoaded(true));
   }, [dispatch]);
@@ -47,17 +51,18 @@ function Dashboard() {
                 <h4 className="profileInfo">Teacher</h4>
                 <h4 className="profileInfo">Primary Grade: {user.teacher.primary_grade}</h4>
                 <h4 className="profileInfo">Primary Subject: {user.teacher.primary_subject}</h4>
+                <OpenModalButton
+                  buttonText={'New Class'}
+                  modalComponent={<CreateClassModal />}
+                  cssClasses={'newClassButton'}
+                />
                 </>):(<>
                   <h4 className="profileInfo">Student</h4>
                   <h4 className="profileInfo">Grade: {user.student.grade}th</h4>
                 </>)}
               </div>
             </div>
-            <OpenModalButton
-              buttonText={'New Class'}
-              modalComponent={<CreateClassModal />}
-              cssClasses={'newClassButton'}
-            />
+            
           </div>
           <div id="classesCon">
             {(user.type == 'teacher') ? (<>
@@ -89,7 +94,14 @@ function Dashboard() {
                     <h3 className="classInfo">{class_.grade}th Grade {class_.name} - {class_.period} Period</h3>
                     <h4 className="classInfo">{class_.teacher.last_name}, {class_.teacher.first_name}</h4>
                     <h4 className="classInfo">Room - {class_.room}</h4>
-                    <h4 className="currentGrade">Current Grade: {class_.current_grade}</h4>
+                    <div className="classGradeCon">
+                      <h4 className="currentGrade">Current Grade: {class_.current_grade}</h4>
+                      <button 
+                        onClick={() => handleGrades(class_.id)} 
+                        className="classButton grades"
+                      >Grades</button>
+                    </div>
+                    
                   </div>
                 ))}
               </>)}
