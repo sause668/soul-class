@@ -1,5 +1,3 @@
-
-
 export const stringToType = (type) => {
     switch (type) {
       case 'Classwork':

@@ -1,7 +1,7 @@
 import { useDispatch, } from "react-redux"
 import { useModal } from "../../context/Modal";
 import "./GradeBook.css";
-import { deleteAssignment, deleteClass, deleteGrade, removeStudent } from "../../redux/class";
+import { deleteGrade } from "../../redux/class";
 
 
 const DeleteGradeModal = ({studentId, assignmentId}) => {

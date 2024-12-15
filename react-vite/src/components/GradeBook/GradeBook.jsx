@@ -2,52 +2,26 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./GradeBook.css";
 import Navigation from "../Navigation/Navigation";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { fetchClass } from "../../redux/class";
 import OpenModalButton from "../OpenModalButton/OpenModalButton";
 import AddStudentModal from "./AddStudentModal";
 import NewAssignmentModal from "./NewAssignmentModal";
 import OpenModalCell from "../OpenModalTableCell/OpenModalTableCell";
-import EditAssignmentModal from "./EditAssignmentModal copy";
-import RemoveStudentModal from "./RemoveStudentModal";
+import EditAssignmentModal from "./EditAssignmentModal";
 import CreateGradeModal from "./CreateGradeModal";
 import EditGradeModal from "./EditGradeModal";
 import StudentInfoModal from "./StudentInfoModal";
-import { calcFinalGradeStudent, calcFinalGradeTeacher } from "../../utils/Grading";
+import { calcFinalGradeTeacher } from "../../utils/Grading";
 
 function GradeBook() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { classId } = useParams();
   const user = useSelector((state) => state.session.user);
   const class_ = useSelector((state) => state.class.class);
-  // const assignments = class_.assignments;
-  // const students = class_.students;
-  // const assignLen = class_.assignments.length;
   const [quarter, setQuarter] = useState(1)
   const [isLoaded, setIsLoaded] = useState(false);
-  const [errors, setErrors] = useState({});
-  let gradeArr = []
-  
-
-  // const changeQuarter = (e) => {
-  //   setQuarter(e.target.value)
-  // }
-
-  const weightGrade = (type) => {
-    switch (type) {
-      case 'W':
-        return 1
-      case 'Q':
-        return 2
-      case 'T':
-        return 3
-      case 'P':
-        return 3
-      default:
-        return 1
-  }
-  }
+  // const [errors, setErrors] = useState({});
 
   
   useEffect(() => {

@@ -1,15 +1,12 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./GradeBook.css";
-import { fetchStudents } from "../../redux/student";
-import { addStudent, createAssignment } from "../../redux/class";
+import { createAssignment } from "../../redux/class";
 import { stringToType } from "../../utils/TypeConvertion";
 
 function NewAssignmentModal({classId, quarter}) {
   const dispatch = useDispatch();
-  // const students = useSelector((state) => state.student.students);
-  // const [isLoaded, setIsLoaded] = useState(false);
   const [assignName, setAssignName] = useState('');
   const [type, setType] = useState('');
   const [dueDate, setDueDate] = useState('');
