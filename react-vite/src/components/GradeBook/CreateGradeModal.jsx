@@ -1,11 +1,8 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./GradeBook.css";
-import { fetchStudents } from "../../redux/student";
-import { addStudent, createAssignment, createGrade } from "../../redux/class";
-import { stringToType } from "../../utils/TypeConvertion";
-import OpenModalButton from "../OpenModalButton/OpenModalButton";
+import { createGrade } from "../../redux/class";
 
 function CreateGradeModal({assignmentId, studentId}) {
   const dispatch = useDispatch();

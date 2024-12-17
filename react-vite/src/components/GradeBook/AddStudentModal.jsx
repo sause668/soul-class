@@ -7,11 +7,13 @@ import { addStudent } from "../../redux/class";
 
 function AddStudentModal({classId, currentStudentIds}) {
   const dispatch = useDispatch();
-  const students = useSelector((state) => state.student.students).filter(student => !currentStudentIds.includes(student.id));
+  const studentsState = useSelector((state) => state.student.students)
+  const students = studentsState && studentsState.filter(student => !currentStudentIds.includes(student.id));
   const [isLoaded, setIsLoaded] = useState(false);
-  const [newStudent, setNewStudent] = useState((typeof students == 'object') && `${students[0].last_name}, ${students[0].first_name}`);
-  const [errors, setErrors] = useState({});
+  const [newStudent, setNewStudent] = useState((students) ? `${students[0].last_name}, ${students[0].first_name}`:'');
+//   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,7 +27,7 @@ function AddStudentModal({classId, currentStudentIds}) {
     );
 
     if (await serverResponse.errors) {
-      setErrors(serverResponse.errors);
+    //   setErrors(serverResponse.errors);
     } else {
       closeModal();
     }

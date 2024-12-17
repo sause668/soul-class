@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./GradeBook.css";
-import { fetchStudents } from "../../redux/student";
 import { editAssignment } from "../../redux/class";
 import { stringToType, typeToString } from "../../utils/TypeConvertion";
 import DeleteAssignmentModal from "./DeleteAssignmentModal";
@@ -10,8 +9,6 @@ import OpenModalButton from "../OpenModalButton/OpenModalButton";
 
 function EditAssignmentModal({assignment}) {
   const dispatch = useDispatch();
-  // const students = useSelector((state) => state.student.students);
-  // const [isLoaded, setIsLoaded] = useState(false);
   const quarter = assignment.quarter;
   const [assignName, setAssignName] = useState(assignment.name);
   const [type, setType] = useState(typeToString(assignment.type));

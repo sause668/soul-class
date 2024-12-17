@@ -2,25 +2,18 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Grades.css";
 import Navigation from "../Navigation/Navigation";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { fetchClass } from "../../redux/class";
 import { calcFinalGradeStudent } from "../../utils/Grading";
 
 function Grades() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { classId } = useParams();
   const user = useSelector((state) => state.session.user);
   const class_ = useSelector((state) => state.class.class);
   const [quarter, setQuarter] = useState(1)
   const [isLoaded, setIsLoaded] = useState(false);
-  const [errors, setErrors] = useState({});
-
-  
-
-
-
-  
+  // const [errors, setErrors] = useState({});
 
   useEffect(() => {
     dispatch(fetchClass({classId})).then(() => setIsLoaded(true));

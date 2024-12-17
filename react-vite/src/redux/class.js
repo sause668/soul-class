@@ -1,4 +1,4 @@
-import { csrfFetch } from "./csrf";
+// import { csrfFetch } from "./csrf";
 
 const SET_CLASS = 'class/setClass';
 const REMOVE_CLASS = 'class/removeClass';

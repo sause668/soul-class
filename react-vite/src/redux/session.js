@@ -11,7 +11,6 @@ const removeUser = () => ({
 });
 
 export const thunkAuthenticate = () => async (dispatch) => {
-  console.log('bah')
 	const response = await fetch("/api/auth/");
 	if (response.ok) {
 		const data = await response.json();
@@ -68,9 +67,9 @@ export const thunkSignupTeacher = (params) => async (dispatch) => {
   }
 };
 
-export const thunkSignup = (params) => async (dispatch) => {
+export const thunkSignupStudent = (params) => async (dispatch) => {
   const { firstName, lastName, email, username, password, type, grade} = params
-  const response = await fetch("/api/auth/signup", {
+  const response = await fetch("/api/auth/signup/student", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
