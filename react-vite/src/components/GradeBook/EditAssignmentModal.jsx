@@ -40,7 +40,6 @@ function EditAssignmentModal({assignment}) {
   return (
     <div className='formCon'>
         <h1 className='inputTitle'>Edit Assignment</h1>
-        <p>{new Date(assignment.due_date).toISOString().slice(0, 10)}</p>
         <form onSubmit={handleSubmit}>
         {/* Name */}
         <div className='inputCon'>
@@ -68,6 +67,7 @@ function EditAssignmentModal({assignment}) {
           <select 
             name="type" 
             id="type" 
+            className="typeSelectGB"
             value={type} 
             onChange={(e) => setType(e.target.value)}
           >
@@ -95,22 +95,27 @@ function EditAssignmentModal({assignment}) {
           />
           {errors.dueDate && <p className='labelTitle error'>{errors.dueDate}</p>}
         </div>
-        <button
-            className='submitButton'
-            type="submit"
-        //   disabled={
-        //     (!email.length ||
-        //     !username.length ||
-        //     !password.length ||
-        //     !confirmPassword.length)
-        //   }
-            >Submit</button>
-        </form>
-        <OpenModalButton
+        <div className="submitCon">
+          <button 
+              className='submitButton'
+              type="submit"
+              // disabled={
+              //   (!email.length ||
+              //   !username.length ||
+              //   !firstName.length ||
+              //   !lastName.length ||
+              //   !password.length ||
+              //   !confirmPassword.length)
+              // }
+          >Submit</button>
+          <OpenModalButton
           buttonText={'Delete'}
           modalComponent={<DeleteAssignmentModal assignment={assignment}/>}
           cssClasses={''}
         />
+        </div>
+        </form>
+        
     </div>
   );
 }

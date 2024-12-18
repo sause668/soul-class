@@ -50,25 +50,30 @@ function EditGradeModal({grade}) {
           />
           {errors.grade && <p className='labelTitle error'>{errors.grade}</p>}
         </div>
-        <button
+        <div className="submitCon">
+          <button 
             className='submitButton'
             type="submit"
-        //   disabled={
-        //     (!email.length ||
-        //     !username.length ||
-        //     !password.length ||
-        //     !confirmPassword.length)
-        //   }
-            >Submit</button>
+            // disabled={
+            //   (!email.length ||
+            //   !username.length ||
+            //   !firstName.length ||
+            //   !lastName.length ||
+            //   !password.length ||
+            //   !confirmPassword.length)
+            // }
+          >Submit</button>
+          <OpenModalButton
+            buttonText={'Delete'}
+            modalComponent={<DeleteGradeModal 
+              assignmentId={grade.assignment_id}
+              studentId={grade.student_id}
+            />}
+            cssClasses={''}
+          />
+        </div>
         </form>
-        <OpenModalButton
-          buttonText={'Delete'}
-          modalComponent={<DeleteGradeModal 
-            assignmentId={grade.assignment_id}
-            studentId={grade.student_id}
-          />}
-          cssClasses={''}
-        />
+        
     </div>
   );
 }

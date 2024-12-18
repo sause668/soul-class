@@ -14,15 +14,13 @@ const DeleteGradeModal = ({studentId, assignmentId}) => {
     }
     
     return (
-        <>
+        <div className="formCon">
             <h3>{`Are you sure you want to delete this Grade?`}</h3>
-            <div >
+            <div className="confirmButtonCon">
                 <button onClick={handleDelete} className="submitButton yes">Yes</button>
                 <button onClick={closeModal} className="submitButton no">No</button>
             </div>
-            <br/>
-            
-        </>
+        </div>
     )
 }
 

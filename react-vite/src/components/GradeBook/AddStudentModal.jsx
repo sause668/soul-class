@@ -47,6 +47,7 @@ function AddStudentModal({classId, currentStudentIds}) {
                     <select 
                         name="newStudent" 
                         id="newStudent" 
+                        className="formInput"
                         value={newStudent} 
                         onChange={(e) => setNewStudent(e.target.value)}
                     >
@@ -55,16 +56,20 @@ function AddStudentModal({classId, currentStudentIds}) {
                         ))}
                     </select>
                 </div>
-                <button
-                    className='submitButton'
-                    type="submit"
-                //   disabled={
-                //     (!email.length ||
-                //     !username.length ||
-                //     !password.length ||
-                //     !confirmPassword.length)
-                //   }
+                <div className="submitCon">
+                    <button 
+                        className='submitButton'
+                        type="submit"
+                        // disabled={
+                        //   (!email.length ||
+                        //   !username.length ||
+                        //   !firstName.length ||
+                        //   !lastName.length ||
+                        //   !password.length ||
+                        //   !confirmPassword.length)
+                        // }
                     >Submit</button>
+                </div>
                 </form>
             </div>
         )}

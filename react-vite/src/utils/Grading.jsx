@@ -66,3 +66,11 @@ const rubric = {
     
     return calcFinalGrade(grades)
   }
+
+export const calcLetterGrade = (grade) => {
+    if (grade >= 92) return 'A';
+    if (grade >= 83) return 'B';
+    if (grade >= 72) return 'C';
+    if (grade >= 65) return 'D';
+    return 'F';
+}

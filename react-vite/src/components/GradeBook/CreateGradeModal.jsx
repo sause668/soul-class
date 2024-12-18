@@ -48,16 +48,20 @@ function CreateGradeModal({assignmentId, studentId}) {
           />
           {errors.grade && <p className='labelTitle error'>{errors.grade}</p>}
         </div>
-        <button
+        <div className="submitCon">
+          <button 
             className='submitButton'
             type="submit"
-        //   disabled={
-        //     (!email.length ||
-        //     !username.length ||
-        //     !password.length ||
-        //     !confirmPassword.length)
-        //   }
-            >Submit</button>
+            // disabled={
+            //   (!email.length ||
+            //   !username.length ||
+            //   !firstName.length ||
+            //   !lastName.length ||
+            //   !password.length ||
+            //   !confirmPassword.length)
+            // }
+          >Submit</button>
+        </div>
         </form>
     </div>
   );

@@ -64,6 +64,7 @@ function NewAssignmentModal({classId, quarter}) {
           <select 
             name="type" 
             id="type" 
+            className="typeSelectGB"
             value={type} 
             onChange={(e) => setType(e.target.value)}
           >
@@ -91,16 +92,20 @@ function NewAssignmentModal({classId, quarter}) {
           />
           {errors.dueDate && <p className='labelTitle error'>{errors.dueDate}</p>}
         </div>
-        <button
-            className='submitButton'
-            type="submit"
-        //   disabled={
-        //     (!email.length ||
-        //     !username.length ||
-        //     !password.length ||
-        //     !confirmPassword.length)
-        //   }
+        <div className="submitCon">
+            <button 
+                className='submitButton'
+                type="submit"
+                // disabled={
+                //   (!email.length ||
+                //   !username.length ||
+                //   !firstName.length ||
+                //   !lastName.length ||
+                //   !password.length ||
+                //   !confirmPassword.length)
+                // }
             >Submit</button>
+        </div>
         </form>
     </div>
   );

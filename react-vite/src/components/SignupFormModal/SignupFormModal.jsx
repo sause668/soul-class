@@ -67,7 +67,7 @@ function SignupFormModal() {
       <form onSubmit={handleSubmit}>
         {/* Email */}
         <div className='inputCon'>
-          <label>
+          <label className='labelCon'>
             <p className='labelTitle'>Email</p>
           </label>
           <input
@@ -81,7 +81,7 @@ function SignupFormModal() {
         </div>
         {/* Username */}
         <div className='inputCon'>
-          <label>
+          <label className='labelCon'>
             <p className='labelTitle'>
               Username
             </p>
@@ -97,7 +97,7 @@ function SignupFormModal() {
         </div>
         {/* First Name */}
         <div className='inputCon'>
-          <label>
+          <label className='labelCon'>
             <p className='labelTitle'>
               First Name
             </p>
@@ -113,7 +113,7 @@ function SignupFormModal() {
         </div>
         {/* Last Name */}
         <div className='inputCon'>
-          <label>
+          <label className='labelCon'>
             <p className='labelTitle'>Last Name</p>
           </label>
           <input
@@ -127,10 +127,11 @@ function SignupFormModal() {
         </div>
         {/* Type */}
         <div className='inputCon'>
-          <label>
+          <label className='labelCon'>
             <p className='labelTitle'>Type</p>
           </label>
           <select name="type" id="type" 
+            className='formInput'
             value={type} 
             onChange={(e) => setType(e.target.value)}
           >
@@ -142,7 +143,7 @@ function SignupFormModal() {
         {type === 'teacher' && (<>
           {/* Primary Subject */}
           <div className='inputCon' hidden=''>
-            <label>
+            <label className='labelCon'>
               <p className='labelTitle'>Primary Subject</p>
             </label>
             <input
@@ -156,7 +157,7 @@ function SignupFormModal() {
           </div>
           {/* Primary Grade */}
           <div className='inputCon'>
-            <label>
+            <label className='labelCon'>
               <p className='labelTitle'>Primary Grade</p>
             </label>
             <input
@@ -172,7 +173,7 @@ function SignupFormModal() {
         {type === 'student' && (<>
           {/* Grade */}
           <div className='inputCon'>
-            <label>
+            <label className='labelCon'>
               <p className='labelTitle'>Grade</p>
             </label>
             <input
@@ -187,7 +188,7 @@ function SignupFormModal() {
         </>)}
         {/* Password */}
         <div className='inputCon'>
-          <label>
+          <label className='labelCon'>
             <p className='labelTitle'>Password</p>
           </label>
           <input
@@ -201,7 +202,7 @@ function SignupFormModal() {
         </div>
         {/* Confirm Password */}
         <div className='inputCon'>
-          <label>
+          <label className='labelCon'>
             <p className='labelTitle'>Confirm Password</p>
           </label>
           <input
@@ -215,18 +216,21 @@ function SignupFormModal() {
             <p className='labelTitle error'>{errors.confirmPassword}</p>
           )}
         </div>
-        <button 
-          className='submitButton'
-          type="submit"
-          // disabled={
-          //   (!email.length ||
-          //   !username.length ||
-          //   !firstName.length ||
-          //   !lastName.length ||
-          //   !password.length ||
-          //   !confirmPassword.length)
-          // }
+        <div className="submitCon">
+          <button 
+            className='submitButton'
+            type="submit"
+            // disabled={
+            //   (!email.length ||
+            //   !username.length ||
+            //   !firstName.length ||
+            //   !lastName.length ||
+            //   !password.length ||
+            //   !confirmPassword.length)
+            // }
           >Sign Up</button>
+        </div>
+        
       </form>
     </div>
   );

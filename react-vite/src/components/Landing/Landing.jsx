@@ -60,7 +60,7 @@ function Landing() {
 
   return (
     <>
-      <div id="mainCon">
+      <div id="landingCon">
         <div id="titleSide">
           <div id="titleCon">
             <h1 id="titleMain">Soul Academy</h1>
@@ -68,7 +68,7 @@ function Landing() {
           </div>
         </div>
         <div id="loginSide">
-          <div id="loginCon">
+          <div id="loginCon" className="whiteBox">
             <form id="loginForm" onSubmit={handleSubmit}>
               {/* Email */}
               <div className='inputCon'>
@@ -102,18 +102,33 @@ function Landing() {
                 />
                 {errors.password && <p className='labelTitle error'>{errors.password}</p>}
               </div>
-              <button 
-                className='submitButton'
-                type="submit" 
-                // disabled={(credential.length < 4 || password.length < 4)}
-              >Log In</button>
+              <div className='submitCon'>
+                <button 
+                  className='submitButton btnLanding'
+                  type="submit" 
+                  // disabled={(credential.length < 4 || password.length < 4)}
+                >Log In</button>
+                
+              </div>
+              
             </form>
             <OpenModalButton
               buttonText={'Sign Up'}
               modalComponent={<SignupFormModal/>}
-              cssClasses={'signupButton'}
+              cssClasses={'signupButton btnLanding'}
             />
-            <div id="demoCon">
+            {/* <div id="demoCon" className="lightBlueBox">
+              <button 
+                className="demoButton"
+                onClick={demoTeacher}
+              >Demo Teacher</button>
+              <button 
+                className="demoButton"
+                onClick={demoStudent}
+              >Demo Student</button>
+            </div> */}
+          </div>
+          <div id="demoCon" className="whiteBox">
               <button 
                 className="demoButton"
                 onClick={demoTeacher}
@@ -123,7 +138,6 @@ function Landing() {
                 onClick={demoStudent}
               >Demo Student</button>
             </div>
-          </div>
         </div>
       </div>
     </>

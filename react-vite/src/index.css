@@ -1,1 +1,232 @@
-/* TODO: Add sitewide styles */
+@font-face {
+    font-family: 'Sour Gummy';
+    font-style: normal;
+    font-weight: normal;
+    src: url('/fonts/SourGummy-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Sour Gummy';
+    font-style: normal;
+    font-weight: bold;
+    src: url('/fonts/SourGummy-Bold.ttf');
+}
+
+@font-face {
+    font-family: 'Chewy';
+    font-style: normal;
+    font-weight: normal;
+    src: url('/fonts/Chewy-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Delius';
+    font-style: normal;
+    font-weight: normal;
+    src: url('/fonts/Delius-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'BalsamiqSans';
+    font-style: normal;
+    font-weight: normal;
+    src: url('/fonts/BalsamiqSans-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'BalsamiqSans';
+    font-style: normal;
+    font-weight: bold;
+    src: url('/fonts/BalsamiqSans-Bold.ttf');
+}
+
+@font-face {
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: normal;
+    src: url('/fonts/RobotoFlex-Regular.ttf');
+}
+
+body {
+    font-family: 'Roboto Flex';
+    padding: 0px 0px 10px;
+    margin: 0px;
+}
+
+h1,h2  {
+    font-family: 'Sour Gummy';
+    margin: 0px;
+}
+
+h3,h4 {
+    font-family: 'BalsamiqSans';
+    margin: 0px;
+}
+
+h5,h6,p {
+    font-family: 'Roboto Flex';
+    margin: 0px;
+}
+
+button {
+    font-family: 'Delius';
+    border: 1px solid #007AFF;
+    background-color: #007AFF;
+    transition: background-color .2s;
+    color: white;
+    border-radius: 10px;
+    padding: .5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+button:hover {
+    border: 1px solid #005ec3;
+    background-color: #005ec3;
+    transition: background-color .2s;
+}
+
+.whiteBox {
+    background-color: white;
+    border: 1px solid #007AFF;
+    border-radius: 20px;
+    
+}
+
+.blueBox {
+    background-color: #007AFF;
+    border: 1px solid #007AFF;
+    border-radius: 20px;
+    color: white;
+}
+
+.lightBlueBox {
+    background-color: #007bff4b;
+    /* border: 1px solid #007bff4b; */
+    border-radius: 20px;
+}
+
+
+
+.formCon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* width: 300px; */
+    padding: 1rem 1rem;
+}
+
+.inputTitle {
+    margin-bottom: .8rem;
+    /* background-color: #007AFF; */
+}
+
+.inputCon {
+    margin-bottom: 1rem;
+}
+
+.labelCon {
+
+}
+
+.labelTitle {
+    margin-bottom: .3rem;
+}
+
+.error {
+
+}
+
+.formInput {
+    /* appearance: none; */
+    width: 200px;
+    /* margin-bottom: 1rem; */
+    border: 1px solid #007AFF;
+    border-radius: 5px;
+    padding: .5rem;
+    /* background-color: #007AFF; */
+    /* box-shadow: none; */
+    /* outline: none; */
+}
+
+.formInput:focus {
+    border-color: #005ec3;
+    /* border: 1.5px solid #85c0ff; */
+    outline: none;
+    /* opacity: 50%; */
+}
+
+
+.submitCon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.confirmButtonCon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .7rem;
+    margin-top: 1rem;
+}
+
+.submitButton {
+    
+    
+}
+/* #2979ff */
+.A {
+    background-color: #00e67761;
+}
+
+.B {
+    background-color: #c8ff005f;
+}
+
+.C {
+    background-color: #ffea0068;
+}
+
+.D {
+    background-color: #ff91005f;
+}
+
+.F {
+    background-color: #ff17455a;
+}
+
+.noGrade {
+    background-color: #0000004b;
+}
+
+.HW {
+    background-color: #00aeff4a;   
+}
+
+.CW {
+    background-color: #00aeff4a;
+}
+
+.Q {
+    background-color: #d400f954;
+}
+
+.T {
+    background-color: #f500564e;
+}
+
+.P {
+    background-color: #f500564e;
+    ;
+}
+
+/* 100
+92
+83
+72
+65 */
+
