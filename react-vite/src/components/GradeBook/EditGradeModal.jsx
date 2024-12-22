@@ -22,7 +22,7 @@ function EditGradeModal({grade}) {
         })
     );
 
-    if (await serverResponse.errors) {
+    if (serverResponse && serverResponse.errors) {
       setErrors(serverResponse.errors);
     } else {
       closeModal();
@@ -35,40 +35,39 @@ function EditGradeModal({grade}) {
     <div className='formCon'>
         <h1 className='inputTitle'>Edit Grade</h1>
         <form onSubmit={handleSubmit}>
-        <div className='inputCon'>
-          <label htmlFor='grade'>
-            <p className='labelTitle'>
-              Grade
-            </p>
-          </label>
-          <input
-            className='formInput'
-            type="number"
-            value={currentGrade}
-            onChange={(e) => setCurrentGrade(e.target.value)}
-            required
-          />
-          {errors.grade && <p className='labelTitle error'>{errors.grade}</p>}
-        </div>
-        <button
-            className='submitButton'
-            type="submit"
-        //   disabled={
-        //     (!email.length ||
-        //     !username.length ||
-        //     !password.length ||
-        //     !confirmPassword.length)
-        //   }
+          <div className='inputCon'>
+            <label htmlFor='grade'>
+              <p className='labelTitle'>
+                Grade
+              </p>
+            </label>
+            <input
+              className='formInput'
+              id="grade"
+              type="number"
+              value={currentGrade}
+              onChange={(e) => setCurrentGrade(e.target.value)}
+              required
+            />
+            {errors.grade && <p className='labelTitle error'>{errors.grade}</p>}
+          </div>
+          <div className="submitCon">
+            <button 
+              className='submitButton'
+              type="submit"
+              // disabled={(!currentGrade)}
             >Submit</button>
+            <OpenModalButton
+              buttonText={'Delete'}
+              modalComponent={<DeleteGradeModal 
+                assignmentId={grade.assignment_id}
+                studentId={grade.student_id}
+              />}
+              cssClasses={''}
+            />
+          </div>
+          {errors.message && <p className='labelTitle error'>{errors.message}</p>}
         </form>
-        <OpenModalButton
-          buttonText={'Delete'}
-          modalComponent={<DeleteGradeModal 
-            assignmentId={grade.assignment_id}
-            studentId={grade.student_id}
-          />}
-          cssClasses={''}
-        />
     </div>
   );
 }

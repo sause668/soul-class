@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaUserCircle } from 'react-icons/fa';
 import { thunkLogout } from "../../redux/session";
+import "./Navigation.css";
 
 function ProfileButton() {
   const dispatch = useDispatch();
@@ -37,20 +38,21 @@ function ProfileButton() {
   };
 
   return (
-    <>
-      <button onClick={toggleMenu}>
-        <FaUserCircle />
+    <div id="navProfileButtonCon">
+      <button id="navProfileButton" onClick={toggleMenu}>
+        <FaUserCircle id='navProfileLogo'/>
       </button>
       {showMenu && (
-        <div className={"profile-dropdown"} ref={ulRef}>
-          <div>{user.username}</div>
-          <div>{user.email}</div>
-          <div>
-            <button onClick={logout}>Log Out</button>
+        <div className={"profile-dropdown whiteBox"} ref={ulRef}>
+          <div className="navDropdownItem">{user.first_name} {user.last_name}</div>
+          {/* <div className="navDropdownItem">{user.username}</div> */}
+          <div className="navDropdownItem">{user.email}</div>
+          <div className="navDropdownItem">
+            <button id="navLogout" onClick={logout}>Log Out</button>
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
 

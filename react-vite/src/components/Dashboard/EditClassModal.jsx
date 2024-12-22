@@ -28,7 +28,7 @@ function EditClassModal({classEdit}) {
       })
     );
 
-    if (await serverResponse.errors) {
+    if (serverResponse && serverResponse.errors) {
       setErrors(serverResponse.errors);
     } else {
       closeModal();
@@ -46,6 +46,7 @@ function EditClassModal({classEdit}) {
           </label>
           <input
             className='formInput'
+            id="name"
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -60,6 +61,7 @@ function EditClassModal({classEdit}) {
           </label>
           <input
             className='formInput'
+            id="subject"
             type="text"
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
@@ -74,6 +76,7 @@ function EditClassModal({classEdit}) {
           </label>
           <input
             className='formInput'
+            id="grade"
             type="number"
             value={grade}
             onChange={(e) => setGrade(e.target.value)}
@@ -88,6 +91,7 @@ function EditClassModal({classEdit}) {
           </label>
           <input
             className='formInput'
+            id="room"
             type="number"
             value={room}
             onChange={(e) => setRoom(e.target.value)}
@@ -102,6 +106,7 @@ function EditClassModal({classEdit}) {
           </label>
           <input
             className='formInput'
+            id="period"
             type="number"
             value={period}
             onChange={(e) => setPeriod(e.target.value)}
@@ -110,16 +115,20 @@ function EditClassModal({classEdit}) {
           {errors.period && <p className='labelTitle error'>{errors.period}</p>}
         </div>
         
-        <button 
-          className='submitButton'
-          type="submit"
-        //   disabled={
-        //     (!email.length ||
-        //     !username.length ||
-        //     !password.length ||
-        //     !confirmPassword.length)
-        //   }
+        <div className="submitCon">
+          <button 
+            className='submitButton'
+            type="submit"
+            disabled={(
+                !name.length ||
+                !subject.length ||
+                !parseInt(grade) ||
+                !parseInt(room) ||
+                !parseInt(period)
+            )}
           >Submit</button>
+        </div>
+        {errors.message && <p className='labelTitle error'>{errors.message}</p>}
       </form>
     </div>
   );

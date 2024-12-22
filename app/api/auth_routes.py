@@ -13,30 +13,13 @@ def authenticate():
     Authenticates a user.
     """
 
-    # if not current_user.get_id():
-    #     return {'errors': {'message': 'No User'}}, 200
-
-
-    print(current_user.get_id(), 'bah')
     if not current_user.is_authenticated:
+        isLandingPage = request.headers.get('Landing-Page')
+        if isLandingPage:
+            return {'landing': 'true'}
         return {'errors': {'message': 'Unauthorized'}}, 401
     
     return current_user.to_dict()
-
-# @auth_routes.route('/isUser')
-# def authenticate():
-#     """
-#     Checks for an active user.
-#     """
-#     # print(current_user.get_id())
-
-#     if not current_user.get_id():
-#         return None
-
-#     # if not current_user.is_authenticated:
-#     #     return {'errors': {'message': 'Unauthorized'}}, 401
-    
-#     return current_user.to_dict()
 
 
 @auth_routes.route('/login', methods=['POST'])
@@ -118,7 +101,7 @@ def sign_up_teacher():
 
         login_user(user)
         return user.to_dict()
-    return form.errors, 401
+    return form.errors, 400
 
 
 @auth_routes.route('/signup/student', methods=['POST'])

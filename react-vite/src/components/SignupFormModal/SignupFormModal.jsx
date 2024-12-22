@@ -54,8 +54,8 @@ function SignupFormModal() {
         })
       );
 
-    if (serverResponse) {
-      setErrors(serverResponse);
+    if (serverResponse && serverResponse.errors) {
+      setErrors(serverResponse.errors);
     } else {
       closeModal();
     }
@@ -65,12 +65,30 @@ function SignupFormModal() {
     <div className='formCon'>
       <h1 className='inputTitle'>Sign Up</h1>
       <form onSubmit={handleSubmit}>
+        {/* Username */}
+        <div className='inputCon' htmlFor='username'>
+          <label className='labelCon'>
+            <p className='labelTitle'>
+              Username
+            </p>
+          </label>
+          <input
+            className='formInput'
+            id="username"
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+          {errors.username && <p className='labelTitle error'>{errors.username}</p>}
+        </div>
         {/* Email */}
         <div className='inputCon'>
-          <label>
+          <label className='labelCon' htmlFor='emailS'>
             <p className='labelTitle'>Email</p>
           </label>
           <input
+            id="emailS"
             className='formInput'
             type="text"
             value={email}
@@ -79,31 +97,16 @@ function SignupFormModal() {
           />
           {errors.email && <p className='labelTitle error'>{errors.email}</p>}
         </div>
-        {/* Username */}
-        <div className='inputCon'>
-          <label>
-            <p className='labelTitle'>
-              Username
-            </p>
-          </label>
-          <input
-            className='formInput'
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-          {errors.username && <p className='labelTitle error'>{errors.username}</p>}
-        </div>
         {/* First Name */}
         <div className='inputCon'>
-          <label>
-            <p className='labelTitle'>
+          <label className='labelCon'>
+            <p className='labelTitle' htmlFor='firstName'>
               First Name
             </p>
           </label>
           <input
             className='formInput'
+            id="firstName"
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
@@ -113,11 +116,12 @@ function SignupFormModal() {
         </div>
         {/* Last Name */}
         <div className='inputCon'>
-          <label>
+          <label className='labelCon' htmlFor='lastName'>
             <p className='labelTitle'>Last Name</p>
           </label>
           <input
             className='formInput'
+            id="lastName"
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
@@ -127,10 +131,11 @@ function SignupFormModal() {
         </div>
         {/* Type */}
         <div className='inputCon'>
-          <label>
+          <label className='labelCon' htmlFor='type'>
             <p className='labelTitle'>Type</p>
           </label>
           <select name="type" id="type" 
+            className='formInput'
             value={type} 
             onChange={(e) => setType(e.target.value)}
           >
@@ -142,42 +147,45 @@ function SignupFormModal() {
         {type === 'teacher' && (<>
           {/* Primary Subject */}
           <div className='inputCon' hidden=''>
-            <label>
+            <label className='labelCon' htmlFor='primarySubject'>
               <p className='labelTitle'>Primary Subject</p>
             </label>
             <input
               className='formInput'
+              id="primarySubject"
               type="text"
               value={primarySubject}
               onChange={(e) => setPrimarySubject(e.target.value)}
               required
             />
-            {errors.primarySubject && <p className='labelTitle error'>{errors.primarySubject}</p>}
+            {errors.primary_subject && <p className='labelTitle error'>{errors.primary_subject}</p>}
           </div>
           {/* Primary Grade */}
           <div className='inputCon'>
-            <label>
+            <label className='labelCon' htmlFor='primaryGrade'>
               <p className='labelTitle'>Primary Grade</p>
             </label>
             <input
               className='formInput'
-              type="text"
+              id="primaryGrade"
+              type="number"
               value={primaryGrade}
               onChange={(e) => setPrimaryGrade(e.target.value)}
               required
             />
-            {errors.primaryGrade && <p className='labelTitle error'>{errors.primaryGrade}</p>}
+            {errors.primary_grade && <p className='labelTitle error'>{errors.primary_grade}</p>}
           </div>
         </>)}
         {type === 'student' && (<>
           {/* Grade */}
           <div className='inputCon'>
-            <label>
+            <label className='labelCon' htmlFor='grade'>
               <p className='labelTitle'>Grade</p>
             </label>
             <input
               className='formInput'
-              type="text"
+              id="grade"
+              type="number"
               value={grade}
               onChange={(e) => setGrade(e.target.value)}
               required
@@ -187,12 +195,12 @@ function SignupFormModal() {
         </>)}
         {/* Password */}
         <div className='inputCon'>
-          <label>
+          <label className='labelCon' htmlFor='passwordS'>
             <p className='labelTitle'>Password</p>
           </label>
           <input
             className='formInput'
-            type="password"
+            type="passwordS"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -201,11 +209,12 @@ function SignupFormModal() {
         </div>
         {/* Confirm Password */}
         <div className='inputCon'>
-          <label>
+          <label className='labelCon' htmlFor='confirmPassword'>
             <p className='labelTitle'>Confirm Password</p>
           </label>
           <input
             className='formInput'
+            id="confirmPassword"
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
@@ -215,18 +224,27 @@ function SignupFormModal() {
             <p className='labelTitle error'>{errors.confirmPassword}</p>
           )}
         </div>
-        <button 
-          className='submitButton'
-          type="submit"
-          // disabled={
-          //   (!email.length ||
-          //   !username.length ||
-          //   !firstName.length ||
-          //   !lastName.length ||
-          //   !password.length ||
-          //   !confirmPassword.length)
-          // }
+        <div className="submitCon">
+          <button 
+            className='submitButton'
+            type="submit"
+            disabled={(
+              !email.length ||
+              !username.length ||
+              !firstName.length ||
+              !lastName.length ||
+              !type.length ||
+              (type === 'teacher' && (
+                !primarySubject.length ||
+                !primaryGrade.length
+              )) ||
+              (type === 'student' && !grade.length) ||
+              !password.length ||
+              !confirmPassword.length
+            )}
           >Sign Up</button>
+        </div>
+        {errors.message && <p className='labelTitle error'>{errors.message}</p>}
       </form>
     </div>
   );

@@ -8,7 +8,7 @@ import { stringToType } from "../../utils/TypeConvertion";
 function NewAssignmentModal({classId, quarter}) {
   const dispatch = useDispatch();
   const [assignName, setAssignName] = useState('');
-  const [type, setType] = useState('');
+  const [type, setType] = useState('Classwork');
   const [dueDate, setDueDate] = useState('');
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
@@ -25,7 +25,7 @@ function NewAssignmentModal({classId, quarter}) {
         })
     );
 
-    if (await serverResponse.errors) {
+    if (serverResponse && serverResponse.errors) {
       setErrors(serverResponse.errors);
     } else {
       closeModal();
@@ -47,12 +47,13 @@ function NewAssignmentModal({classId, quarter}) {
           </label>
           <input
             className='formInput'
+            id="assignName"
             type="text"
             value={assignName}
             onChange={(e) => setAssignName(e.target.value)}
             required
           />
-          {errors.assignName && <p className='labelTitle error'>{errors.assignName}</p>}
+          {errors.name && <p className='labelTitle error'>{errors.name}</p>}
         </div>
         {/* Type */}
         <div className='inputCon'>
@@ -64,6 +65,7 @@ function NewAssignmentModal({classId, quarter}) {
           <select 
             name="type" 
             id="type" 
+            className="typeSelectGB"
             value={type} 
             onChange={(e) => setType(e.target.value)}
           >
@@ -84,23 +86,26 @@ function NewAssignmentModal({classId, quarter}) {
           </label>
           <input
             className='formInput'
+            id="dueDate"
             type="date"
             value={dueDate}
             onChange={(e) => setDueDate(e.target.value)}
             required
           />
-          {errors.dueDate && <p className='labelTitle error'>{errors.dueDate}</p>}
+          {errors.due_date && <p className='labelTitle error'>{errors.due_date}</p>}
         </div>
-        <button
-            className='submitButton'
-            type="submit"
-        //   disabled={
-        //     (!email.length ||
-        //     !username.length ||
-        //     !password.length ||
-        //     !confirmPassword.length)
-        //   }
+        <div className="submitCon">
+            <button 
+                className='submitButton'
+                type="submit"
+                disabled={
+                  (!assignName.length ||
+                  !type.length ||
+                  !dueDate.length)
+                }
             >Submit</button>
+        </div>
+        {errors.message && <p className='labelTitle error'>{errors.message}</p>}
         </form>
     </div>
   );

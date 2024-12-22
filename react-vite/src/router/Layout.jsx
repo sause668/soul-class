@@ -8,7 +8,7 @@ export default function Layout() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
-    dispatch(thunkAuthenticate()).then(() => setIsLoaded(true));
+    dispatch(thunkAuthenticate()).then(() => setIsLoaded(true)).catch(error => console.log(error));
   }, [dispatch]);
 
   return (

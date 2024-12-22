@@ -38,71 +38,75 @@ function Dashboard() {
   return (
     <>
       <Navigation/>
-      <h1>Dashboard</h1>
       {isLoaded && (
-        <div className="mainCon">
-          <div id='profileSide'>
-            <div id="profileCon">
-              <div id="profilePicCon">
-                <FiUser id='profilePic'/>
-              </div>
-              <div id="profileInfoCon">
-                <h2 className="profileInfo">{user.first_name} {user.last_name}</h2>
-                {(user.type == 'teacher') ? (<>
-                <h4 className="profileInfo">Teacher</h4>
-                <h4 className="profileInfo">Primary Grade: {user.teacher.primary_grade}</h4>
-                <h4 className="profileInfo">Primary Subject: {user.teacher.primary_subject}</h4>
-                <OpenModalButton
-                  buttonText={'New Class'}
-                  modalComponent={<CreateClassModal />}
-                  cssClasses={'newClassButton'}
-                />
-                </>):(<>
-                  <h4 className="profileInfo">Student</h4>
-                  <h4 className="profileInfo">Grade: {user.student.grade}th</h4>
-                </>)}
+        <div className="dashboardCon">
+          <div id='profileSideDB'>
+            <div>
+              <div id="profileConDB"className="lightBlueBox">
+                <div id="profilePicConDB">
+                  <FiUser id='profilePicDB'/>
+                </div>
+                <div id="profileInfoConDB">
+                  <h2 className="profileInfoDB">{user.first_name} {user.last_name}</h2>
+                  {(user.type == 'teacher') ? (<>
+                  <h4 className="profileInfoDB">Teacher</h4>
+                  <h4 className="profileInfoDB">Primary Grade: {user.teacher.primary_grade}</h4>
+                  <h4 className="profileInfoDB">Primary Subject: {user.teacher.primary_subject}</h4>
+                  <OpenModalButton
+                    buttonText={'New Class'}
+                    modalComponent={<CreateClassModal />}
+                    cssClasses={'newClassButtonDB'}
+                  />
+                  </>):(<>
+                    <h4 className="profileInfoDB">Student</h4>
+                    <h4 className="profileInfoDB">Grade: {user.student.grade}th</h4>
+                  </>)}
+                </div>
               </div>
             </div>
-            
           </div>
-          <div id="classesCon">
+          <div id="classesSideDB">
             {(user.type == 'teacher') ? (<>
                 {classes.map((class_, index) => (
-                  <div id="classCon" key={`classConT${index}`}>
-                    <h3 className="classInfo">{class_.grade}th Grade {class_.name} - {class_.period} Period</h3>
-                    <h4 className="classInfo">Room - {class_.room}, {class_.num_students} Students</h4>
-                    <div className="classButtonsCon">
-                      <button 
-                        onClick={() => handleGradeBook(class_.id)} 
-                        className="classButton gradeBook"
-                      >Grade Book</button>
-                      <OpenModalButton
-                        buttonText={'Edit'}
-                        modalComponent={<EditClassModal classEdit={class_} />}
-                        cssClasses={'classButton edit'}
-                      />
-                      <OpenModalButton
-                        buttonText={'Delete'}
-                        modalComponent={<DeleteClassModal classDelete={class_} />}
-                        cssClasses={'classButton delete'}
-                      />
+                  <div className="classGridConDB" key={`classConT${index}`}>
+                    <div className="classConDB lightBlueBox" >
+                      <h3 className="classInfoDB">{class_.grade}th Grade {class_.name} - Period {class_.period}</h3>
+                      <h4 className="classInfoDB">Room - {class_.room}, {class_.num_students} Students</h4>
+                      <div className="classButtonsConDB">
+                        <button 
+                          onClick={() => handleGradeBook(class_.id)} 
+                          className="classButtonDB gradeBookDB"
+                        >Grade Book</button>
+                        <OpenModalButton
+                          buttonText={'Edit'}
+                          modalComponent={<EditClassModal classEdit={class_} />}
+                          cssClasses={'classButtonDB editDB'}
+                        />
+                        <OpenModalButton
+                          buttonText={'Delete'}
+                          modalComponent={<DeleteClassModal classDelete={class_} />}
+                          cssClasses={'classButtonDB deleteDB'}
+                        />
+                      </div>
                     </div>
                   </div>
+                  
                 ))}
               </>):(<>
                 {classes.map((class_, index) => (
-                  <div id="classCon" key={`classConS${index}`}>
-                    <h3 className="classInfo">{class_.grade}th Grade {class_.name} - {class_.period} Period</h3>
-                    <h4 className="classInfo">{class_.teacher.last_name}, {class_.teacher.first_name}</h4>
-                    <h4 className="classInfo">Room - {class_.room}</h4>
-                    <div className="classGradeCon">
-                      <h4 className="currentGrade">Current Grade: {calcFinalGradeStudent(class_.assignments)}</h4>
-                      <button 
-                        onClick={() => handleGrades(class_.id)} 
-                        className="classButton grades"
-                      >Grades</button>
+                  <div className="classGridConDB" key={`classConS${index}`}>
+                    <div className="classConDB lightBlueBox">
+                      <h3 className="classInfoDB">{class_.grade}th Grade {class_.name} - Period {class_.period}</h3>
+                      <h4 className="classInfoDB">{class_.teacher.last_name}, {class_.teacher.first_name}</h4>
+                      <h4 className="classInfoDB">Room - {class_.room}</h4>
+                      <div className="classGradeConDB">
+                        <h4 className="currentGradeDB">Current Grade: {calcFinalGradeStudent(class_.assignments)}</h4>
+                        <button 
+                          onClick={() => handleGrades(class_.id)} 
+                          className="classButtonDB gradesDB"
+                        >Grades</button>
+                      </div>
                     </div>
-                    
                   </div>
                 ))}
               </>)}

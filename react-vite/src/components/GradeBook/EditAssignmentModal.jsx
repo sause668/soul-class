@@ -29,7 +29,7 @@ function EditAssignmentModal({assignment}) {
         })
     );
 
-    if (await serverResponse.errors) {
+    if (serverResponse && serverResponse.errors) {
       setErrors(serverResponse.errors);
     } else {
       closeModal();
@@ -40,7 +40,6 @@ function EditAssignmentModal({assignment}) {
   return (
     <div className='formCon'>
         <h1 className='inputTitle'>Edit Assignment</h1>
-        <p>{new Date(assignment.due_date).toISOString().slice(0, 10)}</p>
         <form onSubmit={handleSubmit}>
         {/* Name */}
         <div className='inputCon'>
@@ -51,12 +50,13 @@ function EditAssignmentModal({assignment}) {
           </label>
           <input
             className='formInput'
+            id="assignName"
             type="text"
             value={assignName}
             onChange={(e) => setAssignName(e.target.value)}
             required
           />
-          {errors.assignName && <p className='labelTitle error'>{errors.assignName}</p>}
+          {errors.name && <p className='labelTitle error'>{errors.name}</p>}
         </div>
         {/* Type */}
         <div className='inputCon'>
@@ -68,6 +68,7 @@ function EditAssignmentModal({assignment}) {
           <select 
             name="type" 
             id="type" 
+            className="typeSelectGB"
             value={type} 
             onChange={(e) => setType(e.target.value)}
           >
@@ -88,29 +89,33 @@ function EditAssignmentModal({assignment}) {
           </label>
           <input
             className='formInput'
+            id="dueDate"
             type="date"
             value={dueDate}
             onChange={(e) => setDueDate(e.target.value)}
             required
           />
-          {errors.dueDate && <p className='labelTitle error'>{errors.dueDate}</p>}
+          {errors.due_date && <p className='labelTitle error'>{errors.due_date}</p>}
         </div>
-        <button
-            className='submitButton'
-            type="submit"
-        //   disabled={
-        //     (!email.length ||
-        //     !username.length ||
-        //     !password.length ||
-        //     !confirmPassword.length)
-        //   }
-            >Submit</button>
-        </form>
-        <OpenModalButton
+        <div className="submitCon">
+          <button 
+              className='submitButton'
+              type="submit"
+              disabled={
+                (!assignName.length ||
+                !type.length ||
+                !dueDate.length)
+              }
+          >Submit</button>
+          <OpenModalButton
           buttonText={'Delete'}
           modalComponent={<DeleteAssignmentModal assignment={assignment}/>}
           cssClasses={''}
         />
+        </div>
+        {errors.message && <p className='labelTitle error'>{errors.message}</p>}
+        </form>
+        
     </div>
   );
 }

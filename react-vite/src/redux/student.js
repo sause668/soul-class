@@ -1,4 +1,4 @@
-// import { csrfFetch } from "./csrf";
+import { csrfFetch } from "./csrf";
 
 const SET_STUDENTS = 'class/setStudents';
 const REMOVE_STUDENTS = 'class/removeStudents';
@@ -14,10 +14,22 @@ const setStudents = (students) => ({
   
 
 export const fetchStudents = () => async (dispatch) => {
-	const response = await fetch(`/api/students`);
-    const data = await response.json();
-    dispatch(setStudents(data));
-    return data;
+	const response = await csrfFetch(`/api/students`);
+    
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setStudents(data));
+        return data
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
 };
 
 export const removeStudentsState = () => async (dispatch) => {
