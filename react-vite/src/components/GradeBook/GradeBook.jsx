@@ -12,7 +12,7 @@ import EditAssignmentModal from "./EditAssignmentModal";
 import CreateGradeModal from "./CreateGradeModal";
 import EditGradeModal from "./EditGradeModal";
 import StudentInfoModal from "./StudentInfoModal";
-import { calcFinalGradeTeacher, calcLetterGrade } from "../../utils/Grading";
+import { calcFinalGradeTeacher, calcLetterGrade, sortStudents, sortAssignments } from "../../utils/Grading";
 
 function GradeBook() {
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ function GradeBook() {
   const [errors, setErrors] = useState({});
 
   
-  
+
   useEffect(() => {
     dispatch(fetchClass({classId}))
       .then((res) => {
@@ -87,76 +87,147 @@ function GradeBook() {
             </div>
           </div>
           <div id="tableConGB" className="lightBlueBox">
+          
             <div id="tableFormatConGB">
-              <table id="tableGB">
-              <colgroup>
-                <col />
-                <col />
-                <col />
-              </colgroup> 
-                <thead id="tableHeadGB">
-                  <tr id="tableHeadRowGB">
-                    <td className="tableCellGB tableHeadCellGB studentsHeadCellGB"></td>
-                    {class_.assignments.filter(a => a.quarter == quarter).map((assignment, index) => (
-                      // <td key={`assignHead${index}`}>{assignment.name}</td>
-                      <OpenModalCell
-                        cellText={assignment.name}
-                        modalComponent={<EditAssignmentModal assignment={assignment}/>}
-                        cssClasses={`tableCellGB tableHeadCellGB assignHeadCellGB ${assignment.type}`}
-                        key={`assignHead${index}`}
-                      />
-                    ))}
-                    {/* <td className="emptyCell emptyCellTop"></td> */}
-                    <td className="tableCellGB tableHeadCellGB finalHeadCellBG">Final</td>
-                  </tr>
-                </thead>
-                <tbody id="tableBodyGB">
-                  {class_.students.map((student, iStudent) => {
-                    let finalGrade = calcFinalGradeTeacher(class_.assignments.filter(a => a.quarter == quarter), student.id);
-                    let finalLetterGrade = calcLetterGrade(finalGrade);
-                    return (
-                    <tr className="tableBodyRowBG" key={`studentName${iStudent}`}>
-                      <OpenModalCell
-                        cellText={`${student.last_name}, ${student.first_name}`}
-                        modalComponent={<StudentInfoModal
-                          classId={class_.id}
-                          student={student}
-                        />}
-                        cssClasses={'tableCellGB tableBodyCellBG studentBodyCellGB'}
-                      />
-                      {class_.assignments.filter(a => a.quarter === quarter).map((assignment, iAssignment) => {
-                        let grade = assignment.grades.find((grade) => {
-                          return grade.student_id == student.id
-                        })
-                        if (grade) {
-                          let letterGrade = calcLetterGrade(grade.grade)
-                          return <OpenModalCell
-                            cellText={`${grade.grade} (${letterGrade})`}
-                            key={`grade${iStudent}${iAssignment}`}
-                            cssClasses={`tableCellGB tableBodyCellGB gradeBodyCellBG ${letterGrade}`}
-                            modalComponent={<EditGradeModal grade={grade}/>}
-                          />
-                        }
-                        return <OpenModalCell
-                          cellText={''}
-                          key={`grade${iStudent}${iAssignment}`}
-                          cssClasses={'tableCellGB tableBodyCellGB gradeBodyCellBG noGrade'}
-                          modalComponent={<CreateGradeModal
-                            assignmentId={assignment.id}
-                            studentId={student.id}
-                          />}
+              <div id="tableStudentsConGB">
+              <table id="tableGBS">
+                  <thead id="tableHeadGB">
+                    <tr id="tableHeadRowGB">
+                      {/* <td className="studentsHeadCellGBS"></td> */}
+                      {/* {class_.assignments.filter(a => a.quarter == quarter).map((assignment, index) => (
+                        // <td key={`assignHead${index}`}>{assignment.name}</td>
+                        <OpenModalCell
+                          cellText={assignment.name}
+                          modalComponent={<EditAssignmentModal assignment={assignment}/>}
+                          cssClasses={`tableCellGB tableHeadCellGB assignHeadCellGB ${assignment.type}`}
+                          key={`assignHead${index}`}
                         />
-                      })}
-                      {/* <td className={`emptyCell ${iStudent === class_.students.length - 1 && 'emptyCellBottom'}`}></td> */}
-                      {finalGrade != 'N/A' ? 
-                        <td className={`tableCellGB tableBodyCellGB finalBodyCellGB ${finalLetterGrade}`}>{finalGrade} ({finalLetterGrade})</td>
-                      :
-                        <td className={`tableCellGB tableBodyCellGB finalBodyCellGB noGrade`}>N/A</td>
-                      }
+                      ))}
+                      <td className="emptyCell emptyCellTop"></td>
+                      <td className="tableCellGB tableHeadCellGB finalHeadCellBG">Final</td> */}
                     </tr>
-                  )})}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody id="tableBodyGB">
+                    {class_.students.sort((s1, s2) => sortStudents(s1, s2)).map((student, iStudent) => {
+                      // let finalGrade = calcFinalGradeTeacher(class_.assignments.filter(a => a.quarter == quarter), student.id);
+                      // let finalLetterGrade = calcLetterGrade(finalGrade);
+                      return (
+                      <tr className="tableBodyRowBG" key={`studentName${iStudent}`}>
+                        <OpenModalCell
+                          cellText={`${student.last_name}, ${student.first_name}`}
+                          modalComponent={<StudentInfoModal
+                            classId={class_.id}
+                            student={student}
+                          />}
+                          cssClasses={'tableCellGB tableBodyCellBG studentBodyCellGB'}
+                        />
+                        {/* {class_.assignments.filter(a => a.quarter === quarter).map((assignment, iAssignment) => {
+                          let grade = assignment.grades.find((grade) => {
+                            return grade.student_id == student.id
+                          })
+                          if (grade) {
+                            let letterGrade = calcLetterGrade(grade.grade)
+                            return <OpenModalCell
+                              cellText={`${grade.grade} (${letterGrade})`}
+                              key={`grade${iStudent}${iAssignment}`}
+                              cssClasses={`tableCellGB tableBodyCellGB gradeBodyCellBG ${letterGrade}`}
+                              modalComponent={<EditGradeModal grade={grade}/>}
+                            />
+                          }
+                          return <OpenModalCell
+                            cellText={''}
+                            key={`grade${iStudent}${iAssignment}`}
+                            cssClasses={'tableCellGB tableBodyCellGB gradeBodyCellBG noGrade'}
+                            modalComponent={<CreateGradeModal
+                              assignmentId={assignment.id}
+                              studentId={student.id}
+                            />}
+                          />
+                        })}
+                        
+                        {finalGrade != 'N/A' ? 
+                          <td className={`tableCellGB tableBodyCellGB finalBodyCellGB ${finalLetterGrade}`}>{finalGrade} ({finalLetterGrade})</td>
+                        :
+                          <td className={`tableCellGB tableBodyCellGB finalBodyCellGB noGrade`}>N/A</td>
+                        } */}
+                      </tr>
+                    )})}
+                  </tbody>
+                </table>
+              </div>
+              <div id="tableGradesConGB">
+                <table id="tableGB">
+                  <thead id="tableHeadGB">
+                    <tr id="tableHeadRowGB">
+                      {/* <td className="tableCellGB tableHeadCellGB studentsHeadCellGB"></td> */}
+                      {class_.assignments
+                        .filter(a => a.quarter == quarter)
+                        .sort((a1, a2) => sortAssignments(a1, a2))
+                        .map((assignment, index) => (
+                        // <td key={`assignHead${index}`}>{assignment.name}</td>
+                        <OpenModalCell
+                          cellText={assignment.name}
+                          modalComponent={<EditAssignmentModal assignment={assignment}/>}
+                          cssClasses={`tableCellGB tableHeadCellGB assignHeadCellGB ${assignment.type}`}
+                          key={`assignHead${index}`}
+                        />
+                      ))}
+                      {/* <td className="emptyCell emptyCellTop"></td> */}
+                      <td className="tableCellGB tableHeadCellGB finalHeadCellBG">Final</td>
+                    </tr>
+                  </thead>
+                  <tbody id="tableBodyGB">
+                    {class_.students.map((student, iStudent) => {
+                      let finalGrade = calcFinalGradeTeacher(class_.assignments.filter(a => a.quarter == quarter), student.id);
+                      let finalLetterGrade = calcLetterGrade(finalGrade);
+                      return (
+                      <tr className="tableBodyRowBG" key={`studentName${iStudent}`}>
+                        {/* <OpenModalCell
+                          cellText={`${student.last_name}, ${student.first_name}`}
+                          modalComponent={<StudentInfoModal
+                            classId={class_.id}
+                            student={student}
+                          />}
+                          cssClasses={'tableCellGB tableBodyCellBG studentBodyCellGB'}
+                        /> */}
+                        {class_.assignments
+                          .filter(a => a.quarter === quarter)
+                          .sort((a1, a2) => sortAssignments(a1, a2))
+                          .map((assignment, iAssignment) => {
+                          let grade = assignment.grades.find((grade) => {
+                            return grade.student_id == student.id
+                          })
+                          if (grade) {
+                            let letterGrade = calcLetterGrade(grade.grade)
+                            return <OpenModalCell
+                              cellText={`${grade.grade} (${letterGrade})`}
+                              key={`grade${iStudent}${iAssignment}`}
+                              cssClasses={`tableCellGB tableBodyCellGB gradeBodyCellBG ${letterGrade}`}
+                              modalComponent={<EditGradeModal grade={grade}/>}
+                            />
+                          }
+                          return <OpenModalCell
+                            cellText={''}
+                            key={`grade${iStudent}${iAssignment}`}
+                            cssClasses={'tableCellGB tableBodyCellGB gradeBodyCellBG noGrade'}
+                            modalComponent={<CreateGradeModal
+                              assignmentId={assignment.id}
+                              studentId={student.id}
+                            />}
+                          />
+                        })}
+                        {/* <td className={`emptyCell ${iStudent === class_.students.length - 1 && 'emptyCellBottom'}`}></td> */}
+                        {finalGrade != 'N/A' ? 
+                          <td className={`tableCellGB tableBodyCellGB finalBodyCellGB ${finalLetterGrade}`}>{finalGrade} ({finalLetterGrade})</td>
+                        :
+                          <td className={`tableCellGB tableBodyCellGB finalBodyCellGB noGrade`}>N/A</td>
+                        }
+                      </tr>
+                    )})}
+                  </tbody>
+                </table>
+              </div>
+              
             </div>
           </div>
         </div>
