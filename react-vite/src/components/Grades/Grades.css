@@ -91,3 +91,30 @@
 .assignGradeG {
     margin-top: 1rem;
 }
+
+@media (max-width:1000px) {
+    #classAssignmentsConG {
+        grid-template-columns: 32.33333% 32.33333% 32.33333%;
+    }
+}
+
+@media (max-width:750px) {
+    #classAssignmentsConG {
+        grid-template-columns: 49% 49%;
+    }
+}
+
+@media (max-width:620px) {
+    #headerConG {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 1rem;
+    }
+}
+
+@media (max-width:500px) {
+    #classAssignmentsConG {
+        grid-template-columns: 100%;
+    }
+}

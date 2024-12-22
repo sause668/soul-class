@@ -11,7 +11,7 @@ function AddStudentModal({classId, currentStudentIds}) {
   const students = studentsState && studentsState.filter(student => !currentStudentIds.includes(student.id));
   const [isLoaded, setIsLoaded] = useState(false);
   const [newStudent, setNewStudent] = useState((students) ? `${students[0].last_name}, ${students[0].first_name}`:'');
-//   const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
   
 
@@ -26,20 +26,24 @@ function AddStudentModal({classId, currentStudentIds}) {
         })
     );
 
-    if (await serverResponse.errors) {
-    //   setErrors(serverResponse.errors);
+    if (serverResponse && serverResponse.errors) {
+      setErrors(serverResponse.errors);
     } else {
       closeModal();
     }
   };
 
   useEffect(() => {
-    dispatch(fetchStudents()).then(() => setIsLoaded(true));
-  }, [dispatch]);
+    dispatch(fetchStudents()).then((studentData) => {
+        setIsLoaded(true)
+        const studentsNew = studentData && studentData.filter(student => !currentStudentIds.includes(student.id));
+        setNewStudent(`${studentsNew[0].last_name}, ${studentsNew[0].first_name}`)
+    });
+  }, [dispatch, currentStudentIds]);
 
   return (
     <>
-        {isLoaded && (
+        {(isLoaded && students) && (
             <div className='formCon'>
                 <h1 className='inputTitle'>Add Student</h1>
                 <form onSubmit={handleSubmit}>
@@ -60,16 +64,10 @@ function AddStudentModal({classId, currentStudentIds}) {
                     <button 
                         className='submitButton'
                         type="submit"
-                        // disabled={
-                        //   (!email.length ||
-                        //   !username.length ||
-                        //   !firstName.length ||
-                        //   !lastName.length ||
-                        //   !password.length ||
-                        //   !confirmPassword.length)
-                        // }
+                        disabled={(!newStudent.length)}
                     >Submit</button>
                 </div>
+                {errors.message && <p className='labelTitle error'>{errors.message}</p>}
                 </form>
             </div>
         )}

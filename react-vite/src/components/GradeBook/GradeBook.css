@@ -17,6 +17,7 @@
 }
 
 #titleConGB {
+    text-align: center;
     padding: 1rem;
 }
 
@@ -110,6 +111,7 @@ th,td {
 
 .assignHeadCellGB {
     /* width: 4rem; */
+    cursor: pointer;
 }
 
 .finalHeadCellBG {
@@ -132,9 +134,11 @@ th,td {
 
 .studentBodyCellGB {
     background-color: #78909c10;
+    cursor: pointer;
 }
 
 .gradeBodyCellBG {
+    cursor: pointer;
 
 }
 
@@ -182,4 +186,19 @@ th,td {
     padding: .5rem;
     padding-right: 0rem;
     
+}
+
+@media (max-width:920px) {
+    #headerConGB {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 1rem;
+    }
+}
+
+@media (max-width:500px) {
+    #titleGB {
+        font-size: 1.75rem;
+    }
 }

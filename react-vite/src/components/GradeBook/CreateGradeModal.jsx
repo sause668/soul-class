@@ -20,7 +20,7 @@ function CreateGradeModal({assignmentId, studentId}) {
         })
     );
 
-    if (await serverResponse.errors) {
+    if (serverResponse && serverResponse.errors) {
       setErrors(serverResponse.errors);
     } else {
       closeModal();
@@ -33,35 +33,30 @@ function CreateGradeModal({assignmentId, studentId}) {
     <div className='formCon'>
         <h1 className='inputTitle'>New Grade</h1>
         <form onSubmit={handleSubmit}>
-        <div className='inputCon'>
-          <label htmlFor='grade'>
-            <p className='labelTitle'>
-              Grade
-            </p>
-          </label>
-          <input
-            className='formInput'
-            type="number"
-            value={grade}
-            onChange={(e) => setGrade(e.target.value)}
-            required
-          />
-          {errors.grade && <p className='labelTitle error'>{errors.grade}</p>}
-        </div>
-        <div className="submitCon">
-          <button 
-            className='submitButton'
-            type="submit"
-            // disabled={
-            //   (!email.length ||
-            //   !username.length ||
-            //   !firstName.length ||
-            //   !lastName.length ||
-            //   !password.length ||
-            //   !confirmPassword.length)
-            // }
-          >Submit</button>
-        </div>
+          <div className='inputCon'>
+            <label htmlFor='grade'>
+              <p className='labelTitle'>
+                Grade
+              </p>
+            </label>
+            <input
+              className='formInput'
+              id="grade"
+              type="number"
+              value={grade}
+              onChange={(e) => setGrade(e.target.value)}
+              required
+            />
+            {errors.grade && <p className='labelTitle error'>{errors.grade}</p>}
+          </div>
+          <div className="submitCon">
+            <button 
+              className='submitButton'
+              type="submit"
+              // disabled={(!grade)}
+            >Submit</button>
+          </div>
+        {errors.message && <p className='labelTitle error'>{errors.message}</p>}
         </form>
     </div>
   );

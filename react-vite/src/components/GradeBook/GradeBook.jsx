@@ -21,12 +21,19 @@ function GradeBook() {
   const class_ = useSelector((state) => state.class.class);
   const [quarter, setQuarter] = useState(1)
   const [isLoaded, setIsLoaded] = useState(false);
-  // const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({});
 
   
   
   useEffect(() => {
-    dispatch(fetchClass({classId})).then(() => setIsLoaded(true));
+    dispatch(fetchClass({classId}))
+      .then((res) => {
+        if (res && res.errors) {
+          setErrors(res.errors)
+        } else {
+          setIsLoaded(true)
+        }
+      })
   }, [dispatch, classId]);
 
   if (!user || user.type != 'teacher') return <Navigate to="/" replace={true} />;
@@ -35,7 +42,7 @@ function GradeBook() {
   return (
     <>
       <Navigation/>
-      {isLoaded && (
+      {(isLoaded) && (
         <div id="gradeBookCon">
           <div id="headerConGB">
             <div id="titleConGB" className="lightBlueBox">
@@ -154,6 +161,7 @@ function GradeBook() {
           </div>
         </div>
       )}
+      {errors.message && (<h1>{errors.message}</h1>)}
     </>
   );
 }

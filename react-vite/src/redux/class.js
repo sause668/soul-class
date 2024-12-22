@@ -1,4 +1,4 @@
-// import { csrfFetch } from "./csrf";
+import { csrfFetch } from "./csrf";
 
 const SET_CLASS = 'class/setClass';
 const REMOVE_CLASS = 'class/removeClass';
@@ -32,34 +32,68 @@ const setClass = (class_) => ({
     
 // Classes
 export const fetchClasses = () => async (dispatch) => {
-	const response = await fetch(`/api/classes`);
-    const data = await response.json();
-    dispatch(setClasses(data));
-    return data;
+	const response = await csrfFetch(`/api/classes`);
+    
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClasses(data));
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
 };
 
 export const fetchClass = (params) => async (dispatch) => {
     const { classId } = params
-	const response = await fetch(`/api/classes/${classId}`);
-    const data = await response.json();
-    dispatch(setClass(data));
-    return data;
+	const response = await csrfFetch(`/api/classes/${classId}`);
+    
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClass(data));
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            console.log(errorMessages)
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
 };
 
 export const createClass = (params) => async (dispatch) => {
-	const response = await fetch("/api/classes", {
+	const response = await csrfFetch("/api/classes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(params)
       });
-    const data = await response.json();
-    dispatch(setClasses(data));
-    return data;
+    
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClasses(data));
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
 };
 
 export const editClass = (params) => async (dispatch) => {
     const { classId, name, subject, grade, period, room } = params;
-	const response = await fetch(`/api/classes/${classId}`, {
+	const response = await csrfFetch(`/api/classes/${classId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -70,19 +104,41 @@ export const editClass = (params) => async (dispatch) => {
             room
         })
       });
-    const data = await response.json();
-    dispatch(setClasses(data));
-    return data;
+    
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClasses(data));
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
 };
 
 export const deleteClass = (params) => async (dispatch) => {
     const { classId } = params;
-	const response = await fetch(`/api/classes/${classId}`, {
+	const response = await csrfFetch(`/api/classes/${classId}`, {
         method: "DELETE"
       });
-    const data = await response.json();
-    dispatch(setClasses(data));
-    return data;
+    
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClasses(data));
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
 };
 
 export const removeClassesState = () => async (dispatch) => {
@@ -97,25 +153,47 @@ export const removeClassState = () => async (dispatch) => {
 //Students
 export const addStudent = (params) => async (dispatch) => {
     const { classId, studentId } = params;
-	const response = await fetch(`/api/classes/${classId}/students/${studentId}`, {method: "POST"});
-    const data = await response.json();
-    dispatch(setClass(data))
-    return data;
+	const response = await csrfFetch(`/api/classes/${classId}/students/${studentId}`, {method: "POST"});
+    
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClass(data));
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
 };
 
 export const removeStudent = (params) => async (dispatch) => {
     const { classId, studentId } = params;
-	const response = await fetch(`/api/classes/${classId}/students/${studentId}`, {method: "DELETE"});
-    const data = await response.json();
-    dispatch(setClass(data))
-    return data;
+	const response = await csrfFetch(`/api/classes/${classId}/students/${studentId}`, {method: "DELETE"});
+    
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClass(data))
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
 };
 
 
 // Assignments
 export const createAssignment = (params) => async (dispatch) => {
     const { classId, name, type, quarter, dueDate } = params;
-	const response = await fetch(`/api/classes/${classId}/assignments`, {
+	const response = await csrfFetch(`/api/classes/${classId}/assignments`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -125,14 +203,25 @@ export const createAssignment = (params) => async (dispatch) => {
             due_date: dueDate
         })
       });
-    const data = await response.json();
-    dispatch(setClass(data))
-    return data;
+    
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClass(data))
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
 };
 
 export const editAssignment = (params) => async (dispatch) => {
     const { assignmentId, name, type, quarter, dueDate } = params;
-	const response = await fetch(`/api/assignments/${assignmentId}`, {
+	const response = await csrfFetch(`/api/assignments/${assignmentId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -142,66 +231,115 @@ export const editAssignment = (params) => async (dispatch) => {
             due_date: dueDate
         })
       });
-    const data = await response.json();
-    dispatch(setClass(data))
-    return data;
+    
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClass(data))
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
 };
 
 export const deleteAssignment = (params) => async (dispatch) => {
     const { assignmentId } = params;
-	const response = await fetch(`/api/assignments/${assignmentId}`, {
+	const response = await csrfFetch(`/api/assignments/${assignmentId}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" }
       });
-    const data = await response.json();
-    dispatch(setClass(data))
-    return data;
+    
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClass(data))
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
 };
 
 
 // Grades
 export const createGrade = (params) => async (dispatch) => {
     const { assignmentId, studentId, grade } = params;
-	const response = await fetch(`/api/assignments/${assignmentId}/grades`, {
+	const response = await csrfFetch(`/api/assignments/${assignmentId}/grades/${studentId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            student_id: studentId, 
             grade
         })
       });
-    const data = await response.json();
-    dispatch(setClass(data))
-    return data;
+    
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClass(data))
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
 };
 
 export const editGrade = (params) => async (dispatch) => {
     const { assignmentId, studentId, grade } = params;
-	const response = await fetch(`/api/assignments/${assignmentId}/grades`, {
+	const response = await csrfFetch(`/api/assignments/${assignmentId}/grades/${studentId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            student_id: studentId, 
             grade
         })
       });
-    const data = await response.json();
-    dispatch(setClass(data))
-    return data;
+    
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClass(data))
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
 };
 
 export const deleteGrade = (params) => async (dispatch) => {
     const { assignmentId, studentId } = params;
-	const response = await fetch(`/api/assignments/${assignmentId}/grades`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            student_id: studentId
-        })
+	const response = await csrfFetch(`/api/assignments/${assignmentId}/grades/${studentId}`, {
+        method: "DELETE"
       });
-    const data = await response.json();
-    dispatch(setClass(data))
-    return data;
+    
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClass(data))
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
 };
 
 

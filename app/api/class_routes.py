@@ -1,11 +1,15 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import db, Class, StudentClass, Student, Assignment
+from app.forms import ClassForm, AssignmentForm
 import json
 from datetime import datetime
 
 class_routes = Blueprint('classes', __name__)
-
+    # form = SignUpForm()
+    # form['csrf_token'].data = request.cookies['csrf_token']
+    # if form.validate_on_submit():
+    # return form.errors, 400
 
 @class_routes.route('', methods=['GET'])
 @login_required
@@ -54,29 +58,29 @@ def create_class():
     """
     Create a class
     """
-    print(current_user)
     if current_user.type != 'teacher':
         return jsonify({"message": "Teacher Authorization Required"}), 401
     
-    req_body = json.loads(request.data)
+    form = ClassForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
 
-    class_new = Class(
-        teacher_id=current_user.teacher.id,
-        name=req_body['name'],
-        subject=req_body['subject'],
-        grade=req_body['grade'],
-        room=req_body['room'],
-        period=req_body['period']
-    )
+        class_new = Class(
+            teacher_id=current_user.teacher.id,
+            name=form.data['name'],
+            subject=form.data['subject'],
+            grade=form.data['grade'],
+            room=form.data['room'],
+            period=form.data['period']
+        )
 
-    db.session.add(class_new)
-    db.session.commit()
+        db.session.add(class_new)
+        db.session.commit()
 
-    classes = Class.query.filter_by(teacher_id=current_user.teacher.id).all()
-    return jsonify([class_.teacher_dash() for class_ in classes]), 201
+        classes = Class.query.filter_by(teacher_id=current_user.teacher.id).all()
+        return jsonify([class_.teacher_dash() for class_ in classes]), 201
 
-    return jsonify(class_new.teacher_dash()), 201
-
+    return form.errors, 400
 
     
 @class_routes.route('/<int:class_id>', methods=['PUT'])
@@ -88,25 +92,27 @@ def edit_class(class_id):
     if current_user.type != 'teacher':
         return jsonify({"message": "Teacher Authorization Required"}), 401
     
-    req_body = json.loads(request.data)
-    
-    class_edit = Class.query.filter_by(id=class_id, teacher_id=current_user.teacher.id).first()
+    form = ClassForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        
+        class_edit = Class.query.filter_by(id=class_id, teacher_id=current_user.teacher.id).first()
 
-    if not class_edit:
+        if not class_edit:
             return jsonify({"message": "Class not found"}), 404
+        
+        class_edit.name = form.data['name']
+        class_edit.subject = form.data['subject']
+        class_edit.grade = form.data['grade']
+        class_edit.period = form.data['period']
+        class_edit.room = form.data['room']
+
+        db.session.commit()
+
+        classes = Class.query.filter_by(teacher_id=current_user.teacher.id).all()
+        return jsonify([class_.teacher_dash() for class_ in classes]), 201
     
-    class_edit.name = req_body['name']
-    class_edit.subject = req_body['subject']
-    class_edit.grade = req_body['grade']
-    class_edit.period = req_body['period']
-    class_edit.room = req_body['room']
-
-    db.session.commit()
-
-    classes = Class.query.filter_by(teacher_id=current_user.teacher.id).all()
-    return jsonify([class_.teacher_dash() for class_ in classes]), 201
-
-    return jsonify(class_edit.teacher_dash()), 201
+    return form.errors, 400
     
     
 
@@ -129,8 +135,6 @@ def delete_class(class_id):
 
     classes = Class.query.filter_by(teacher_id=current_user.teacher.id).all()
     return jsonify([class_.teacher_dash() for class_ in classes]), 200
-
-    return jsonify({'message': "Delete Successful"}), 200
     
     
 
@@ -144,10 +148,13 @@ def add_student(class_id, student_id):
         return jsonify({"message": "Teacher Authorization Required"}), 401
 
     if not Class.query.filter_by(id=class_id, teacher_id=current_user.teacher.id).first():
-            return jsonify({"message": "Class not found"}), 404
+        return jsonify({"message": "Class not found"}), 404
     
     if not Student.query.filter_by(id=student_id).first():
-            return jsonify({"message": "Student not found"}), 404
+        return jsonify({"message": "Student not found"}), 404
+    
+    if StudentClass.query.filter_by(class_id=class_id, student_id=student_id).first():
+        return jsonify({"message": "Student already in class"}), 401
     
     add_student = StudentClass(
          student_id=student_id,
@@ -206,29 +213,31 @@ def create_assignment(class_id):
     if current_user.type != 'teacher':
         return jsonify({"message": "Teacher Authorization Required"}), 401
     
-    if not Class.query.filter_by(id=class_id, teacher_id=current_user.teacher.id).first():
-            return jsonify({"message": "Class not found"}), 404
-    
-    req_body = json.loads(request.data)
+    form = AssignmentForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        
+        if not Class.query.filter_by(id=class_id, teacher_id=current_user.teacher.id).first():
+                return jsonify({"message": "Class not found"}), 404
 
-    due_date = req_body['due_date'].split('-')
-    
-    assignment_new = Assignment(
-        class_id=class_id,
-        name=req_body['name'],
-        type=req_body['type'],
-        quarter=req_body['quarter'],
-        due_date= datetime(int(due_date[0]), int(due_date[1]), int(due_date[2]))
-    )
+        due_date = form.data['due_date'].split('-')
+        
+        assignment_new = Assignment(
+            class_id=class_id,
+            name=form.data['name'],
+            type=form.data['type'],
+            quarter=form.data['quarter'],
+            due_date= datetime(int(due_date[0]), int(due_date[1]), int(due_date[2]))
+        )
 
-    db.session.add(assignment_new)
-    db.session.commit()
+        db.session.add(assignment_new)
+        db.session.commit()
 
-    class_ = Class.query.filter_by(id=class_id, teacher_id=current_user.teacher.id).first()
-    
-    return jsonify(class_.grade_book()), 201
+        class_ = Class.query.filter_by(id=class_id, teacher_id=current_user.teacher.id).first()
+        
+        return jsonify(class_.grade_book()), 201
 
-    # return jsonify(assignment_new.grade_book()), 201
+    return form.errors, 400
     
 
  

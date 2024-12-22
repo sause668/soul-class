@@ -66,3 +66,32 @@
     /* width: 100%; */
 }
 
+@media (max-width:750px) {
+    #landingCon {
+        flex-direction: column;
+    }
+
+    #titleSide {
+        width: auto;
+        padding-bottom: 3rem;
+    }
+
+    #loginSide {
+        width: auto;
+        padding-top: 1rem;
+    }
+}
+
+@media (max-width:450px) {
+    #titleSide {
+        padding-bottom: 1.5rem;
+    }
+
+    #titleMain {
+        font-size: 3rem;
+    }
+    
+    #titleSub {
+        font-size: 1.5rem;
+    }
+}

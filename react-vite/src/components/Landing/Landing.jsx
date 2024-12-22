@@ -21,11 +21,9 @@ function Landing() {
       })
     );
 
-    if (serverResponse) {
-      setErrors(serverResponse);
-    } else {
-      // closeModal();
-    }
+    if (serverResponse && serverResponse.errors) {
+      setErrors(serverResponse.errors);
+    } 
   };
 
   const demoTeacher = async () => {
@@ -36,11 +34,9 @@ function Landing() {
       })
     );
 
-    if (serverResponse) {
-      setErrors(serverResponse);
-    } else {
-      // closeModal();
-    }
+    if (serverResponse && serverResponse.errors) {
+      setErrors(serverResponse.errors);
+    } 
   }
 
   const demoStudent = async () => {
@@ -51,11 +47,9 @@ function Landing() {
       })
     );
 
-    if (serverResponse) {
-      setErrors(serverResponse);
-    } else {
-      // closeModal();
-    }
+    if (serverResponse && serverResponse.errors) {
+      setErrors(serverResponse.errors);
+    } 
   }
 
   return (
@@ -78,11 +72,13 @@ function Landing() {
                   </p>
                 </label>
                 <input
+                  id='email' 
                   className='formInput'
                   type="text"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
+                  autoComplete="on"
                 />
                 {errors.email && <p className='labelTitle error'>{errors.email}</p>}
               </div>
@@ -94,6 +90,7 @@ function Landing() {
                   </p>
                 </label>
                 <input
+                  id='password' 
                   className='formInput'
                   type="text"
                   value={password}
@@ -106,27 +103,19 @@ function Landing() {
                 <button 
                   className='submitButton btnLanding'
                   type="submit" 
-                  // disabled={(credential.length < 4 || password.length < 4)}
+                  disabled={(
+                    email.length < 4 || 
+                    password.length < 4
+                  )}
                 >Log In</button>
-                
               </div>
-              
+              {errors.message && <p className='labelTitle error'>{errors.message}</p>}
             </form>
             <OpenModalButton
               buttonText={'Sign Up'}
               modalComponent={<SignupFormModal/>}
               cssClasses={'signupButton btnLanding'}
             />
-            {/* <div id="demoCon" className="lightBlueBox">
-              <button 
-                className="demoButton"
-                onClick={demoTeacher}
-              >Demo Teacher</button>
-              <button 
-                className="demoButton"
-                onClick={demoStudent}
-              >Demo Student</button>
-            </div> */}
           </div>
           <div id="demoCon" className="whiteBox">
               <button 

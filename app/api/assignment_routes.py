@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import db, Assignment, Grade, Class
+from app.forms import AssignmentForm, GradeForm
 import json
 from datetime import datetime
 
@@ -16,28 +17,30 @@ def edit_assignment(assignment_id):
     if current_user.type != 'teacher':
         return jsonify({"message": "Teacher Authorization Required"}), 401
     
-    req_body = json.loads(request.data)
-    
-    assignment_edit = Assignment.query.filter_by(id=assignment_id).first()
+    form = AssignmentForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        
+        assignment_edit = Assignment.query.filter_by(id=assignment_id).first()
 
-    if not assignment_edit or assignment_edit.class_.teacher_id != current_user.teacher.id:
-            return jsonify({"message": "Assignment not found"}), 404
+        if not assignment_edit or assignment_edit.class_.teacher_id != current_user.teacher.id:
+                return jsonify({"message": "Assignment not found"}), 404
 
-    assignment_edit.name = req_body['name']
-    assignment_edit.type = req_body['type']
-    assignment_edit.quarter = req_body['quarter']
+        assignment_edit.name = form.data['name']
+        assignment_edit.type = form.data['type']
+        assignment_edit.quarter = form.data['quarter']
 
-    due_date = req_body['due_date'].split('-')
-    assignment_edit.due_date = datetime(int(due_date[0]), int(due_date[1]), int(due_date[2]))
-    
+        due_date = form.data['due_date'].split('-')
+        assignment_edit.due_date = datetime(int(due_date[0]), int(due_date[1]), int(due_date[2]))
+        
 
-    db.session.commit()
+        db.session.commit()
 
-    class_ = Class.query.filter_by(id=assignment_edit.class_.id, teacher_id=current_user.teacher.id).first()
-    
-    return jsonify(class_.grade_book()), 201
+        class_ = Class.query.filter_by(id=assignment_edit.class_.id, teacher_id=current_user.teacher.id).first()
+        
+        return jsonify(class_.grade_book()), 201
 
-    # return jsonify(assignment_edit.grade_book()), 201
+    return form.errors, 400
     
 
 
@@ -66,70 +69,76 @@ def delete_assignment(assignment_id):
 
 
 
-@assignment_routes.route('/<int:assignment_id>/grades', methods=['POST'])
+@assignment_routes.route('/<int:assignment_id>/grades/<int:student_id>', methods=['POST'])
 @login_required
-def create_grade(assignment_id):
+def create_grade(assignment_id, student_id):
     """
     Create a Grade
     """
     if current_user.type != 'teacher':
         return jsonify({"message": "Teacher Authorization Required"}), 401
     
-    if not Assignment.query.filter_by(id=assignment_id).first():
+    form = GradeForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        
+        if not Assignment.query.filter_by(id=assignment_id).first():
             return jsonify({"message": "Assignment not found"}), 404
-    
-    req_body = json.loads(request.data)
-    
-    grade_new = Grade(
-        assignment_id=assignment_id,
-        student_id=req_body['student_id'],
-        grade=req_body['grade']
-    )
+        
+        # if not Grade.query.filter_by(assignment_id=assignment_id, student_id=student_id).first():
+        #     return jsonify({"message": "Grade already exists"}), 400
+        
+        grade_new = Grade(
+            assignment_id=assignment_id,
+            student_id=student_id,
+            grade=form.data['grade']
+        )
 
-    db.session.add(grade_new)
-    db.session.commit()
+        db.session.add(grade_new)
+        db.session.commit()
 
-    class_ = Class.query.filter_by(id=grade_new.assignment.class_.id, teacher_id=current_user.teacher.id).first()
+        class_ = Class.query.filter_by(id=grade_new.assignment.class_.id, teacher_id=current_user.teacher.id).first()
+        
+        return jsonify(class_.grade_book()), 201
+
+    return form.errors, 400
     
-    return jsonify(class_.grade_book()), 201
 
-    # return jsonify(grade_new.to_dict()), 201
-    
-
-@assignment_routes.route('/<int:assignment_id>/grades', methods=['PUT'])
+@assignment_routes.route('/<int:assignment_id>/grades/<int:student_id>', methods=['PUT'])
 @login_required
-def edit_grade(assignment_id):
+def edit_grade(assignment_id, student_id):
     """
     Edit a Grade
     """
     if current_user.type != 'teacher':
         return jsonify({"message": "Teacher Authorization Required"}), 401
     
-    if not Assignment.query.filter_by(id=assignment_id).first():
-            return jsonify({"message": "Assignment not found"}), 404
+    form = GradeForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        if not Assignment.query.filter_by(id=assignment_id).first():
+                return jsonify({"message": "Assignment not found"}), 404
+        
+        grade_edit = Grade.query.filter_by(assignment_id=assignment_id, student_id=student_id).first()
+
+        if not grade_edit:
+                return jsonify({"message": "Grade not found"}), 404
+
+        grade_edit.grade = form.data['grade']
+        
+        db.session.commit()
+
+        class_ = Class.query.filter_by(id=grade_edit.assignment.class_.id, teacher_id=current_user.teacher.id).first()
+        
+        return jsonify(class_.grade_book()), 201
     
-    req_body = json.loads(request.data)
-    
-    grade_edit = Grade.query.filter_by(assignment_id=assignment_id, student_id=req_body['student_id']).first()
-
-    if not grade_edit:
-            return jsonify({"message": "Grade not found"}), 404
-
-    grade_edit.grade = req_body['grade']
-    
-    db.session.commit()
-
-    class_ = Class.query.filter_by(id=grade_edit.assignment.class_.id, teacher_id=current_user.teacher.id).first()
-    
-    return jsonify(class_.grade_book()), 201
-
-    return jsonify(grade_edit.to_dict()), 201
+    return form.errors, 400
 
 
 
-@assignment_routes.route('/<int:assignment_id>/grades', methods=['DELETE'])
+@assignment_routes.route('/<int:assignment_id>/grades/<int:student_id>', methods=['DELETE'])
 @login_required
-def delete_grade(assignment_id):
+def delete_grade(assignment_id, student_id):
     """
     Delete a Grade
     """
@@ -139,9 +148,7 @@ def delete_grade(assignment_id):
     if not Assignment.query.filter_by(id=assignment_id).first():
             return jsonify({"message": "Assignment not found"}), 404
     
-    req_body = json.loads(request.data)
-    
-    grade_delete = Grade.query.filter_by(assignment_id=assignment_id, student_id=req_body['student_id']).first()
+    grade_delete = Grade.query.filter_by(assignment_id=assignment_id, student_id=student_id).first()
 
     if not grade_delete:
             return jsonify({"message": "Grade not found"}), 404
@@ -153,7 +160,5 @@ def delete_grade(assignment_id):
     class_ = Class.query.filter_by(id=class_id, teacher_id=current_user.teacher.id).first()
     
     return jsonify(class_.grade_book()), 200
-
-    return jsonify({'message': "Delete Successful"}), 200
 
 

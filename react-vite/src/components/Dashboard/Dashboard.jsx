@@ -41,28 +41,29 @@ function Dashboard() {
       {isLoaded && (
         <div className="dashboardCon">
           <div id='profileSideDB'>
-            <div id="profileConDB"className="lightBlueBox">
-              <div id="profilePicConDB">
-                <FiUser id='profilePicDB'/>
-              </div>
-              <div id="profileInfoConDB">
-                <h2 className="profileInfoDB">{user.first_name} {user.last_name}</h2>
-                {(user.type == 'teacher') ? (<>
-                <h4 className="profileInfoDB">Teacher</h4>
-                <h4 className="profileInfoDB">Primary Grade: {user.teacher.primary_grade}</h4>
-                <h4 className="profileInfoDB">Primary Subject: {user.teacher.primary_subject}</h4>
-                <OpenModalButton
-                  buttonText={'New Class'}
-                  modalComponent={<CreateClassModal />}
-                  cssClasses={'newClassButtonDB'}
-                />
-                </>):(<>
-                  <h4 className="profileInfoDB">Student</h4>
-                  <h4 className="profileInfoDB">Grade: {user.student.grade}th</h4>
-                </>)}
+            <div>
+              <div id="profileConDB"className="lightBlueBox">
+                <div id="profilePicConDB">
+                  <FiUser id='profilePicDB'/>
+                </div>
+                <div id="profileInfoConDB">
+                  <h2 className="profileInfoDB">{user.first_name} {user.last_name}</h2>
+                  {(user.type == 'teacher') ? (<>
+                  <h4 className="profileInfoDB">Teacher</h4>
+                  <h4 className="profileInfoDB">Primary Grade: {user.teacher.primary_grade}</h4>
+                  <h4 className="profileInfoDB">Primary Subject: {user.teacher.primary_subject}</h4>
+                  <OpenModalButton
+                    buttonText={'New Class'}
+                    modalComponent={<CreateClassModal />}
+                    cssClasses={'newClassButtonDB'}
+                  />
+                  </>):(<>
+                    <h4 className="profileInfoDB">Student</h4>
+                    <h4 className="profileInfoDB">Grade: {user.student.grade}th</h4>
+                  </>)}
+                </div>
               </div>
             </div>
-            
           </div>
           <div id="classesSideDB">
             {(user.type == 'teacher') ? (<>

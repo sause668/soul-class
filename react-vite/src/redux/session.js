@@ -1,3 +1,5 @@
+import { csrfFetch } from "./csrf";
+
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
 
@@ -11,18 +13,25 @@ const removeUser = () => ({
 });
 
 export const thunkAuthenticate = () => async (dispatch) => {
-	const response = await fetch("/api/auth/");
+	const response = await csrfFetch("/api/auth/");
 	if (response.ok) {
 		const data = await response.json();
-		if (data.errors) {
-			return;
-		}
+    if (data.landing) return;
 		dispatch(setUser(data));
-	}
+	} else {
+    const errorObj = {}
+    if (response.status < 500) {
+      const errorMessages = await response.json();
+      errorObj.errors = errorMessages
+    } else {
+      errorObj.errors = { message: "Something went wrong. Please try again" }
+    }
+    return errorObj
+  }
 };
 
 export const thunkLogin = (credentials) => async dispatch => {
-  const response = await fetch("/api/auth/login", {
+  const response = await csrfFetch("/api/auth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(credentials)
@@ -31,17 +40,21 @@ export const thunkLogin = (credentials) => async dispatch => {
   if(response.ok) {
     const data = await response.json();
     dispatch(setUser(data));
-  } else if (response.status < 500) {
-    const errorMessages = await response.json();
-    return errorMessages
   } else {
-    return { server: "Something went wrong. Please try again" }
+    const errorObj = {}
+    if (response.status < 500) {
+      const errorMessages = await response.json();
+      errorObj.errors = errorMessages
+    } else {
+      errorObj.errors = { message: "Something went wrong. Please try again" }
+    }
+    return errorObj
   }
 };
 
 export const thunkSignupTeacher = (params) => async (dispatch) => {
   const { firstName, lastName, email, username, password, type, primaryGrade, primarySubject} = params
-  const response = await fetch("/api/auth/signup/teacher", {
+  const response = await csrfFetch("/api/auth/signup/teacher", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -59,17 +72,21 @@ export const thunkSignupTeacher = (params) => async (dispatch) => {
   if(response.ok) {
     const data = await response.json();
     dispatch(setUser(data));
-  } else if (response.status < 500) {
-    const errorMessages = await response.json();
-    return errorMessages
   } else {
-    return { server: "Something went wrong. Please try again" }
+    const errorObj = {}
+    if (response.status < 500) {
+      const errorMessages = await response.json();
+      errorObj.errors = errorMessages
+    } else {
+      errorObj.errors = { message: "Something went wrong. Please try again" }
+    }
+    return errorObj
   }
 };
 
 export const thunkSignupStudent = (params) => async (dispatch) => {
   const { firstName, lastName, email, username, password, type, grade} = params
-  const response = await fetch("/api/auth/signup/student", {
+  const response = await csrfFetch("/api/auth/signup/student", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -86,16 +103,20 @@ export const thunkSignupStudent = (params) => async (dispatch) => {
   if(response.ok) {
     const data = await response.json();
     dispatch(setUser(data));
-  } else if (response.status < 500) {
-    const errorMessages = await response.json();
-    return errorMessages
   } else {
-    return { server: "Something went wrong. Please try again" }
+    const errorObj = {}
+    if (response.status < 500) {
+      const errorMessages = await response.json();
+      errorObj.errors = errorMessages
+    } else {
+      errorObj.errors = { message: "Something went wrong. Please try again" }
+    }
+    return errorObj
   }
 };
 
 export const thunkLogout = () => async (dispatch) => {
-  await fetch("/api/auth/logout");
+  await csrfFetch("/api/auth/logout");
   dispatch(removeUser());
 };
 
