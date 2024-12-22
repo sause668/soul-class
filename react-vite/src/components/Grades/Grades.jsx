@@ -4,7 +4,7 @@ import "./Grades.css";
 import Navigation from "../Navigation/Navigation";
 import { Navigate, useParams } from "react-router-dom";
 import { fetchClass } from "../../redux/class";
-import { calcFinalGradeStudent, calcLetterGrade } from "../../utils/Grading";
+import { calcFinalGradeStudent, calcLetterGrade, sortAssignments } from "../../utils/Grading";
 
 function Grades() {
   const dispatch = useDispatch();
@@ -58,7 +58,10 @@ function Grades() {
             </div>
           </div>
           <div id="classAssignmentsConG">
-          {class_.assignments.filter(a => a.quarter == quarter).map((assignment, index) => (
+          {class_.assignments
+            .filter(a => a.quarter == quarter)
+            .sort((a1, a2) => sortAssignments(a1, a2))
+            .map((assignment, index) => (
             <div className="assignmentGridConG" key={`classAssignment${index}`}>
               <div className={`assignmentConG ${assignment.type}`}>
                 <h3 className="assignNameG">{assignment.name}</h3>
