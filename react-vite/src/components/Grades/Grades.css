@@ -19,7 +19,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    /* gap: .5rem; */
+    gap: .2rem;
     padding: 1rem;
 }
 
@@ -110,6 +110,14 @@
         justify-content: flex-start;
         align-items: center;
         gap: 1rem;
+    }
+
+    #classInfoConG {
+        align-items: center;
+    }
+
+    #classGradeConG {
+        align-items: center;
     }
 }
 

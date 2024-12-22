@@ -74,3 +74,17 @@ export const calcLetterGrade = (grade) => {
     if (grade >= 65) return 'D';
     return 'F';
 }
+
+
+export const sortStudents = (student1, student2) => {
+    if (student1.last_name > student2.last_name) return 1;
+    if (student1.last_name < student2.last_name) return -1;
+    if (student1.first_name > student2.first_name) return 1;
+    if (student1.first_name < student2.first_name) return -1;
+}
+
+export const sortAssignments = (assign1, assign2) => {
+    const date1 = new Date(assign1.due_date).toISOString().slice(0, 10);
+    const date2 = new Date(assign2.due_date).toISOString().slice(0, 10);
+    return date1 > date2 ? 1:-1;
+}
