@@ -11,7 +11,7 @@ class Assignment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     class_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('classes.id')), nullable=False)
     name = db.Column(db.String(100), nullable=False)
-    type = db.Column(db.String(1), nullable=False)
+    type = db.Column(db.String(2), nullable=False)
     quarter = db.Column(db.Integer, nullable=False)
     due_date = db.Column(db.Date, nullable=False)
 

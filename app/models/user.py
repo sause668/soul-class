@@ -10,10 +10,10 @@ class User(db.Model, UserMixin):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(40), nullable=False, unique=True)
-    email = db.Column(db.String(255), nullable=False)
-    first_name = db.Column(db.String(50), nullable=False)
-    last_name = db.Column(db.String(50), nullable=False)
+    username = db.Column(db.String(15), nullable=False, unique=True)
+    email = db.Column(db.String(30), nullable=False)
+    first_name = db.Column(db.String(20), nullable=False)
+    last_name = db.Column(db.String(20), nullable=False)
     type = db.Column(db.String(8), nullable=False)
     hashed_password = db.Column(db.String(255), nullable=False)
 
@@ -52,5 +52,14 @@ class User(db.Model, UserMixin):
                 'type': self.type,
                 'student': self.student.to_dict()
             }
+        
+    def signup_id(self):
+        return self.id
+    
+    def full_name(self):
+        return {
+            'first_name': self.first_name,
+            'last_name': self.last_name
+        }
     
     

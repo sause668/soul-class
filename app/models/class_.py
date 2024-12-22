@@ -33,7 +33,7 @@ class Class(db.Model):
             "num_students": len(self.students)
         }
     
-    def student_dash(self, student_id):
+    def student_dash(self):
         # gradeList = []
 
         # for assignment in self.assignments:
@@ -47,7 +47,8 @@ class Class(db.Model):
             "grade": self.grade,
             "period": self.period,
             "room": self.room,
-            "current_grade": "To be worked on"
+            "current_grade": "To be worked on",
+            "teacher": self.teacher.info()
         }
     
     def grade_book(self):
@@ -59,7 +60,7 @@ class Class(db.Model):
             "grade": self.grade,
             "period": self.period,
             "room": self.room,
-            "students": [student.to_dict() for student in self.students],
+            "students": [student.info() for student in self.students],
             "assignments": [assignment.grade_book() for assignment in self.assignments]
         }
     
@@ -73,7 +74,8 @@ class Class(db.Model):
             "period": self.period,
             "room": self.room,
             "current_grade": "To be worked on",
-            "assignments": [assignment.grade(student_id) for assignment in self.assignments]
+            "assignments": [assignment.grade(student_id) for assignment in self.assignments],
+            "teacher": self.teacher.info()
         }
     
     

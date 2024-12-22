@@ -23,3 +23,11 @@ class Student(db.Model):
             'grade': self.grade
         }
     
+    def info(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'grade': self.grade,
+            'first_name': self.user.first_name,
+            'last_name': self.user.last_name
+        }

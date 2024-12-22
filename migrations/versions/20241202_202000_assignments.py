@@ -25,7 +25,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('class_id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=100), nullable=False),
-    sa.Column('type', sa.String(length=1), nullable=False),
+    sa.Column('type', sa.String(length=2), nullable=False),
     sa.Column('quarter', sa.Integer(), nullable=False),
     sa.Column('due_date', sa.Date(), nullable=False),
     sa.ForeignKeyConstraint(['class_id'], ['classes.id'], ),

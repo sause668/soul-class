@@ -1,0 +1,204 @@
+#gradeBookCon {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+    /* max-width: 100%; */
+}
+
+/* Header */
+#headerConGB {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%
+}
+
+#titleConGB {
+    text-align: center;
+    padding: 1rem;
+}
+
+#titleGB {
+
+}
+
+#optionsConGB {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: .5rem;
+    padding: 1rem;
+}
+
+
+.gradeBookButtonGB {
+
+}
+
+.addStudentGB {
+
+}
+
+.newAssignmentGB {
+
+}
+
+.quarterSelectConGB {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: .2rem;
+}
+
+.quarterSelectGB {
+    border: 1px solid #007AFF;
+    border-radius: 5px;
+    padding: .5rem;
+    width: 3rem;
+    margin: 0rem;
+}
+
+
+/* Table */
+#tableConGB {
+    max-width: 100%;
+    display: flex;
+}
+
+th,td {
+    height: 2.5rem;
+    min-width: 4rem;
+    max-width: 7rem;
+}
+
+#tableFormatConGB {
+    background-color: white;
+    margin: 1rem;
+    max-width: 100%;
+    overflow-y: scroll;
+}
+
+#tableGB {
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.tableCellGB {
+    text-align: center;
+    border: 1px solid #0000003b;
+    
+}
+
+#tableHeadGB {
+
+}
+
+#tableHeadRowGB {
+
+}
+
+.tableHeadCellGB {
+
+}
+
+.studentsHeadCellGB {
+    background-color: #78909c72;
+    /* border: 1px solid #007bff4b; */
+}
+
+.assignHeadCellGB {
+    /* width: 4rem; */
+    cursor: pointer;
+}
+
+.finalHeadCellBG {
+    background-color: #2978ff46;
+}
+
+
+
+.tableBodyGB {
+
+}
+
+.tableBodyRowBG {
+
+}
+
+.tableBodyCellGB {
+
+}
+
+.studentBodyCellGB {
+    background-color: #78909c10;
+    cursor: pointer;
+}
+
+.gradeBodyCellBG {
+    cursor: pointer;
+
+}
+
+.emptyCell {
+    background-color: #0000003b;
+    /* border: 1px solid #0000003b; */
+    min-width: 0px;
+    min-height: 0px;
+}
+
+.emptyCellTop {
+    /* background-color: #0000003b; */
+    border-top: 1px solid #0000003b;
+    /* min-width: 0px; */
+}
+
+.emptyCellBottom {
+    /* background-color: #0000003b; */
+    border-bottom: 1px solid #0000003b;
+    /* min-width: 0px; */
+}
+
+.finalBodyCellGB {
+    /* border: 2px solid black; */
+    font-weight: bold;
+    /* font-size: 1.05rem; */
+    z-index: 9999;
+}
+
+
+/* Forms */
+#studentInfoCon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.typeSelectGB {
+    border: 1px solid #007AFF;
+    border-radius: 5px;
+    /* width: 50rem; */
+    padding: .5rem;
+    padding-right: 0rem;
+    
+}
+
+@media (max-width:920px) {
+    #headerConGB {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 1rem;
+    }
+}
+
+@media (max-width:500px) {
+    #titleGB {
+        font-size: 1.75rem;
+    }
+}

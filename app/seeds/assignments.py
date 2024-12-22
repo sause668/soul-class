@@ -13,12 +13,12 @@ def seed_assignments():
                 'assignments': [
                     {
                         'name': 'Exponents Classwork',
-                        'type': 'W',
+                        'type': 'CW',
                         'due_date': datetime(2024, 8, 19),
                     },
                     {
                         'name': 'Exponents Homework',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 8, 22),
                     },
                     {
@@ -28,12 +28,12 @@ def seed_assignments():
                     },
                     {
                         'name': 'Square Root Classwork',
-                        'type': 'W',
+                        'type': 'CW',
                         'due_date': datetime(2024, 9, 3),
                     },
                     {
                         'name': 'Square Root Homework',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 9, 5),
                     },
                     {
@@ -43,7 +43,7 @@ def seed_assignments():
                     },
                     {
                         'name': 'Exponents & Square Root Review',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 9, 16),
                     },
                     {
@@ -53,12 +53,12 @@ def seed_assignments():
                     },
                     {
                         'name': 'Expressions Classwork',
-                        'type': 'W',
+                        'type': 'CW',
                         'due_date': datetime(2024, 9, 23),
                     },
                     {
                         'name': 'Expressions Homework',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 9, 25),
                     },
                     {
@@ -73,7 +73,7 @@ def seed_assignments():
                     },
                     {
                         'name': 'Quarter 1 Review',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 10, 16),
                     },
                     {
@@ -88,12 +88,12 @@ def seed_assignments():
                 'assignments': [
                     {
                         'name': 'Transition Classwork',
-                        'type': 'W',
+                        'type': 'CW',
                         'due_date': datetime(2024, 10, 21),
                     },
                     {
                         'name': 'Transition Homework',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 10, 24),
                     },
                     {
@@ -103,12 +103,12 @@ def seed_assignments():
                     },
                     {
                         'name': 'Reflection Classwork',
-                        'type': 'W',
+                        'type': 'CW',
                         'due_date': datetime(2024, 11, 4),
                     },
                     {
                         'name': 'Reflection Homework',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 11, 6),
                     },
                     {
@@ -118,7 +118,7 @@ def seed_assignments():
                     },
                     {
                         'name': 'Transition & Reflection Review',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 11, 19),
                     },
                     {
@@ -140,12 +140,12 @@ def seed_assignments():
                 'assignments': [
                     {
                         'name': 'Characters Classwork',
-                        'type': 'W',
+                        'type': 'CW',
                         'due_date': datetime(2024, 8, 19),
                     },
                     {
                         'name': 'Characters Homework',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 8, 22),
                     },
                     {
@@ -155,12 +155,12 @@ def seed_assignments():
                     },
                     {
                         'name': 'Plot Classwork',
-                        'type': 'W',
+                        'type': 'CW',
                         'due_date': datetime(2024, 9, 3),
                     },
                     {
                         'name': 'Plot Homework',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 9, 5),
                     },
                     {
@@ -170,7 +170,7 @@ def seed_assignments():
                     },
                     {
                         'name': 'Story Elements Review',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 9, 16),
                     },
                     {
@@ -180,12 +180,12 @@ def seed_assignments():
                     },
                     {
                         'name': 'Point of View Classwork',
-                        'type': 'W',
+                        'type': 'CW',
                         'due_date': datetime(2024, 9, 23),
                     },
                     {
                         'name': 'Point of View Homework',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 9, 25),
                     },
                     {
@@ -200,7 +200,7 @@ def seed_assignments():
                     },
                     {
                         'name': 'Quarter 1 Review',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 10, 16),
                     },
                     {
@@ -215,12 +215,12 @@ def seed_assignments():
                 'assignments': [
                     {
                         'name': 'Narrative Nonfiction Classwork',
-                        'type': 'W',
+                        'type': 'CW',
                         'due_date': datetime(2024, 10, 21),
                     },
                     {
                         'name': 'Narrative Nonfiction Homework',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 10, 24),
                     },
                     {
@@ -230,12 +230,12 @@ def seed_assignments():
                     },
                     {
                         'name': 'Personal Essays Classwork',
-                        'type': 'W',
+                        'type': 'CW',
                         'due_date': datetime(2024, 11, 4),
                     },
                     {
                         'name': 'Personal Essays Homework',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 11, 6),
                     },
                     {
@@ -245,7 +245,7 @@ def seed_assignments():
                     },
                     {
                         'name': 'Types of Nonfiction Review',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 11, 19),
                     },
                     {
@@ -267,12 +267,12 @@ def seed_assignments():
                 'assignments': [
                     {
                         'name': 'Velocity Classwork',
-                        'type': 'W',
+                        'type': 'CW',
                         'due_date': datetime(2024, 8, 19),
                     },
                     {
                         'name': 'Velocity Homework',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 8, 22),
                     },
                     {
@@ -282,12 +282,12 @@ def seed_assignments():
                     },
                     {
                         'name': 'Acceleration Classwork',
-                        'type': 'W',
+                        'type': 'CW',
                         'due_date': datetime(2024, 9, 3),
                     },
                     {
                         'name': 'Acceleration Homework',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 9, 5),
                     },
                     {
@@ -297,7 +297,7 @@ def seed_assignments():
                     },
                     {
                         'name': 'Motion Review',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 9, 16),
                     },
                     {
@@ -307,12 +307,12 @@ def seed_assignments():
                     },
                     {
                         'name': 'Force Classwork',
-                        'type': 'W',
+                        'type': 'CW',
                         'due_date': datetime(2024, 9, 23),
                     },
                     {
                         'name': 'Force Homework',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 9, 25),
                     },
                     {
@@ -327,7 +327,7 @@ def seed_assignments():
                     },
                     {
                         'name': 'Quarter 1 Review',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 10, 16),
                     },
                     {
@@ -342,12 +342,12 @@ def seed_assignments():
                 'assignments': [
                     {
                         'name': 'Planes & Levers Classwork',
-                        'type': 'W',
+                        'type': 'CW',
                         'due_date': datetime(2024, 10, 21),
                     },
                     {
                         'name': 'Planes & Levers Homework',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 10, 24),
                     },
                     {
@@ -357,12 +357,12 @@ def seed_assignments():
                     },
                     {
                         'name': 'Wheels and Pulleys Classwork',
-                        'type': 'W',
+                        'type': 'CW',
                         'due_date': datetime(2024, 11, 4),
                     },
                     {
                         'name': 'Wheels and Pulleys Homework',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 11, 6),
                     },
                     {
@@ -372,7 +372,7 @@ def seed_assignments():
                     },
                     {
                         'name': 'Simple Machines Review',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 11, 19),
                     },
                     {
@@ -394,12 +394,12 @@ def seed_assignments():
                 'assignments': [
                     {
                         'name': 'Roanoke Classwork',
-                        'type': 'W',
+                        'type': 'CW',
                         'due_date': datetime(2024, 8, 19),
                     },
                     {
                         'name': 'Roanoke Homework',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 8, 22),
                     },
                     {
@@ -409,12 +409,12 @@ def seed_assignments():
                     },
                     {
                         'name': 'Jamestown Classwork',
-                        'type': 'W',
+                        'type': 'CW',
                         'due_date': datetime(2024, 9, 3),
                     },
                     {
                         'name': 'Jamestown Homework',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 9, 5),
                     },
                     {
@@ -424,7 +424,7 @@ def seed_assignments():
                     },
                     {
                         'name': 'First Colonies Review',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 9, 16),
                     },
                     {
@@ -434,12 +434,12 @@ def seed_assignments():
                     },
                     {
                         'name': 'Plymouth Rock Classwork',
-                        'type': 'W',
+                        'type': 'CW',
                         'due_date': datetime(2024, 9, 23),
                     },
                     {
                         'name': 'Plymouth Rock Homework',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 9, 25),
                     },
                     {
@@ -454,7 +454,7 @@ def seed_assignments():
                     },
                     {
                         'name': 'Quarter 1 Review',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 10, 16),
                     },
                     {
@@ -469,12 +469,12 @@ def seed_assignments():
                 'assignments': [
                     {
                         'name': 'French & Indian War Classwork',
-                        'type': 'W',
+                        'type': 'CW',
                         'due_date': datetime(2024, 10, 21),
                     },
                     {
                         'name': 'French & Indian War Homework',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 10, 24),
                     },
                     {
@@ -484,12 +484,12 @@ def seed_assignments():
                     },
                     {
                         'name': 'Boston Tea Party Classwork',
-                        'type': 'W',
+                        'type': 'CW',
                         'due_date': datetime(2024, 11, 4),
                     },
                     {
                         'name': 'Declaration of Independence Homework',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 11, 6),
                     },
                     {
@@ -499,7 +499,7 @@ def seed_assignments():
                     },
                     {
                         'name': 'Revolutionary War Review',
-                        'type': 'W',
+                        'type': 'HW',
                         'due_date': datetime(2024, 11, 19),
                     },
                     {

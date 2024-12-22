@@ -1,18 +1,19 @@
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 
 function Navigation() {
+  const nav = useNavigate()
   return (
-    <ul>
-      <li>
-        <NavLink to="/">Home</NavLink>
-      </li>
-
-      <li>
-        <ProfileButton />
-      </li>
-    </ul>
+    <div id="navCon">
+      <div id="navLogoCon">
+        <img src="/imgs/logo.png" alt="logo" id="navLogo"/>
+      </div>
+      <div id="navTitleCon">
+        <h1 id="navTitle" onClick={()=>nav('/')}>Soul Academy</h1>
+      </div>
+      <ProfileButton/>
+    </div>
   );
 }
 

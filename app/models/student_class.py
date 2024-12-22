@@ -14,5 +14,6 @@ class StudentClass(db.Model):
 
     def to_dict(self):
         return {
-            
+            'student_id': self.student_id,
+            'class_id': self.class_id
         }
