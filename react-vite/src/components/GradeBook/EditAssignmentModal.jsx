@@ -4,8 +4,6 @@ import { useModal } from "../../context/Modal";
 import "./GradeBook.css";
 import { editAssignment } from "../../redux/class";
 import { stringToType, typeToString } from "../../utils/TypeConvertion";
-import DeleteAssignmentModal from "./DeleteAssignmentModal";
-import OpenModalButton from "../OpenModalButton/OpenModalButton";
 
 function EditAssignmentModal({assignment}) {
   const dispatch = useDispatch();
@@ -107,11 +105,6 @@ function EditAssignmentModal({assignment}) {
                 !dueDate.length)
               }
           >Submit</button>
-          <OpenModalButton
-          buttonText={'Delete'}
-          modalComponent={<DeleteAssignmentModal assignment={assignment}/>}
-          cssClasses={''}
-        />
         </div>
         {errors.message && <p className='labelTitle error'>{errors.message}</p>}
         </form>

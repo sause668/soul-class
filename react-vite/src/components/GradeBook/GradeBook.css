@@ -228,6 +228,22 @@ th,td {
     
 }
 
+#assignInfoCon {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: .5rem;
+    padding: 1rem;
+}
+
+#assignButtonsCon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+}
+
 @media (max-width:920px) {
     #headerConGB {
         flex-direction: column;
