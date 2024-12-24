@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { FiUser } from "react-icons/fi";
 
 import "./Dashboard.css";
-import Navigation from "../Navigation/Navigation";
 import { fetchClasses } from "../../redux/class";
 import EditClassModal from "./EditClassModal";
 import OpenModalButton from "../OpenModalButton/OpenModalButton";
@@ -37,7 +36,6 @@ function Dashboard() {
 
   return (
     <>
-      <Navigation/>
       {isLoaded && (
         <div className="dashboardCon">
           <div id='profileSideDB'>
