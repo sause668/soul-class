@@ -1,0 +1,13 @@
+#footerCon {
+    position: absolute;
+    bottom: 0;
+    height: 45px;
+    width: 100%;
+    background-color: #007AFF;
+    text-align: right;
+}
+
+#tag {
+    color: white;
+    margin-right: 1rem;
+}

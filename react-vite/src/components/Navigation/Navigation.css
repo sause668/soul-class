@@ -12,6 +12,8 @@
 }
 
 #navCon {
+  position: sticky;
+  top: 0;
   background-color: #007AFF;
   display: flex;
   justify-content: space-between;

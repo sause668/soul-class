@@ -49,8 +49,17 @@
 
 body {
     font-family: 'Roboto Flex';
-    padding: 0px 0px 10px;
+    padding: 0px 0px;
     margin: 0px;
+}
+
+#mainPageCon {
+    position: relative;
+    min-height: 100vh;
+}
+
+#subPageCon {
+    padding-bottom: 45px;
 }
 
 h1,h2  {

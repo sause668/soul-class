@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Grades.css";
-import Navigation from "../Navigation/Navigation";
 import { Navigate, useParams } from "react-router-dom";
 import { fetchClass } from "../../redux/class";
 import { calcFinalGradeStudent, calcLetterGrade, sortAssignments } from "../../utils/Grading";
@@ -13,19 +12,25 @@ function Grades() {
   const class_ = useSelector((state) => state.class.class);
   const [quarter, setQuarter] = useState(1)
   const [isLoaded, setIsLoaded] = useState(false);
-  // const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({});
 
 
 
   useEffect(() => {
-    dispatch(fetchClass({classId})).then(() => setIsLoaded(true));
+    dispatch(fetchClass({classId}))
+      .then((res) => {
+        if (res && res.errors) {
+          setErrors(res.errors)
+        } else {
+          setIsLoaded(true)
+        }
+      })
   }, [dispatch, classId]);
 
   if (!user || user.type != 'student') return <Navigate to="/" replace={true} />;
 
   return (
-    <>
-      <Navigation/>
+    <div className="">
       {isLoaded && (
         <div id="gradesCon"> 
           <div id="headerConG">
@@ -74,7 +79,8 @@ function Grades() {
           </div>
         </div>
       )}
-    </>
+      {errors.message && (<h1>{errors.message}</h1>)}
+    </div>
   );
 }
 
