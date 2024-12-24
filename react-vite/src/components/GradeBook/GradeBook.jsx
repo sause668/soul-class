@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./GradeBook.css";
-import Navigation from "../Navigation/Navigation";
 import { Navigate, useParams } from "react-router-dom";
 import { fetchClass } from "../../redux/class";
 import OpenModalButton from "../OpenModalButton/OpenModalButton";
@@ -41,7 +40,6 @@ function GradeBook() {
 
   return (
     <>
-      <Navigation/>
       {(isLoaded) && (
         <div id="gradeBookCon">
           <div id="headerConGB">
