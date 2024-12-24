@@ -35,6 +35,7 @@ function NewAssignmentModal({classId, quarter}) {
 
 
   return (
+    
     <div className='formCon'>
         <h1 className='inputTitle'>New Assignment</h1>
         <form onSubmit={handleSubmit}>
