@@ -2,7 +2,6 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import db, Assignment, Grade, Class
 from app.forms import AssignmentForm, GradeForm
-import json
 from datetime import datetime
 
 assignment_routes = Blueprint('assignments', __name__)
@@ -65,8 +64,6 @@ def delete_assignment(assignment_id):
     
     return jsonify(class_.grade_book()), 200
 
-    # return jsonify({'message': "Delete Successful"}), 200
-
 
 
 @assignment_routes.route('/<int:assignment_id>/grades/<int:student_id>', methods=['POST'])
@@ -84,9 +81,6 @@ def create_grade(assignment_id, student_id):
         
         if not Assignment.query.filter_by(id=assignment_id).first():
             return jsonify({"message": "Assignment not found"}), 404
-        
-        # if not Grade.query.filter_by(assignment_id=assignment_id, student_id=student_id).first():
-        #     return jsonify({"message": "Grade already exists"}), 400
         
         grade_new = Grade(
             assignment_id=assignment_id,

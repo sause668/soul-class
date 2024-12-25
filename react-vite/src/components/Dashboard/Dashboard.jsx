@@ -17,7 +17,6 @@ function Dashboard() {
   const user = useSelector((state) => state.session.user);
   const classes = useSelector((state) => state.class.classes);
   const [isLoaded, setIsLoaded] = useState(false);
-  // const [errors, setErrors] = useState({});
 
   const handleGradeBook = (classId) => {
     navigate(`/gradebook/${classId}`)
@@ -109,10 +108,6 @@ function Dashboard() {
                 ))}
               </>)}
           </div>
-          <ul>
-            
-            
-          </ul>
         </div>
       )}
     </>

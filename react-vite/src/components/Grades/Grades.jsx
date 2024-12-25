@@ -74,7 +74,6 @@ function Grades() {
                 <h4 className={`assignGradeG`}>Grade: {assignment.grade} ({calcLetterGrade(assignment.grade)})</h4>
               </div>
             </div>
-            
           ))}
           </div>
         </div>

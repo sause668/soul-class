@@ -18,16 +18,6 @@ def range(min=0, max=5):
         
     return _range
 
-# def selection(selectArr = []):
-    
-#     def _selection(form, field): 
-#         for item in selectArr:
-#             if field.data == item:
-#                 return 
-#         raise ValidationError(f'Must be between {min} and {max}')
-#     return _selection
-
-
 def isDate(form, field): 
     if re.match('^/d{4}-/d{2}-/d{2}$', field.data):
         raise ValidationError(f'Improper date')

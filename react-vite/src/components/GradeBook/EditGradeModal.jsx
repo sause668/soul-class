@@ -55,7 +55,6 @@ function EditGradeModal({grade}) {
             <button 
               className='submitButton'
               type="submit"
-              // disabled={(!currentGrade)}
             >Submit</button>
             <OpenModalButton
               buttonText={'Delete'}

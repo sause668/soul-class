@@ -34,11 +34,6 @@ class Class(db.Model):
         }
     
     def student_dash(self):
-        # gradeList = []
-
-        # for assignment in self.assignments:
-        #     for grade in assignment.to_dict()['grades']:
-
         return {
             "id": self.id,
             "teacher_id": self.teacher_id,
