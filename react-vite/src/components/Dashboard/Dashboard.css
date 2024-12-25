@@ -89,7 +89,6 @@
     align-items: center;
     gap: .2rem;
     margin-top: 1rem;
-    /* width: 100%; */
 }
 
 .gradeBookDB {
@@ -111,8 +110,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    /* gap: .5rem; */
 }
 
 
@@ -142,10 +139,6 @@
         align-content: center;
         padding: 0rem;
     }
-
-    /* .classConDB {
-        width: 100%;
-    } */
 }
 
 @media (max-width:850px) {
@@ -157,11 +150,6 @@
 @media (max-width:600px) {
     .dashboardCon {
         grid-template-columns: 100%;
-        /* display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-content: center;
-        width: 100%; */
     }
     #profileSideDB {
         margin-bottom: 1rem;
@@ -169,11 +157,8 @@
 
     #profileConDB {
         flex-direction: row;
-        /* gap: 1rem; */
         padding: 1rem;
         height: inherit;
-        /* min-width: 100%; */
-        /* border: 1px solid black; */
     }
 }
 @media (max-width:450px) {
@@ -181,24 +166,3 @@
         font-size: 8rem;
     }
 }
-
-/* @media (max-width:600px) {
-    .dashboardCon {
-        grid-template-columns: 100%;
-        grid-row: auto;
-    }
-    #profileSideDB {
-        display: grid;
-        grid-template-columns: 100%;
-    }
-
-    #profileConDB {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-        padding: 1rem;
-        height: inherit;
-    }
-} */

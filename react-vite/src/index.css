@@ -111,7 +111,6 @@ button:hover {
 
 .lightBlueBox {
     background-color: #007bff4b;
-    /* border: 1px solid #007bff4b; */
     border-radius: 20px;
 }
 
@@ -122,13 +121,11 @@ button:hover {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* width: 300px; */
     padding: 1rem 1rem;
 }
 
 .inputTitle {
     margin-bottom: .8rem;
-    /* background-color: #007AFF; */
 }
 
 .inputCon {
@@ -149,22 +146,15 @@ button:hover {
 }
 
 .formInput {
-    /* appearance: none; */
     width: 200px;
-    /* margin-bottom: 1rem; */
     border: 1px solid #007AFF;
     border-radius: 5px;
     padding: .5rem;
-    /* background-color: #007AFF; */
-    /* box-shadow: none; */
-    /* outline: none; */
 }
 
 .formInput:focus {
     border-color: #005ec3;
-    /* border: 1.5px solid #85c0ff; */
     outline: none;
-    /* opacity: 50%; */
 }
 
 
@@ -198,7 +188,7 @@ button:hover {
     text-align: center;
 }
 
-/* #2979ff */
+
 .A {
     background-color: #00e67761;
 }
@@ -243,10 +233,4 @@ button:hover {
     background-color: #f500564e;
     ;
 }
-
-/* 100
-92
-83
-72
-65 */
 

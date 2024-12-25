@@ -53,7 +53,6 @@ function CreateGradeModal({assignmentId, studentId}) {
             <button 
               className='submitButton'
               type="submit"
-              // disabled={(!grade)}
             >Submit</button>
           </div>
         {errors.message && <p className='labelTitle error'>{errors.message}</p>}

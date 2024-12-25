@@ -2,14 +2,9 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import db, Class, StudentClass, Student, Assignment
 from app.forms import ClassForm, AssignmentForm
-import json
 from datetime import datetime
 
 class_routes = Blueprint('classes', __name__)
-    # form = SignUpForm()
-    # form['csrf_token'].data = request.cookies['csrf_token']
-    # if form.validate_on_submit():
-    # return form.errors, 400
 
 @class_routes.route('', methods=['GET'])
 @login_required
@@ -167,8 +162,6 @@ def add_student(class_id, student_id):
     class_ = Class.query.filter_by(id=class_id, teacher_id=current_user.teacher.id).first()
     
     return jsonify(class_.grade_book()), 201
-
-    # return jsonify(add_student.to_dict()), 201
     
     
 
@@ -199,8 +192,6 @@ def remove_student(class_id, student_id):
     class_ = Class.query.filter_by(id=class_id, teacher_id=current_user.teacher.id).first()
     
     return jsonify(class_.grade_book()), 200
-
-    # return jsonify({'message': "Delete Successful"}), 200
     
 
 

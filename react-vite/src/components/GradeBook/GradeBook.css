@@ -5,7 +5,6 @@
     align-items: flex-start;
     gap: 1rem;
     padding: 1rem;
-    /* max-width: 100%; */
 }
 
 /* Header */
@@ -63,10 +62,6 @@
 
 
 /* Table */
-/* #tableConGB {
-    max-width: 100%;
-    display: flex;
-} */
 #tableConGB {
     max-width: 100%;
     display: flex;
@@ -77,13 +72,6 @@ th,td {
     min-width: 4rem;
     max-width: 7rem;
 }
-
-/* #tableFormatConGB {
-    background-color: white;
-    margin: 1rem;
-    max-width: 100%;
-    overflow-y: scroll;
-} */
 
 #tableFormatConGB {
     display: grid;
@@ -137,8 +125,6 @@ th,td {
 
 .studentsHeadCellGB {
     background-color: #78909c72;
-    /* min-height: 5rem; */
-    /* border: 1px solid #007bff4b; */
 }
 
 .studentsHeadCellGBS {
@@ -146,11 +132,9 @@ th,td {
     text-align: center;
     border: 1px solid #0000003b;
     height: max-content;
-    /* border: 1px solid #007bff4b; */
 }
 
 .assignHeadCellGB {
-    /* width: 4rem; */
     cursor: pointer;
 }
 
@@ -184,27 +168,20 @@ th,td {
 
 .emptyCell {
     background-color: #0000003b;
-    /* border: 1px solid #0000003b; */
     min-width: 0px;
     min-height: 0px;
 }
 
 .emptyCellTop {
-    /* background-color: #0000003b; */
     border-top: 1px solid #0000003b;
-    /* min-width: 0px; */
 }
 
 .emptyCellBottom {
-    /* background-color: #0000003b; */
     border-bottom: 1px solid #0000003b;
-    /* min-width: 0px; */
 }
 
 .finalBodyCellGB {
-    /* border: 2px solid black; */
     font-weight: bold;
-    /* font-size: 1.05rem; */
     z-index: 9999;
 }
 
@@ -222,7 +199,6 @@ th,td {
 .typeSelectGB {
     border: 1px solid #007AFF;
     border-radius: 5px;
-    /* width: 50rem; */
     padding: .5rem;
     padding-right: 0rem;
     

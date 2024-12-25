@@ -283,23 +283,23 @@ def seed_users():
 
     for teacher in teachers:
         db.session.add(User(
-        username=teacher['username'], 
-        email=teacher['email'], 
-        password='password',
-        first_name=teacher['first_name'],
-        last_name=teacher['last_name'],
-        type='teacher',
-    ))
+            username=teacher['username'], 
+            email=teacher['email'], 
+            password='password',
+            first_name=teacher['first_name'],
+            last_name=teacher['last_name'],
+            type='teacher',
+        ))
         
     for student in students:
         db.session.add(User(
-        username=student['username'], 
-        email=student['email'], 
-        password='password',
-        first_name=student['first_name'],
-        last_name=student['last_name'],
-        type='student',
-    ))
+            username=student['username'], 
+            email=student['email'], 
+            password='password',
+            first_name=student['first_name'],
+            last_name=student['last_name'],
+            type='student',
+        ))
 
     db.session.commit()
 

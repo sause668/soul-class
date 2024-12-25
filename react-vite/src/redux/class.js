@@ -24,11 +24,6 @@ const setClass = (class_) => ({
     type: REMOVE_CLASSES
   });
 
-//   const addAssignment = (assignment) => ({
-//     type: REMOVE_CLASSES,
-//     assignment
-//   });
-  
     
 // Classes
 export const fetchClasses = () => async (dispatch) => {
@@ -358,9 +353,6 @@ function classReducer(state = initialState, action) {
             return { ...state, classes: action.classes };
         case REMOVE_CLASSES:
             return { ...state, classes: null };
-        // case ADD_ASSIGNMENT:
-        //     const classEdit = state.class.assignments.push(action.assignment)
-        //     return { ...state, class: classEdit };
         default:
             return state;
     }
