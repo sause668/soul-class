@@ -1,9 +1,45 @@
-# Flask React Project
+# Soul Academy
+Brief Description
 
-This is the starter for the Flask React project.
+Contact: [LinkedIn](https://www.linkedin.com/in/kamara-reynolds-41248686/)
 
-## Getting started
+## Live Link
+https://soul-class.onrender.com/
 
+## Tech Stack
+### Frameworks and Libraries
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white) ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white) ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+
+### Database:
+![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+
+### Hosting:
+![Render](https://img.shields.io/badge/Render-%46E3B7.svg?style=for-the-badge&logo=render&logoColor=white)
+
+# Page Overview
+## Landing Page
+![landing]
+
+## Dashboard (Teacher)
+![dash-teacher]
+
+## Dashboard (Student)
+![dash-student]
+
+## Grade Book Page (Teacher Only)
+![gradebook]
+
+## Grades Page (Student Only)
+![grades]
+
+[landing]: ./images/landing.png
+[dash-teacher]: ./images/dash-teacher.png
+[dash-student]: ./images/dash-student.png
+[gradebook]: ./images/gradebook.png
+[grades]: ./images/grades.png
+
+
+<!-- # Installation 
 1. Clone this repository (only this branch).
 
 2. Install dependencies.
@@ -50,82 +86,1123 @@ This is the starter for the Flask React project.
    to create the `dist` folder. The starter has modified the `npm run build`
    command to include the `--watch` flag. This flag will rebuild the __dist__
    folder whenever you change your code, keeping the production version up to
-   date.
+   date. -->
 
-## Deployment through Render.com
 
-First, recall that Vite is a development dependency, so it will not be used in
-production. This means that you must already have the __dist__ folder located in
-the root of your __react-vite__ folder when you push to GitHub. This __dist__
-folder contains your React code and all necessary dependencies minified and
-bundled into a smaller footprint, ready to be served from your Python API.
+# Endpoints
 
-Begin deployment by running `npm run build` in your __react-vite__ folder and
-pushing any changes to GitHub.
+### Get the Current User (Teacher)
 
-Refer to your Render.com deployment articles for more detailed instructions
-about getting started with [Render.com], creating a production database, and
-deployment debugging tips.
+Returns the information about the current teacher user that is logged in.
 
-From the Render [Dashboard], click on the "New +" button in the navigation bar,
-and click on "Web Service" to create the application that will be deployed.
+* Request: GET /api/auth
 
-Select that you want to "Build and deploy from a Git repository" and click
-"Next". On the next page, find the name of the application repo you want to
-deploy and click the "Connect" button to the right of the name.
+* Response: 200
+    ```json
+    {
+      "id": 1,
+      "firstName": "Severus",
+      "lastName": "Snape",
+      "email": "ssname@soulachademey.com",
+      "username": "ssnape",
+      "type": "teacher",
+      "teacher": {
+        "id": 1,
+        "user_id": 1,
+        "primary_grade": 8,
+        "primary_subject": "Math"
+      }
+    }
+    ```
+    
+* Error Response: 401
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
 
-Now you need to fill out the form to configure your app. Most of the setup will
-be handled by the __Dockerfile__, but you do need to fill in a few fields.
+### Get the Current User (Student)
 
-Start by giving your application a name.
+Returns the information about the current student user that is logged in.
 
-Make sure the Region is set to the location closest to you, the Branch is set to
-"main", and Runtime is set to "Docker". You can leave the Root Directory field
-blank. (By default, Render will run commands from the root directory.)
+* Request: GET /api/auth
 
-Select "Free" as your Instance Type.
+* Response: 200
+    ```json
+    {
+      "id": 5,
+      "firstName": "Harry",
+      "lastName": "Potter",
+      "email": "hpotter@soulachademy.com",
+      "username": "hpotter",
+      "type": "student",
+      "student": {
+        "id": 1,
+        "grade": 8
+      }
+    }
+    ```
 
-### Add environment variables
+* Error Response: 401
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
 
-In the development environment, you have been securing your environment
-variables in a __.env__ file, which has been removed from source control (i.e.,
-the file is gitignored). In this step, you will need to input the keys and
-values for the environment variables you need for production into the Render
-GUI.
+### Log In a User (Teacher)
 
-Add the following keys and values in the Render GUI form:
+Logs in a current user with valid credentials and returns the current user's
+information.
 
-- SECRET_KEY (click "Generate" to generate a secure secret for production)
-- FLASK_ENV production
-- FLASK_APP app
-- SCHEMA (your unique schema name, in snake_case)
+* Request: POST /api/auth/login
+    ```json
+    {
+      "email": "ssnape@soulacademy.com",
+      "password": "password",
+      "type": "teacher",
+    }
+    ```
 
-In a new tab, navigate to your dashboard and click on your Postgres database
-instance.
+* Response: 200
+    ```json
+    {
+      "id": 1,
+      "firstName": "Severus",
+      "lastName": "Snape",
+      "email": "ssname@soulachademey.com",
+      "username": "ssnape",
+      "type": "teacher",
+      "teacher": {
+          "id": 1,
+          "user_id": 1,
+          "primary_grade": 8,
+          "primary_subject": "Math"
+      }
+    }
+    ```
 
-Add the following keys and values:
+* Error Response: 401
+    ```json
+    {
+      "email": "Email provided not found.",
+      "password": "Password was incorrect.",
+    }
+    ```
 
-- DATABASE_URL (copy value from the **External Database URL** field)
+### Log In a User (Student)
 
-**Note:** Add any other keys and values that may be present in your local
-__.env__ file. As you work to further develop your project, you may need to add
-more environment variables to your local __.env__ file. Make sure you add these
-environment variables to the Render GUI as well for the next deployment.
+Logs in a current user with valid credentials and returns the current user's
+information.
 
-### Deploy
+* Request: POST /api/auth/login
+    ```json
+    {
+        "email": "hpotter@soulacademy.com",
+        "password": "secret password",
+        "type": "student",
+    }
+    ```
 
-Now you are finally ready to deploy! Click "Create Web Service" to deploy your
-project. The deployment process will likely take about 10-15 minutes if
-everything works as expected. You can monitor the logs to see your Dockerfile
-commands being executed and any errors that occur.
+* Response: 200
+    ```json
+    {
+      "id": 5,
+      "firstName": "Harry",
+      "lastName": "Potter",
+      "email": "hpotter@soulachademy.com",
+      "username": "hpotter",
+      "type": "student",
+      "student": {
+        "id": 1,
+        "grade": 8
+      }
+    }
+    ```
 
-When deployment is complete, open your deployed site and check to see that you
-have successfully deployed your Flask application to Render! You can find the
-URL for your site just below the name of the Web Service at the top of the page.
+* Error Response: 401
+    ```json
+    {
+      "email": "Email provided not found.",
+      "password": "Password was incorrect.",
+    }
+    ```
 
-**Note:** By default, Render will set Auto-Deploy for your project to true. This
-setting will cause Render to re-deploy your application every time you push to
-main, always keeping it up to date.
+### Sign Up a User (Teacher)
 
-[Render.com]: https://render.com/
-[Dashboard]: https://dashboard.render.com/
+Creates a new user, logs them in as the current user, and returns the current
+user's information.
+
+* Request: POST /api/auth/signup
+    ```json
+    {
+        "firstName": "Severus",
+        "lastName": "Snape",
+        "email": "ssname@soulachademey.com",
+        "username": "ssnape",
+        "password": "password",
+        "type": "teacher",
+        "primary_grade": 8,
+        "primary_subject": "Math"
+    }
+    ```
+
+* Response: 201
+    ```json
+    {
+      "id": 1,
+      "firstName": "Severus",
+      "lastName": "Snape",
+      "email": "ssname@soulachademey.com",
+      "username": "ssnape",
+      "type": "teacher",
+      "teacher": {
+          "id": 1,
+          "user_id": 1,
+          "primary_grade": 8,
+          "primary_subject": "Math"
+      }
+    }
+    ```
+
+* Error response: 401
+    ```json
+    {
+      "email": "Email address is already in use.",
+      "username": "Username is already in use.",
+      "password": "Password required",
+      "first_name": "Maximum 20 characters",
+      "last_name": "Maximum 20 characters",
+      "type": "Type Required",
+      "primary_grade": "Must be between 6 and 8",
+      "primary_subject": "Subject Required"
+    }
+    ```
+
+### Sign Up a User (Student)
+
+Creates a new user, logs them in as the current user, and returns the current
+user's information.
+
+* Request: POST /api/auth/signup
+    ```json
+    {
+        "firstName": "Harry",
+        "lastName": "Potter",
+        "email": "hpotter@soulachademy.com",
+        "username": "hpotter",
+        "password": "password",
+        "type": "student",
+        "grade": 8
+    }
+    ```
+
+* Response: 201
+    ```json
+    {
+      "id": 5,
+      "firstName": "Harry",
+      "lastName": "Potter",
+      "email": "hpotter@soulachademy.com",
+      "username": "hpotter",
+      "type": "student",
+      "student": {
+        "id": 1,
+        "grade": 8
+      }
+    }
+    ```
+
+* Error response: 401
+    ```json
+    {
+      "email": "Email address is already in use.",
+      "username": "Username is already in use.",
+      "password": "Password required",
+      "first_name": "Maximum 20 characters",
+      "last_name": "Maximum 20 characters",
+      "type": "Type Required",
+      "grade": "Must be between 6 and 8"
+    }
+    ```
+
+## CLASSES
+
+### Get all User Classes (Teacher) - Dashboard Page
+
+Returns all teacher classes.
+
+* Request: GET /api/classes
+
+* Response: 200
+    ```json
+    [
+      {
+        "id": 1,
+        "teacher_id": 1,
+        "name": "Algebra",
+        "subject": "Math",
+        "grade": 8,
+        "period": 1,
+        "room": 315,
+        "numStudents": 1
+      },
+    ]
+    ```
+
+### Get all User Classes (Student) - Dashboard Page
+
+Returns all student classes.
+
+* Request: GET /api/classes
+
+* Response: 200
+    ```json
+    [
+      {
+        "id": 1,
+        "teacher_id": 1,
+        "teacher": {
+          "id": 1,
+          "user_id": 1,
+          "primary_grade": 8,
+          "primary_subject": "Math",
+          "first_name": "Severus",
+          "last_name": "Snape"
+        },
+        "name": "Algebra",
+        "subject": "Math",
+        "grade": 8,
+        "period": 1,
+        "room": 315,
+        "assignments": [
+          {
+            "id": 1,
+            "class_id": 1,
+            "name": "Exponents Classwork",
+            "type": "CW",
+            "quarter": 1,
+            "due_date": "Mon, 19 Aug 2024",
+            "grade": 82
+          }
+        ]
+      }
+    ]
+    ```
+
+### Get Class by ID (Teacher) - Grade Book Page
+
+Returns teacher's class by ID with all the information needed for the grade book page.
+
+* Request: GET /api/classes/:classId
+
+* Response: 200
+    ```json
+    {
+      "id": 1,
+      "teacher_id": 1,
+      "name": "Algebra",
+      "subject": "Math",
+      "grade": 8,
+      "period": 1,
+      "room": 315,
+      "students": [
+        {
+          "id": 5,
+          "firstName": "Harry",
+          "lastName": "Potter"
+        },
+      ],
+      "assignments": [
+        {
+          "id": 1,
+          "class_id": 1,
+          "name": "Exponents Classwork",
+          "type": "CW",
+          "quarter": 1,
+          "due_date": "Mon, 19 Aug 2024",
+          "grades": [
+            {
+              "assignment_id": 1,
+              "student_id": 5,
+              "grade": 82
+            },
+          ]
+        },
+      ]
+    }
+    ```
+
+### Get Class by ID (Student) - Grade Page
+
+Returns student's class by ID with all information for the grade page.
+
+* Request: GET /api/classes/:classId
+
+* Response: 200
+    ```json
+    {
+      "id": 1,
+      "teacher_id": 1,
+      "teacher": {
+        "id": 1,
+        "user_id": 1,
+        "primary_grade": 8,
+        "primary_subject": "Math",
+        "first_name": "Severus",
+        "last_name": "Snape"
+      },
+      "name": "Algebra",
+      "subject": "Math",
+      "grade": 8,
+      "period": 1,
+      "room": 315,
+      "assignments": [
+        {
+          "id": 1,
+          "class_id": 1,
+          "name": "Exponents Classwork",
+          "type": "CW",
+          "quarter": 1,
+          "due_date": "Mon, 19 Aug 2024",
+          "grade": 82
+        },
+      ]
+    }
+    ```
+
+### Create Class
+
+Creates new class.
+
+* Request: POST /api/classes
+    ```json
+    {
+      "teacher_id": 1,
+      "name": "Algebra",
+      "subject": "Math",
+      "grade": 8,
+      "period": 2,
+      "room": 315
+    }
+    ```
+
+* Response: 200
+    ```json
+    [
+      {
+        "id": 1,
+        "teacher_id": 1,
+        "name": "Algebra",
+        "subject": "Math",
+        "grade": 8,
+        "period": 1,
+        "room": 315,
+        "numStudents": 1
+      },
+      {
+        "id": 2,
+        "teacher_id": 1,
+        "name": "Algebra",
+        "subject": "Math",
+        "grade": 8,
+        "period": 2,
+        "room": 315,
+        "numStudents": 0
+      },
+    ]
+    ```
+
+* Error Response: 401
+    ```json
+    {
+      "name": "Name address is required",
+      "subject": "Subject is required",
+      "grade": "Must be between 6 and 8",
+      "period": "Must be between 1 and 4",
+      "room": "Must be between 100 and 350"
+    }
+    ```
+
+### Edit Class
+
+Edits class by ID.
+
+* Request: GET /api/classes/:classId
+    {
+      "teacher_id": 1,
+      "name": "Algebra",
+      "subject": "Math",
+      "grade": 8,
+      "period": 3,
+      "room": 315
+    }
+    ```
+
+* Response: 200
+    ```json
+    [
+      {
+        "id": 1,
+        "teacher_id": 1,
+        "name": "Algebra",
+        "subject": "Math",
+        "grade": 8,
+        "period": 1,
+        "room": 315,
+        "numStudents": 1
+      },
+      {
+        "id": 2,
+        "teacher_id": 1,
+        "name": "Algebra",
+        "subject": "Math",
+        "grade": 8,
+        "period": 3,
+        "room": 315,
+        "numStudents": 0
+      },
+    ]
+    ```
+
+* Error Response: 401
+    ```json
+    {
+      "name": "Name address is required",
+      "subject": "Subject is required",
+      "grade": "Must be between 6 and 8",
+      "period": "Must be between 1 and 4",
+      "room": "Must be between 100 and 350"
+    }
+    ```
+
+* Error response: 404
+    ```json
+    {
+      "message": "Class not found"
+    }
+    ```
+
+### Delete Class
+
+Deletes class by ID.
+
+* Request: GET /api/classes/:classId
+
+* Response: 200
+    ```json
+    [
+      {
+        "id": 1,
+        "teacher_id": 1,
+        "name": "Algebra",
+        "subject": "Math",
+        "grade": 8,
+        "period": 1,
+        "room": 315,
+        "numStudents": 1
+      },
+    ]
+    ```
+
+* Error response: 404
+    ```json
+    {
+      "message": "Class couldn't be found"
+    }
+    ```
+
+## ASSIGNMENTS
+
+### Create Assignment
+
+Creates class assignment.
+
+* Request: POST /api/classes/:classId/assignments
+    ```json
+    {
+        "name": "Exponents Homework",
+        "type": "HW",
+        "quarter": 1,
+        "due_date": "22-8-24",
+    }
+    ```
+
+* Response: 200
+    ```json
+    {
+      "id": 1,
+      "teacher_id": 1,
+      "name": "Algebra",
+      "subject": "Math",
+      "grade": 8,
+      "period": 1,
+      "room": 315,
+      "students": [
+        {
+          "id": 5,
+          "firstName": "Harry",
+          "lastName": "Potter"
+        },
+      ],
+      "assignments": [
+        {
+          "id": 1,
+          "class_id": 1,
+          "name": "Exponents Classwork",
+          "type": "CW",
+          "quarter": 1,
+          "due_date": "Mon, 19 Aug 2024",
+          "grades": [
+            {
+              "assignment_id": 1,
+              "student_id": 5,
+              "grade": 82
+            },
+          ]
+        },
+        {
+          "id": 2,
+          "class_id": 1,
+          "name": "Exponents Homework",
+          "type": "HW",
+          "quarter": 1,
+          "due_date": "Thu, 22 Aug 2024",
+          "grades": []
+        },
+      ]
+    }
+    ```
+
+* Error response: 404
+    ```json
+    {
+      "message": "Class not found"
+    }
+    ```
+
+* Error Response: 400
+    ```json
+    {
+      "name": "Name is required",
+      "type": "Type is required",
+      "quarter": "Must be between 1 and 4",
+      "due_date": "Improper date",
+    }
+    ```
+
+### Edit Assignment
+
+Edits class assignment by ID.
+
+* Request: PUT /api/assignments/:assignmentId
+    ```json
+    {
+      "name": "Exponents Homework",
+      "type": "HW",
+      "quarter": 1,
+      "due_date": "23-8-24",
+    }
+    ```
+
+* Response: 200
+    ```json
+    {
+      "id": 1,
+      "teacher_id": 1,
+      "name": "Algebra",
+      "subject": "Math",
+      "grade": 8,
+      "period": 1,
+      "room": 315,
+      "students": [
+        {
+          "id": 5,
+          "firstName": "Harry",
+          "lastName": "Potter"
+        },
+      ],
+      "assignments": [
+        {
+          "id": 1,
+          "class_id": 1,
+          "name": "Exponents Classwork",
+          "type": "CW",
+          "quarter": 1,
+          "due_date": "Mon, 19 Aug 2024",
+          "grades": [
+            {
+              "assignment_id": 1,
+              "student_id": 5,
+              "grade": 82
+            },
+          ]
+        },
+        {
+          "id": 2,
+          "class_id": 1,
+          "name": "Exponents Homework",
+          "type": "HW",
+          "quarter": 1,
+          "due_date": "Fri, 23 Aug 2024",
+          "grades": []
+        },
+      ]
+    }
+    ```
+
+* Error response: 404
+    ```json
+    {
+      "message": "Assignment not found"
+    }
+    ```
+
+* Error Response: 400
+    ```json
+    {
+      "name": "Name is required",
+      "type": "Type is required",
+      "quarter": "Must be between 1 and 4",
+      "due_date": "Improper date",
+    }
+    ```
+
+### Delete Assignment
+
+Deletes class assignment by ID.
+
+* Request: DELETE /api/assignments/:assignmentId
+
+* Response: 200
+    ```json
+    {
+      "id": 1,
+      "teacher_id": 1,
+      "name": "Algebra",
+      "subject": "Math",
+      "grade": 8,
+      "period": 1,
+      "room": 315,
+      "students": [
+        {
+          "id": 5,
+          "firstName": "Harry",
+          "lastName": "Potter"
+        },
+      ],
+      "assignments": [
+        {
+          "id": 1,
+          "class_id": 1,
+          "name": "Exponents Classwork",
+          "type": "CW",
+          "quarter": 1,
+          "due_date": "Wed, 21 Aug 2024",
+          "grades": [
+            {
+              "assignment_id": 1,
+              "student_id": 5,
+              "grade": 82
+            },
+          ]
+        },
+      ]
+    }
+    ```
+
+* Error response: 404
+    ```json
+    {
+      "message": "Assignment not found"
+    }
+    ```
+
+## STUDENTS
+
+### Add Student
+
+Adds a Student to a classroom.
+
+* Request: POST /api/classes/:classId/students/:studentId
+
+* Response: 200
+    ```json
+    {
+      "id": 1,
+      "teacher_id": 1,
+      "name": "Algebra",
+      "subject": "Math",
+      "grade": 8,
+      "period": 1,
+      "room": 315,
+      "students": [
+        {
+          "id": 5,
+          "firstName": "Harry",
+          "lastName": "Potter"
+        },
+        {
+          "id": 6,
+          "firstName": "Ronald",
+          "lastName": "Weasley"
+        },
+      ],
+      "assignments": [
+        {
+          "id": 1,
+          "class_id": 1,
+          "name": "Exponents Classwork",
+          "type": "CW",
+          "quarter": 1,
+          "due_date": "Mon, 19 Aug 2024",
+          "grades": [
+            {
+              "assignment_id": 1,
+              "student_id": 5,
+              "grade": 82
+            },
+          ]
+        }
+      ]
+    }
+    ```
+
+* Error response: 404
+    ```json
+    {
+      "message": "Class not found"
+    }
+    ```
+
+* Error response: 404
+    ```json
+    {
+      "message": "Student not found"
+    }
+    ```
+
+* Error Response: 401
+    ```json
+    {
+      "message": "Student Already Exists"
+    }
+    ```
+
+### Remove Student
+
+Remove a Student to a classroom.
+
+* Request: DELETE /api/classes/:classId/students/:studentId
+
+* Response: 200
+    ```json
+    {
+      "id": 1,
+      "teacher_id": 1,
+      "name": "Algebra",
+      "subject": "Math",
+      "grade": 8,
+      "period": 1,
+      "room": 315,
+      "students": [
+        {
+          "id": 5,
+          "firstName": "Harry",
+          "lastName": "Potter"
+        }
+      ],
+      "assignments": [
+        {
+          "id": 1,
+          "class_id": 1,
+          "name": "Exponents Classwork",
+          "type": "CW",
+          "quarter": 1,
+          "due_date": "Mon, 19 Aug 2024",
+          "grades": [
+            {
+              "assignment_id": 1,
+              "student_id": 5,
+              "grade": 82
+            },
+          ]
+        }
+      ]
+    }
+    ```
+
+* Error response: 404
+    ```json
+    {
+      "message": "Class not found"
+    }
+    ```
+
+* Error response: 404
+    ```json
+    {
+      "message": "Student not found"
+    }
+    ```
+
+* Error Response: 401
+    ```json
+    {
+      "message": "Student is not in this class"
+    }
+    ```
+
+
+## GRADES
+
+### Create Grade
+
+Creates new grade.
+
+* Request: POST /api/assignments/:assignmentId/grades/:studentId
+    ```json
+    {
+      "grade": 90
+    }
+    ```
+
+* Response: 200
+    ```json
+    {
+      "id": 1,
+      "teacher_id": 1,
+      "name": "Algebra",
+      "subject": "Math",
+      "grade": 8,
+      "period": 1,
+      "room": 315,
+      "students": [
+        {
+          "id": 5,
+          "firstName": "Harry",
+          "lastName": "Potter"
+        },
+        {
+          "id": 6,
+          "firstName": "Ronald",
+          "lastName": "Weasley"
+        },
+      ],
+      "assignments": [
+        {
+          "id": 1,
+          "class_id": 1,
+          "name": "Exponents Classwork",
+          "type": "CW",
+          "quarter": 1,
+          "due_date": "Mon, 19 Aug 2024",
+          "grades": [
+            {
+              "assignment_id": 1,
+              "student_id": 5,
+              "grade": 82
+            },
+            {
+              "assignment_id": 1,
+              "student_id": 6,
+              "grade": 90
+            }
+          ]
+        }
+      ]
+    }
+    ```
+
+* Error response: 404
+    ```json
+    {
+      "message": "Assignment couldn't be found"
+    }
+    ```
+
+* Error response: 404
+    ```json
+    {
+      "message": "Student couldn't be found"
+    }
+    ```
+
+* Error Response: 400
+    ```json
+    {
+      "grade": "Must be between 0 and 100"
+    }
+    ```
+
+### Edit Grade
+
+Edits grade by ID.
+
+* Request: PUT /api/assignments/:assignmentId/grades/:studentId
+    ```json
+    {
+        "grade": 85
+    }
+    ```
+
+* Response: 200
+    ```json
+    {
+      "id": 1,
+      "teacher_id": 1,
+      "name": "Algebra",
+      "subject": "Math",
+      "grade": 8,
+      "period": 1,
+      "room": 315,
+      "students": [
+        {
+          "id": 5,
+          "firstName": "Harry",
+          "lastName": "Potter"
+        },
+        {
+          "id": 6,
+          "firstName": "Ronald",
+          "lastName": "Weasley"
+        },
+      ],
+      "assignments": [
+        {
+          "id": 1,
+          "class_id": 1,
+          "name": "Exponents Classwork",
+          "type": "CW",
+          "quarter": 1,
+          "due_date": "Mon, 19 Aug 2024",
+          "grades": [
+            {
+              "assignment_id": 1,
+              "student_id": 5,
+              "grade": 82
+            },
+            {
+              "assignment_id": 1,
+              "student_id": 6,
+              "grade": 85
+            }
+          ]
+        }
+      ]
+    }
+    ```
+
+* Error response: 404
+    ```json
+    {
+      "message": "Grade couldn't be found"
+    }
+    ```
+
+* Error Response: 400
+    ```json
+    {
+      "grade": "Grade is required"
+    }
+    ```
+
+### Delete Grade
+
+Deletes grade by ID.
+
+* Request: DELETE /api/assignments/:assignmentId/grades/:studentId
+
+* Response: 200
+    ```json
+    {
+      "id": 1,
+      "teacher_id": 1,
+      "name": "Algebra",
+      "subject": "Math",
+      "grade": 8,
+      "period": 1,
+      "room": 315,
+      "students": [
+        {
+          "id": 5,
+          "firstName": "Harry",
+          "lastName": "Potter"
+        },
+        {
+          "id": 6,
+          "firstName": "Ronald",
+          "lastName": "Weasley"
+        },
+      ],
+      "assignments": [
+        {
+          "id": 1,
+          "class_id": 1,
+          "name": "Exponents Classwork",
+          "type": "CW",
+          "quarter": 1,
+          "due_date": "Mon, 19 Aug 2024",
+          "grades": [
+            {
+              "assignment_id": 1,
+              "student_id": 5,
+              "grade": 82
+            }
+          ]
+        }
+      ]
+    }
+    ```
+
+* Error response: 404
+    ```json
+    {
+      "message": "Grade couldn't be found"
+    }
+    ```
+
+# Technical Implementation
+A lot of thought went into the implementation of the grade book table.  The system requires complex and dynamic information pulled from the database.  In the end, the use of one dynamic object became the optimal choice.  All database changes like a new assignment of grade return an updated version of the object.  Here's an example of the object:
+
+```javascript
+{
+  id: 1,
+  teacher_id: 1,
+  name: "Algebra",
+  subject: "Math",
+  grade: 8,
+  period: 1,
+  room: 315,
+  students: [
+    {
+      id: 5,
+      firstName: "Harry",
+      lastName: "Potter"
+    }, //more students
+  ],
+  assignments: [
+    {
+      id: 1,
+      class_id: 1,
+      name: "Exponents Classwork",
+      type: "CW",
+      quarter: 1,
+      due_date: "Mon, 19 Aug 2024",
+      grades: [
+        {
+          assignment_id: 1,
+          student_id: 5,
+          grade: 82
+        }, //more grades
+      ]
+    }, //more assignments
+  ]
+}
+```
+
+# Future Features
+- Student search and information page
+- Class wide and school wide announcement wall with options to comment
+- Appointment system for teacher, staff and parents

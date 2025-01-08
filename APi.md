@@ -1,5 +1,3 @@
-## API Documentation
-
 ## USER AUTHENTICATION/AUTHORIZATION
 
 ### All endpoints that require authentication
@@ -37,20 +35,30 @@ Returns the information about the current teacher user that is logged in.
 
     ```json
     {
-        "user": {
-            "id": 1,
-            "firstName": "John",
-            "lastName": "Smith",
-            "email": "john.smith@gmail.com",
-            "username": "JohnSmith",
-            "type": "teacher",
-            "teacher": {
-                "id": 1,
-                "user_id": 1,
-                "primary_grade": 6,
-                "primary_subject": "Math"
-            }
-        }
+      "id": 1,
+      "firstName": "Severus",
+      "lastName": "Snape",
+      "email": "ssname@soulachademey.com",
+      "username": "ssnape",
+      "type": "teacher",
+      "teacher": {
+        "id": 1,
+        "user_id": 1,
+        "primary_grade": 8,
+        "primary_subject": "Math"
+      }
+    }
+    ```
+    
+* Error Response: Require authentication
+  * Status Code: 401
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Unauthorized"
     }
     ```
 
@@ -72,18 +80,28 @@ Returns the information about the current student user that is logged in.
 
     ```json
     {
-      "user": {
-        "id": 2,
-        "firstName": "Jane",
-        "lastName": "Smith",
-        "email": "jane.smith@gmail.com",
-        "username": "JaneSmith",
-        "type": "student",
-        "student": {
-            "id": 1,
-            "grade": 6
-        }
+      "id": 5,
+      "firstName": "Harry",
+      "lastName": "Potter",
+      "email": "hpotter@soulachademy.com",
+      "username": "hpotter",
+      "type": "student",
+      "student": {
+        "id": 1,
+        "grade": 8
       }
+    }
+    ```
+
+* Error Response: Require authentication
+  * Status Code: 401
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Unauthorized"
     }
     ```
 
@@ -102,9 +120,9 @@ information.
 
     ```json
     {
-        "credential": "john.smith@gmail.com",
-        "password": "secret password",
-        "type": "teacher",
+      "email": "ssnape@soulacademy.com",
+      "password": "password",
+      "type": "teacher",
     }
     ```
 
@@ -116,18 +134,18 @@ information.
 
     ```json
     {
-        "id": 1,
-        "firstName": "John",
-        "lastName": "Smith",
-        "email": "john.smith@gmail.com",
-        "username": "JohnSmith",
-        "type": "teacher",
-        "teacher": {
-            "id": 1,
-            "user_id": 1,
-            "primary_grade": 6,
-            "primary_subject": "Math"
-        }
+      "id": 1,
+      "firstName": "Severus",
+      "lastName": "Snape",
+      "email": "ssname@soulachademey.com",
+      "username": "ssnape",
+      "type": "teacher",
+      "teacher": {
+          "id": 1,
+          "user_id": 1,
+          "primary_grade": 8,
+          "primary_subject": "Math"
+      }
     }
     ```
 
@@ -139,23 +157,8 @@ information.
 
     ```json
     {
-      "message": "Invalid credentials"
-    }
-    ```
-
-* Error response: Body validation errors
-  * Status Code: 400
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Bad Request", 
-      "errors": {
-        "credential": "Email or username is required",
-        "password": "Password is required"
-      }
+      "email": "Email provided not found.",
+      "password": "Password was incorrect.",
     }
     ```
 
@@ -174,7 +177,7 @@ information.
 
     ```json
     {
-        "credential": "jane.smith@gmail.com",
+        "email": "hpotter@soulacademy.com",
         "password": "secret password",
         "type": "student",
     }
@@ -188,17 +191,15 @@ information.
 
     ```json
     {
-      "user": {
-        "id": 2,
-        "firstName": "Jane",
-        "lastName": "Smith",
-        "email": "jane.smith@gmail.com",
-        "username": "JaneSmith",
-        "type": "student",
-        "student": {
-            "id": 1,
-            "grade": 6
-        }
+      "id": 5,
+      "firstName": "Harry",
+      "lastName": "Potter",
+      "email": "hpotter@soulachademy.com",
+      "username": "hpotter",
+      "type": "student",
+      "student": {
+        "id": 1,
+        "grade": 8
       }
     }
     ```
@@ -211,23 +212,8 @@ information.
 
     ```json
     {
-      "message": "Invalid credentials"
-    }
-    ```
-
-* Error response: Body validation errors
-  * Status Code: 400
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Bad Request",
-      "errors": {
-        "credential": "Email or username is required",
-        "password": "Password is required"
-      }
+      "email": "Email provided not found.",
+      "password": "Password was incorrect.",
     }
     ```
 
@@ -246,13 +232,13 @@ user's information.
 
     ```json
     {
-        "firstName": "John",
-        "lastName": "Smith",
-        "email": "john.smith@gmail.com",
-        "username": "JohnSmith",
-        "password": "secret password",
+        "firstName": "Severus",
+        "lastName": "Snape",
+        "email": "ssname@soulachademey.com",
+        "username": "ssnape",
+        "password": "password",
         "type": "teacher",
-        "primary_grade": 6,
+        "primary_grade": 8,
         "primary_subject": "Math"
     }
     ```
@@ -265,52 +251,37 @@ user's information.
 
     ```json
     {
-        "id": 1,
-        "firstName": "John",
-        "lastName": "Smith",
-        "email": "john.smith@gmail.com",
-        "username": "JohnSmith",
-        "type": "teacher",
-        "teacher": {
-            "id": 1,
-            "user_id": 1,
-            "primary_grade": 6,
-            "primary_subject": "Math"
-        }
+      "id": 1,
+      "firstName": "Severus",
+      "lastName": "Snape",
+      "email": "ssname@soulachademey.com",
+      "username": "ssnape",
+      "type": "teacher",
+      "teacher": {
+          "id": 1,
+          "user_id": 1,
+          "primary_grade": 8,
+          "primary_subject": "Math"
+      }
     }
     ```
 
-* Error response: User already exists with the specified email or username
-  * Status Code: 500
+* Error response: Validation errors
+  * Status Code: 401
   * Headers:
     * Content-Type: application/json
   * Body:
 
     ```json
     {
-      "message": "User already exists",
-      "errors": {
-        "email": "User with that email already exists",
-        "username": "User with that username already exists"
-      }
-    }
-    ```
-
-* Error response: Body validation errors
-  * Status Code: 400
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Bad Request",
-      "errors": {
-        "email": "Invalid email",
-        "username": "Username is required",
-        "firstName": "First Name is required",
-        "lastName": "Last Name is required"
-      }
+      "email": "Email address is already in use.",
+      "username": "Username is already in use.",
+      "password": "Password required",
+      "first_name": "Maximum 20 characters",
+      "last_name": "Maximum 20 characters",
+      "type": "Type Required",
+      "primary_grade": "Must be between 6 and 8",
+      "primary_subject": "Subject Required"
     }
     ```
 
@@ -329,13 +300,13 @@ user's information.
 
     ```json
     {
-        "firstName": "Jane",
-        "lastName": "Smith",
-        "email": "jane.smith@gmail.com",
-        "username": "JaneSmith",
-        "password": "secret password",
+        "firstName": "Harry",
+        "lastName": "Potter",
+        "email": "hpotter@soulachademy.com",
+        "username": "hpotter",
+        "password": "password",
         "type": "student",
-        "grade": 6
+        "grade": 8
     }
     ```
 
@@ -347,52 +318,34 @@ user's information.
 
     ```json
     {
-      "user": {
-        "id": 2,
-        "firstName": "Jane",
-        "lastName": "Smith",
-        "email": "jane.smith@gmail.com",
-        "username": "JaneSmith",
-        "type": "student",
-        "student": {
-            "id": 1,
-            "grade": 6
-        }
+      "id": 5,
+      "firstName": "Harry",
+      "lastName": "Potter",
+      "email": "hpotter@soulachademy.com",
+      "username": "hpotter",
+      "type": "student",
+      "student": {
+        "id": 1,
+        "grade": 8
       }
     }
     ```
 
-* Error response: User already exists with the specified email or username
-  * Status Code: 500
+* Error response: Validation errors
+  * Status Code: 401
   * Headers:
     * Content-Type: application/json
   * Body:
 
     ```json
     {
-      "message": "User already exists",
-      "errors": {
-        "email": "User with that email already exists",
-        "username": "User with that username already exists"
-      }
-    }
-    ```
-
-* Error response: Body validation errors
-  * Status Code: 400
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Bad Request", 
-      "errors": {
-        "email": "Invalid email",
-        "username": "Username is required",
-        "firstName": "First Name is required",
-        "lastName": "Last Name is required"
-      }
+      "email": "Email address is already in use.",
+      "username": "Username is already in use.",
+      "password": "Password required",
+      "first_name": "Maximum 20 characters",
+      "last_name": "Maximum 20 characters",
+      "type": "Type Required",
+      "grade": "Must be between 6 and 8"
     }
     ```
 
@@ -415,40 +368,18 @@ Returns all teacher classes.
   * Body:
 
     ```json
-    {
-        "Classes": [
-            {
-                "id": 1,
-                "teacher_id": 1,
-                "name": "6th Grade Math - 1st Period",
-                "subject": "Math",
-                "grade": 6,
-                "period": 1,
-                "room": 103,
-                "numStudents": 24
-            },
-            {
-                "id": 2,
-                "teacher_id": 1,
-                "name": "6th Grade Math - 2nd Period",
-                "subject": "Math",
-                "grade": 6,
-                "period": 2,
-                "room": 103,
-                "numStudents": 26
-            },
-            {
-                "id": 3,
-                "teacher_id": 1,
-                "name": "6th Grade Math - 3rd Period",
-                "subject": "Math",
-                "grade": 6,
-                "period": 3,
-                "room": 103,
-                "numStudents": 22
-            },
-        ]
-    }
+    [
+      {
+        "id": 1,
+        "teacher_id": 1,
+        "name": "Algebra",
+        "subject": "Math",
+        "grade": 8,
+        "period": 1,
+        "room": 315,
+        "numStudents": 1
+      },
+    ]
     ```
 
 ### Get all User Classes (Student) - Dashboard Page
@@ -468,44 +399,36 @@ Returns all student classes.
   * Body:
 
     ```json
-    {
-        "Classes": [
-            {
-                "id": 1,
-                "teacher_id": 1,
-                "teacher": "Mr Smith",
-                "name": "Math - 1st Period",
-                "subject": "Math",
-                "grade": 6,
-                "period": 1,
-                "room": 103,
-                "current_grade": 95
-            },
-            {
-                "id": 4,
-                "teacher_id": 2,
-                "teacher": "Ms Garcia",
-                "name": "English - 2nd Period",
-                "subject": "English",
-                "grade": 6,
-                "period": 2,
-                "room": 204,
-                "current_grade": 81
-            },
-            {
-                "id": 5,
-                "teacher_id": 3,
-                "teacher": "Mrs. Henry",
-                "name": "Science - 3rd Period",
-                "subject": "Science",
-                "grade": 6,
-                "period": 3,
-                "room": 301,
-                "current_grade": 87
-            },
-            
+    [
+      {
+        "id": 1,
+        "teacher_id": 1,
+        "teacher": {
+          "id": 1,
+          "user_id": 1,
+          "primary_grade": 8,
+          "primary_subject": "Math",
+          "first_name": "Severus",
+          "last_name": "Snape"
+        },
+        "name": "Algebra",
+        "subject": "Math",
+        "grade": 8,
+        "period": 1,
+        "room": 315,
+        "assignments": [
+          {
+            "id": 1,
+            "class_id": 1,
+            "name": "Exponents Classwork",
+            "type": "CW",
+            "quarter": 1,
+            "due_date": "Mon, 19 Aug 2024",
+            "grade": 82
+          }
         ]
-    }
+      }
+    ]
     ```
 
 ### Get Class by ID (Teacher) - Grade Book Page
@@ -526,124 +449,37 @@ Returns teacher's class by ID with all the information needed for the grade book
 
     ```json
     {
-        "class": {
-            "id": 1,
-            "teacher_id": 1,
-            "name": "6th Grade Math - 1st Period",
-            "subject": "Math",
-            "grade": 6,
-            "period": 1,
-            "room": 103,
-            "students": [
-                {
-                    "id": 1,
-                    "firstName": "Jane",
-                    "lastName": "Smith"
-                },
-                {
-                    "id": 2,
-                    "firstName": "Harry",
-                    "lastName": "Potter"
-                },
-                {
-                    "id": 3,
-                    "firstName": "Hermione",
-                    "lastName": "Granger"
-                },
-                {
-                    "id": 4,
-                    "firstName": "Ronald",
-                    "lastName": "Weasly"
-                },
-                {
-                    "id": 5,
-                    "firstName": "Nevile",
-                    "lastName": "Longbottom"
-                },
-            ],
-            "assignments": [
-                {
-                    "id": 1,
-                    "class_id": 1,
-                    "name": "Multiplication CW 1",
-                    "type": "W",
-                    "quarter": 1,
-                    "due_date": "2021-11-19",
-                    "grades": [
-                        {
-                            "id": 1,
-                            "assignment_id": 1,
-                            "student_id": 1,
-                            "grade": 100
-                        },
-                        {
-                            "id": 2,
-                            "assignment_id": 1,
-                            "student_id": 2,
-                            "grade": 90
-                        },
-                        {
-                            "id": 3,
-                            "assignment_id": 1,
-                            "student_id": 3,
-                            "grade": 100
-                        },
-                        {
-                            "id": 4,
-                            "assignment_id": 1,
-                            "student_id": 4,
-                            "grade": 70
-                        },
-                        {
-                            "id": 5,
-                            "assignment_id": 1,
-                            "student_id": 5,
-                            "grade": 75
-                        },
-                    ]
-                },
-                {
-                    "id": 2,
-                    "class_id": 1,
-                    "name": "Multiplication HW 1",
-                    "type": "W",
-                    "quarter": 1,
-                    "due_date": "2021-11-19",
-                    "grades": [
-                        {
-                            "id": 6,
-                            "assignment_id": 2,
-                            "student_id": 1,
-                            "grade": 80
-                        },
-                        {
-                            "id": 7,
-                            "assignment_id": 2,
-                            "student_id": 2,
-                            "grade": 0
-                        },
-                        {
-                            "id": 8,
-                            "assignment_id": 2,
-                            "student_id": 3,
-                            "grade": 100
-                        },
-                        {
-                            "id": 9,
-                            "assignment_id": 2,
-                            "student_id": 4,
-                            "grade": 0
-                        },
-                        {
-                            "id": 10,
-                            "assignment_id": 2,
-                            "student_id": 5,
-                            "grade": 80
-                        },
-                    ]
-                },
-            ]
-        }
+      "id": 1,
+      "teacher_id": 1,
+      "name": "Algebra",
+      "subject": "Math",
+      "grade": 8,
+      "period": 1,
+      "room": 315,
+      "students": [
+        {
+          "id": 5,
+          "firstName": "Harry",
+          "lastName": "Potter"
+        },
+      ],
+      "assignments": [
+        {
+          "id": 1,
+          "class_id": 1,
+          "name": "Exponents Classwork",
+          "type": "CW",
+          "quarter": 1,
+          "due_date": "Mon, 19 Aug 2024",
+          "grades": [
+            {
+              "assignment_id": 1,
+              "student_id": 5,
+              "grade": 82
+            },
+          ]
+        },
+      ]
     }
     ```
 
@@ -665,37 +501,32 @@ Returns student's class by ID with all information for the grade page.
 
     ```json
     {
-        "class": {
-            "id": 1,
-            "teacher_id": 1,
-            "teacher": "Mr Smith",
-            "name": "Math - 1st Period",
-            "subject": "Math",
-            "grade": 6,
-            "period": 1,
-            "room": 103,
-            "current_grade": 95,
-            "assignments": [
-                {
-                    "id": 1,
-                    "class_id": 1,
-                    "name": "Multiplication CW 1",
-                    "type": "W",
-                    "quarter": 1,
-                    "due_date": "2021-11-19",
-                    "grade": 100
-                },
-                {
-                    "id": 2,
-                    "class_id": 1,
-                    "name": "Multiplication HW 1",
-                    "type": "W",
-                    "quarter": 1,
-                    "due_date": "2021-11-19",
-                    "grade": 80
-                }
-            ]
-        }
+      "id": 1,
+      "teacher_id": 1,
+      "teacher": {
+        "id": 1,
+        "user_id": 1,
+        "primary_grade": 8,
+        "primary_subject": "Math",
+        "first_name": "Severus",
+        "last_name": "Snape"
+      },
+      "name": "Algebra",
+      "subject": "Math",
+      "grade": 8,
+      "period": 1,
+      "room": 315,
+      "assignments": [
+        {
+          "id": 1,
+          "class_id": 1,
+          "name": "Exponents Classwork",
+          "type": "CW",
+          "quarter": 1,
+          "due_date": "Mon, 19 Aug 2024",
+          "grade": 82
+        },
+      ]
     }
     ```
 
@@ -711,12 +542,12 @@ Creates new class.
 
     ```json
     {
-        "teacher_id": 1,
-        "name": "Math - 4th Period",
-        "subject": "Math",
-        "grade": 6,
-        "period": 4,
-        "room": 103
+      "teacher_id": 1,
+      "name": "Algebra",
+      "subject": "Math",
+      "grade": 8,
+      "period": 2,
+      "room": 315
     }
     ```
 
@@ -727,35 +558,43 @@ Creates new class.
   * Body:
 
     ```json
-    {
-      "class": {
-            "id": 7,
-            "teacher_id": 1,
-            "name": "Math - 4th Period",
-            "subject": "Math",
-            "grade": 6,
-            "period": 4,
-            "room": 103,
-            "numStudents": 0
-        },
-    }
+    [
+      {
+        "id": 1,
+        "teacher_id": 1,
+        "name": "Algebra",
+        "subject": "Math",
+        "grade": 8,
+        "period": 1,
+        "room": 315,
+        "numStudents": 1
+      },
+      {
+        "id": 2,
+        "teacher_id": 1,
+        "name": "Algebra",
+        "subject": "Math",
+        "grade": 8,
+        "period": 2,
+        "room": 315,
+        "numStudents": 0
+      },
+    ]
     ```
 
-* Error Response: Body validation errors
-  * Status Code: 400
+* Error Response: Validation errors
+  * Status Code: 401
   * Headers:
     * Content-Type: application/json
   * Body:
 
     ```json
     {
-      "errors": {
-        "name": "Name address is required",
-        "subject": "Subject is required",
-        "grade": "Grade is required",
-        "period": "Period is required",
-        "room": "Room is required"
-      }
+      "name": "Name address is required",
+      "subject": "Subject is required",
+      "grade": "Must be between 6 and 8",
+      "period": "Must be between 1 and 4",
+      "room": "Must be between 100 and 350"
     }
     ```
 
@@ -771,12 +610,12 @@ Edits class by ID.
 
     ```json
     {
-        "teacher_id": 1,
-        "name": "Math - 5th Period",
-        "subject": "Math",
-        "grade": 6,
-        "room": 103,
-        "period": 4,
+      "teacher_id": 1,
+      "name": "Algebra",
+      "subject": "Math",
+      "grade": 8,
+      "period": 3,
+      "room": 315
     }
     ```
 
@@ -787,35 +626,43 @@ Edits class by ID.
   * Body:
 
     ```json
-    {
-      "class": {
-            "id": 7,
-            "teacher_id": 1,
-            "name": "Math - 5th Period",
-            "subject": "Math",
-            "grade": 6,
-            "period": 5,
-            "room": 103,
-            "numStudents": 0
-        },
-    }
+    [
+      {
+        "id": 1,
+        "teacher_id": 1,
+        "name": "Algebra",
+        "subject": "Math",
+        "grade": 8,
+        "period": 1,
+        "room": 315,
+        "numStudents": 1
+      },
+      {
+        "id": 2,
+        "teacher_id": 1,
+        "name": "Algebra",
+        "subject": "Math",
+        "grade": 8,
+        "period": 3,
+        "room": 315,
+        "numStudents": 0
+      },
+    ]
     ```
 
-* Error Response: Body validation errors
-  * Status Code: 400
+* Error Response: Validation errors
+  * Status Code: 401
   * Headers:
     * Content-Type: application/json
   * Body:
 
     ```json
     {
-      "errors": {
-        "name": "Name address is required",
-        "subject": "Subject is required",
-        "grade": "Grade is required",
-        "period": "Period is required",
-        "room": "Room is required"
-      }
+      "name": "Name address is required",
+      "subject": "Subject is required",
+      "grade": "Must be between 6 and 8",
+      "period": "Must be between 1 and 4",
+      "room": "Must be between 100 and 350"
     }
     ```
 
@@ -827,7 +674,7 @@ Edits class by ID.
 
     ```json
     {
-      "message": "Class couldn't be found"
+      "message": "Class not found"
     }
     ```
 
@@ -848,9 +695,18 @@ Deletes class by ID.
   * Body:
 
     ```json
-    {
-      "message": "Delete Successful"
-    }
+    [
+      {
+        "id": 1,
+        "teacher_id": 1,
+        "name": "Algebra",
+        "subject": "Math",
+        "grade": 8,
+        "period": 1,
+        "room": 315,
+        "numStudents": 1
+      },
+    ]
     ```
 
 * Error response: Couldn't find a Spot with the specified id
@@ -867,171 +723,6 @@ Deletes class by ID.
 
 ## ASSIGNMENTS
 
-### Get all Class Assignments - Assignment Page
-
-Returns all teacher classes.
-
-* Require Authentication: true (teacher only)
-* Request
-  * Method: GET
-  * Route path: /api/classes/:classId/assignments
-  * Body: None
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-        "assignments": [
-            {
-                "id": 1,
-                "class_id": 1,
-                "name": "Multiplication CW 1",
-                "type": "W",
-                "quarter": 1
-            },
-            {
-                "id": 2,
-                "class_id": 1,
-                "name": "Multiplication HW 1",
-                "type": "W",
-                "quarter": 1
-            }
-        ]
-    }
-    ```
-
-* Error response: Couldn't find a Class with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Class couldn't be found"
-    }
-    ```
-
-### Get Assignment by ID (Teacher) - Assignment Page
-
-Returns all teacher classes.
-
-* Require Authentication: true
-* Request
-  * Method: GET
-  * Route path: /api/assignments/:assignmentId
-  * Body: None
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-        "assignment": [
-            {
-                "id": 1,
-                "class_id": 1,
-                "name": "Multiplication CW 1",
-                "type": "W",
-                "quarter": 1,
-                "grades": [
-                    {
-                        "id": 1,
-                        "assignment_id": 1,
-                        "student_id": 1,
-                        "grade": 100
-                    },
-                    {
-                        "id": 2,
-                        "assignment_id": 1,
-                        "student_id": 2,
-                        "grade": 90
-                    },
-                    {
-                        "id": 3,
-                        "assignment_id": 1,
-                        "student_id": 3,
-                        "grade": 100
-                    },
-                    {
-                        "id": 4,
-                        "assignment_id": 1,
-                        "student_id": 4,
-                        "grade": 70
-                    },
-                    {
-                        "id": 5,
-                        "assignment_id": 1,
-                        "student_id": 5,
-                        "grade": 75
-                    }
-                ]
-            }
-        ]
-    }
-    ```
-
-* Error response: Couldn't find a Assignment with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Assignment couldn't be found"
-    }
-    ```
-
-### Get Assignment by ID (Student) - Assignment Page
-Returns all teacher classes.
-
-* Require Authentication: true
-* Request
-  * Method: GET
-  * Route path: /api/assignments/:assignmentId
-  * Body: None
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-        "assignments": [
-            {
-                "id": 1,
-                "class_id": 1,
-                "name": "Multiplication CW 1",
-                "type": "W",
-                "quarter": 1,
-                "grade": 100
-            },
-        ]
-    }
-    ```
-
-* Error response: Couldn't find a Assignment with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Assignment couldn't be found"
-    }
-    ```
-
 ### Create Assignment
 
 Creates class assignment.
@@ -1044,10 +735,10 @@ Creates class assignment.
 
     ```json
     {
-        "name": "Multiplication Quiz",
-        "type": "Q",
+        "name": "Exponents Homework",
+        "type": "HW",
         "quarter": 1,
-        "due_date": "2021-11-19",
+        "due_date": "22-8-24",
     }
     ```
 
@@ -1059,14 +750,46 @@ Creates class assignment.
 
     ```json
     {
-      "assignment": {
-        "id": 8,
-        "classId": 1,
-        "name": "Multiplication Quiz",
-        "type": "Q",
-        "quarter": 1,
-        "due_date": "2021-11-19",
-      }
+      "id": 1,
+      "teacher_id": 1,
+      "name": "Algebra",
+      "subject": "Math",
+      "grade": 8,
+      "period": 1,
+      "room": 315,
+      "students": [
+        {
+          "id": 5,
+          "firstName": "Harry",
+          "lastName": "Potter"
+        },
+      ],
+      "assignments": [
+        {
+          "id": 1,
+          "class_id": 1,
+          "name": "Exponents Classwork",
+          "type": "CW",
+          "quarter": 1,
+          "due_date": "Mon, 19 Aug 2024",
+          "grades": [
+            {
+              "assignment_id": 1,
+              "student_id": 5,
+              "grade": 82
+            },
+          ]
+        },
+        {
+          "id": 2,
+          "class_id": 1,
+          "name": "Exponents Homework",
+          "type": "HW",
+          "quarter": 1,
+          "due_date": "Thu, 22 Aug 2024",
+          "grades": []
+        },
+      ]
     }
     ```
 
@@ -1078,11 +801,11 @@ Creates class assignment.
 
     ```json
     {
-      "message": "Class couldn't be found"
+      "message": "Class not found"
     }
     ```
 
-* Error Response: Body validation errors
+* Error Response: Validation errors
   * Status Code: 400
   * Headers:
     * Content-Type: application/json
@@ -1090,12 +813,10 @@ Creates class assignment.
 
     ```json
     {
-      "errors": {
-        "name": "Name is required",
-        "type": "Type is required",
-        "quarter": "Quarter is required",
-        "due_date": "Due date is required",
-      }
+      "name": "Name is required",
+      "type": "Type is required",
+      "quarter": "Must be between 1 and 4",
+      "due_date": "Improper date",
     }
     ```
 
@@ -1111,10 +832,10 @@ Edits class assignment by ID.
 
     ```json
     {
-        "name": "Multiplication Test",
-        "type": "T",
-        "quarter": 1,
-        "due_date": "2021-11-19",
+      "name": "Exponents Homework",
+      "type": "HW",
+      "quarter": 1,
+      "due_date": "23-8-24",
     }
     ```
 
@@ -1126,14 +847,46 @@ Edits class assignment by ID.
 
     ```json
     {
-      "assignment": {
-        "id": 8,
-        "classId": 1,
-        "name": "Multiplication Test",
-        "type": "T",
-        "quarter": 1,
-        "due_date": "2021-11-19",
-      }
+      "id": 1,
+      "teacher_id": 1,
+      "name": "Algebra",
+      "subject": "Math",
+      "grade": 8,
+      "period": 1,
+      "room": 315,
+      "students": [
+        {
+          "id": 5,
+          "firstName": "Harry",
+          "lastName": "Potter"
+        },
+      ],
+      "assignments": [
+        {
+          "id": 1,
+          "class_id": 1,
+          "name": "Exponents Classwork",
+          "type": "CW",
+          "quarter": 1,
+          "due_date": "Mon, 19 Aug 2024",
+          "grades": [
+            {
+              "assignment_id": 1,
+              "student_id": 5,
+              "grade": 82
+            },
+          ]
+        },
+        {
+          "id": 2,
+          "class_id": 1,
+          "name": "Exponents Homework",
+          "type": "HW",
+          "quarter": 1,
+          "due_date": "Fri, 23 Aug 2024",
+          "grades": []
+        },
+      ]
     }
     ```
 
@@ -1145,11 +898,11 @@ Edits class assignment by ID.
 
     ```json
     {
-      "message": "Assignment couldn't be found"
+      "message": "Assignment not found"
     }
     ```
 
-* Error Response: Body validation errors
+* Error Response: Validation errors
   * Status Code: 400
   * Headers:
     * Content-Type: application/json
@@ -1157,12 +910,10 @@ Edits class assignment by ID.
 
     ```json
     {
-      "errors": {
-        "name": "Name is required",
-        "type": "Type is required",
-        "quarter": "Quarter is required",
-        "due_date": "Due date is required",
-      }
+      "name": "Name is required",
+      "type": "Type is required",
+      "quarter": "Must be between 1 and 4",
+      "due_date": "Improper date",
     }
     ```
 
@@ -1184,7 +935,37 @@ Deletes class assignment by ID.
 
     ```json
     {
-      "message": "Delete Successful"
+      "id": 1,
+      "teacher_id": 1,
+      "name": "Algebra",
+      "subject": "Math",
+      "grade": 8,
+      "period": 1,
+      "room": 315,
+      "students": [
+        {
+          "id": 5,
+          "firstName": "Harry",
+          "lastName": "Potter"
+        },
+      ],
+      "assignments": [
+        {
+          "id": 1,
+          "class_id": 1,
+          "name": "Exponents Classwork",
+          "type": "CW",
+          "quarter": 1,
+          "due_date": "Wed, 21 Aug 2024",
+          "grades": [
+            {
+              "assignment_id": 1,
+              "student_id": 5,
+              "grade": 82
+            },
+          ]
+        },
+      ]
     }
     ```
 
@@ -1196,9 +977,193 @@ Deletes class assignment by ID.
 
     ```json
     {
-      "message": "Assignment couldn't be found"
+      "message": "Assignment not found"
     }
     ```
+
+## STUDENTS
+
+### Add Student
+
+Adds a Student to a classroom.
+
+* Require Authentication: true (teacher only)
+* Request
+  * Method: POST
+  * Route path: /api/classes/:classId/students/:studentId
+  * Body: None
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "id": 1,
+      "teacher_id": 1,
+      "name": "Algebra",
+      "subject": "Math",
+      "grade": 8,
+      "period": 1,
+      "room": 315,
+      "students": [
+        {
+          "id": 5,
+          "firstName": "Harry",
+          "lastName": "Potter"
+        },
+        {
+          "id": 6,
+          "firstName": "Ronald",
+          "lastName": "Weasley"
+        },
+      ],
+      "assignments": [
+        {
+          "id": 1,
+          "class_id": 1,
+          "name": "Exponents Classwork",
+          "type": "CW",
+          "quarter": 1,
+          "due_date": "Mon, 19 Aug 2024",
+          "grades": [
+            {
+              "assignment_id": 1,
+              "student_id": 5,
+              "grade": 82
+            },
+          ]
+        }
+      ]
+    }
+    ```
+
+* Error response: Couldn't find a class with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Class not found"
+    }
+    ```
+
+* Error response: Couldn't find a student with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Student not found"
+    }
+    ```
+
+* Error Response: Validation error
+  * Status Code: 401
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Student Already Exists"
+    }
+    ```
+
+### Remove Student
+
+Remove a Student to a classroom.
+
+* Require Authentication: true (teacher only)
+* Request
+  * Method: DELETE
+  * Route path: /api/classes/:classId/students/:studentId
+  * Body: None
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "id": 1,
+      "teacher_id": 1,
+      "name": "Algebra",
+      "subject": "Math",
+      "grade": 8,
+      "period": 1,
+      "room": 315,
+      "students": [
+        {
+          "id": 5,
+          "firstName": "Harry",
+          "lastName": "Potter"
+        }
+      ],
+      "assignments": [
+        {
+          "id": 1,
+          "class_id": 1,
+          "name": "Exponents Classwork",
+          "type": "CW",
+          "quarter": 1,
+          "due_date": "Mon, 19 Aug 2024",
+          "grades": [
+            {
+              "assignment_id": 1,
+              "student_id": 5,
+              "grade": 82
+            },
+          ]
+        }
+      ]
+    }
+    ```
+
+* Error response: Couldn't find a class with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Class not found"
+    }
+    ```
+
+* Error response: Couldn't find a student with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Student not found"
+    }
+    ```
+
+* Error Response: Couldn't find a student with the specified id in class with specified id
+  * Status Code: 401
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Student is not in this class"
+    }
+    ```
+
 
 ## GRADES
 
@@ -1209,12 +1174,11 @@ Creates new grade.
 * Require Authentication: true (teacher only)
 * Request
   * Method: POST
-  * Route path: /api/assignments/:assignmentId
+  * Route path: /api/assignments/:assignmentId/grades/:studentId
   * Body: 
 
     ```json
     {
-      "student_id": 6,
       "grade": 90
     }
     ```
@@ -1227,12 +1191,47 @@ Creates new grade.
 
     ```json
     {
-        "grade": {
-            "id": 9,
-            "assignment_id": 1,
-            "student_id": 6,
-            "grade": 90
+      "id": 1,
+      "teacher_id": 1,
+      "name": "Algebra",
+      "subject": "Math",
+      "grade": 8,
+      "period": 1,
+      "room": 315,
+      "students": [
+        {
+          "id": 5,
+          "firstName": "Harry",
+          "lastName": "Potter"
+        },
+        {
+          "id": 6,
+          "firstName": "Ronald",
+          "lastName": "Weasley"
+        },
+      ],
+      "assignments": [
+        {
+          "id": 1,
+          "class_id": 1,
+          "name": "Exponents Classwork",
+          "type": "CW",
+          "quarter": 1,
+          "due_date": "Mon, 19 Aug 2024",
+          "grades": [
+            {
+              "assignment_id": 1,
+              "student_id": 5,
+              "grade": 82
+            },
+            {
+              "assignment_id": 1,
+              "student_id": 6,
+              "grade": 90
+            }
+          ]
         }
+      ]
     }
     ```
 
@@ -1268,9 +1267,7 @@ Creates new grade.
 
     ```json
     {
-      "errors": {
-        "grade": "Grade is required"
-      }
+      "grade": "Must be between 0 and 100"
     }
     ```
 
@@ -1281,7 +1278,7 @@ Edits grade by ID.
 * Require Authentication: true (teacher only)
 * Request
   * Method: PUT
-  * Route path: /api/grades/:gradeId
+  * Route path: /api/assignments/:assignmentId/grades/:studentId
   * Body: 
 
     ```json
@@ -1298,12 +1295,47 @@ Edits grade by ID.
 
     ```json
     {
-        "grade": {
-            "id": 9,
-            "assignment_id": 1,
-            "student_id": 6,
-            "grade": 90
+      "id": 1,
+      "teacher_id": 1,
+      "name": "Algebra",
+      "subject": "Math",
+      "grade": 8,
+      "period": 1,
+      "room": 315,
+      "students": [
+        {
+          "id": 5,
+          "firstName": "Harry",
+          "lastName": "Potter"
+        },
+        {
+          "id": 6,
+          "firstName": "Ronald",
+          "lastName": "Weasley"
+        },
+      ],
+      "assignments": [
+        {
+          "id": 1,
+          "class_id": 1,
+          "name": "Exponents Classwork",
+          "type": "CW",
+          "quarter": 1,
+          "due_date": "Mon, 19 Aug 2024",
+          "grades": [
+            {
+              "assignment_id": 1,
+              "student_id": 5,
+              "grade": 82
+            },
+            {
+              "assignment_id": 1,
+              "student_id": 6,
+              "grade": 85
+            }
+          ]
         }
+      ]
     }
     ```
 
@@ -1327,9 +1359,7 @@ Edits grade by ID.
 
     ```json
     {
-      "errors": {
-        "grade": "Grade is required"
-      }
+      "grade": "Grade is required"
     }
     ```
 
@@ -1339,8 +1369,8 @@ Deletes grade by ID.
 
 * Require Authentication: true (teacher only)
 * Request
-  * Method: GET
-  * Route path: /api/grades:gradeId
+  * Method: DELETE
+  * Route path: /api/assignments/:assignmentId/grades/:studentId
   * Body: None
 
 * Successful Response
@@ -1351,7 +1381,42 @@ Deletes grade by ID.
 
     ```json
     {
-      "message": "Delete Successful"
+      "id": 1,
+      "teacher_id": 1,
+      "name": "Algebra",
+      "subject": "Math",
+      "grade": 8,
+      "period": 1,
+      "room": 315,
+      "students": [
+        {
+          "id": 5,
+          "firstName": "Harry",
+          "lastName": "Potter"
+        },
+        {
+          "id": 6,
+          "firstName": "Ronald",
+          "lastName": "Weasley"
+        },
+      ],
+      "assignments": [
+        {
+          "id": 1,
+          "class_id": 1,
+          "name": "Exponents Classwork",
+          "type": "CW",
+          "quarter": 1,
+          "due_date": "Mon, 19 Aug 2024",
+          "grades": [
+            {
+              "assignment_id": 1,
+              "student_id": 5,
+              "grade": 82
+            }
+          ]
+        }
+      ]
     }
     ```
 
@@ -1364,1207 +1429,5 @@ Deletes grade by ID.
     ```json
     {
       "message": "Grade couldn't be found"
-    }
-    ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-### Get all Spots owned by the Current User
-
-Returns all the spots owned (created) by the current user.
-
-* Require Authentication: true
-* Request
-  * Method: GET
-  * Route path: /api/spots/current
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "Spots": [
-        {
-          "id": 1,
-          "ownerId": 1,
-          "address": "123 Disney Lane",
-          "city": "San Francisco",
-          "state": "California",
-          "country": "United States of America",
-          "lat": 37.7645358,
-          "lng": -122.4730327,
-          "name": "App Academy",
-          "description": "Place where web developers are created",
-          "price": 123,
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36",
-          "avgRating": 4.5,
-          "previewImage": "image url"
-        }
-      ]
-    }
-    ```
-
-### Get details of a Spot from an id
-
-Returns the details of a spot specified by its id.
-
-* Require Authentication: false
-* Request
-  * Method: GET
-  * Route path: /api/spots/:spotId
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "id": 1,
-      "ownerId": 1,
-      "address": "123 Disney Lane",
-      "city": "San Francisco",
-      "state": "California",
-      "country": "United States of America",
-      "lat": 37.7645358,
-      "lng": -122.4730327,
-      "name": "App Academy",
-      "description": "Place where web developers are created",
-      "price": 123,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36" ,
-      "numReviews": 5,
-      "avgStarRating": 4.5,
-      "SpotImages": [
-        {
-          "id": 1,
-          "url": "image url",
-          "preview": true
-        },
-        {
-          "id": 2,
-          "url": "image url",
-          "preview": false
-        }
-      ],
-      "Owner": {
-        "id": 1,
-        "firstName": "John",
-        "lastName": "Smith"
-      }
-    }
-    ```
-
-* Error response: Couldn't find a Spot with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Spot couldn't be found"
-    }
-    ```
-
-### Create a Spot
-
-Creates and returns a new spot.
-
-* Require Authentication: true
-* Request
-  * Method: POST
-  * Route path: /api/spots
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "address": "123 Disney Lane",
-      "city": "San Francisco",
-      "state": "California",
-      "country": "United States of America",
-      "lat": 37.7645358,
-      "lng": -122.4730327,
-      "name": "App Academy",
-      "description": "Place where web developers are created",
-      "price": 123
-    }
-    ```
-
-* Successful Response
-  * Status Code: 201
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "id": 1,
-      "ownerId": 1,
-      "address": "123 Disney Lane",
-      "city": "San Francisco",
-      "state": "California",
-      "country": "United States of America",
-      "lat": 37.7645358,
-      "lng": -122.4730327,
-      "name": "App Academy",
-      "description": "Place where web developers are created",
-      "price": 123,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36"
-    }
-    ```
-
-* Error Response: Body validation errors
-  * Status Code: 400
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
-      "errors": {
-        "address": "Street address is required",
-        "city": "City is required",
-        "state": "State is required",
-        "country": "Country is required",
-        "lat": "Latitude must be within -90 and 90",
-        "lng": "Longitude must be within -180 and 180",
-        "name": "Name must be less than 50 characters",
-        "description": "Description is required",
-        "price": "Price per day must be a positive number"
-      }
-    }
-    ```
-
-### Add an Image to a Spot based on the Spot's id
-
-Create and return a new image for a spot specified by id.
-
-* Require Authentication: true
-* Require proper authorization: Spot must belong to the current user
-* Request
-  * Method: POST
-  * Route path: /api/spots/:spotId/images
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "url": "image url",
-      "preview": true
-    }
-    ```
-
-* Successful Response
-  * Status Code: 201
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "id": 1,
-      "url": "image url",
-      "preview": true
-    }
-    ```
-
-* Error response: Couldn't find a Spot with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Spot couldn't be found"
-    }
-    ```
-
-### Edit a Spot
-
-Updates and returns an existing spot.
-
-* Require Authentication: true
-* Require proper authorization: Spot must belong to the current user
-* Request
-  * Method: PUT
-  * Route path: /api/spots/:spotId
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "address": "123 Disney Lane",
-      "city": "San Francisco",
-      "state": "California",
-      "country": "United States of America",
-      "lat": 37.7645358,
-      "lng": -122.4730327,
-      "name": "App Academy",
-      "description": "Place where web developers are created",
-      "price": 123
-    }
-    ```
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "id": 1,
-      "ownerId": 1,
-      "address": "123 Disney Lane",
-      "city": "San Francisco",
-      "state": "California",
-      "country": "United States of America",
-      "lat": 37.7645358,
-      "lng": -122.4730327,
-      "name": "App Academy",
-      "description": "Place where web developers are created",
-      "price": 123,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-20 10:06:40"
-    }
-    ```
-
-* Error Response: Body validation errors
-  * Status Code: 400
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
-      "errors": {
-        "address": "Street address is required",
-        "city": "City is required",
-        "state": "State is required",
-        "country": "Country is required",
-        "lat": "Latitude must be within -90 and 90",
-        "lng": "Longitude must be within -180 and 180",
-        "name": "Name must be less than 50 characters",
-        "description": "Description is required",
-        "price": "Price per day must be a positive number"
-      }
-    }
-    ```
-
-* Error response: Couldn't find a Spot with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Spot couldn't be found"
-    }
-    ```
-
-### Delete a Spot
-
-Deletes an existing spot.
-
-* Require Authentication: true
-* Require proper authorization: Spot must belong to the current user
-* Request
-  * Method: DELETE
-  * Route path: /api/spots/:spotId
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Successfully deleted"
-    }
-    ```
-
-* Error response: Couldn't find a Spot with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Spot couldn't be found"
-    }
-    ```
-
-## REVIEWS
-
-### Get all Reviews of the Current User
-
-Returns all the reviews written by the current user.
-
-* Require Authentication: true
-* Request
-  * Method: GET
-  * Route path: /api/reviews/current
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "Reviews": [
-        {
-          "id": 1,
-          "userId": 1,
-          "spotId": 1,
-          "review": "This was an awesome spot!",
-          "stars": 5,
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36" ,
-          "User": {
-            "id": 1,
-            "firstName": "John",
-            "lastName": "Smith"
-          },
-          "Spot": {
-            "id": 1,
-            "ownerId": 1,
-            "address": "123 Disney Lane",
-            "city": "San Francisco",
-            "state": "California",
-            "country": "United States of America",
-            "lat": 37.7645358,
-            "lng": -122.4730327,
-            "name": "App Academy",
-            "price": 123,
-            "previewImage": "image url"
-          },
-          "ReviewImages": [
-            {
-              "id": 1,
-              "url": "image url"
-            }
-          ]
-        }
-      ]
-    }
-    ```
-
-### Get all Reviews by a Spot's id
-
-Returns all the reviews that belong to a spot specified by id.
-
-* Require Authentication: false
-* Request
-  * Method: GET
-  * Route path: /api/spots/:spotId/reviews
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "Reviews": [
-        {
-          "id": 1,
-          "userId": 1,
-          "spotId": 1,
-          "review": "This was an awesome spot!",
-          "stars": 5,
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36" ,
-          "User": {
-            "id": 1,
-            "firstName": "John",
-            "lastName": "Smith"
-          },
-          "ReviewImages": [
-            {
-              "id": 1,
-              "url": "image url"
-            }
-          ],
-        }
-      ]
-    }
-    ```
-
-* Error response: Couldn't find a Spot with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Spot couldn't be found"
-    }
-    ```
-
-### Create a Review for a Spot based on the Spot's id
-
-Create and return a new review for a spot specified by id.
-
-* Require Authentication: true
-* Request
-  * Method: POST
-  * Route path: /api/spots/:spotId/reviews
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "review": "This was an awesome spot!",
-      "stars": 5,
-    }
-    ```
-
-* Successful Response
-  * Status Code: 201
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "id": 1,
-      "userId": 1,
-      "spotId": 1,
-      "review": "This was an awesome spot!",
-      "stars": 5,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36"
-    }
-    ```
-
-* Error Response: Body validation errors
-  * Status Code: 400
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
-      "errors": {
-        "review": "Review text is required",
-        "stars": "Stars must be an integer from 1 to 5",
-      }
-    }
-    ```
-
-* Error response: Couldn't find a Spot with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Spot couldn't be found"
-    }
-    ```
-
-* Error response: Review from the current user already exists for the Spot
-  * Status Code: 500
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "User already has a review for this spot"
-    }
-    ```
-
-### Add an Image to a Review based on the Review's id
-
-Create and return a new image for a review specified by id.
-
-* Require Authentication: true
-* Require proper authorization: Review must belong to the current user
-* Request
-  * Method: POST
-  * Route path: /api/reviews/:reviewId/images
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "url": "image url"
-    }
-    ```
-
-* Successful Response
-  * Status Code: 201
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "id": 1,
-      "url": "image url"
-    }
-    ```
-
-* Error response: Couldn't find a Review with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Review couldn't be found"
-    }
-    ```
-
-* Error response: Cannot add any more images because there is a maximum of 10
-  images per resource
-  * Status Code: 403
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Maximum number of images for this resource was reached"
-    }
-    ```
-
-### Edit a Review
-
-Update and return an existing review.
-
-* Require Authentication: true
-* Require proper authorization: Review must belong to the current user
-* Request
-  * Method: PUT
-  * Route path: /api/reviews/:reviewId
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "review": "This was an awesome spot!",
-      "stars": 5,
-    }
-    ```
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "id": 1,
-      "userId": 1,
-      "spotId": 1,
-      "review": "This was an awesome spot!",
-      "stars": 5,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-20 10:06:40"
-    }
-    ```
-
-* Error Response: Body validation errors
-  * Status Code: 400
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
-      "errors": {
-        "review": "Review text is required",
-        "stars": "Stars must be an integer from 1 to 5",
-      }
-    }
-    ```
-
-* Error response: Couldn't find a Review with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Review couldn't be found"
-    }
-    ```
-
-### Delete a Review
-
-Delete an existing review.
-
-* Require Authentication: true
-* Require proper authorization: Review must belong to the current user
-* Request
-  * Method: DELETE
-  * Route path: /api/reviews/:reviewId
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Successfully deleted"
-    }
-    ```
-
-* Error response: Couldn't find a Review with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Review couldn't be found"
-    }
-    ```
-
-## BOOKINGS
-
-### Get all of the Current User's Bookings
-
-Return all the bookings that the current user has made.
-
-* Require Authentication: true
-* Request
-  * Method: GET
-  * Route path: /api/bookings/current
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "Bookings": [
-        {
-          "id": 1,
-          "spotId": 1,
-          "Spot": {
-            "id": 1,
-            "ownerId": 1,
-            "address": "123 Disney Lane",
-            "city": "San Francisco",
-            "state": "California",
-            "country": "United States of America",
-            "lat": 37.7645358,
-            "lng": -122.4730327,
-            "name": "App Academy",
-            "price": 123,
-            "previewImage": "image url"
-          },
-          "userId": 2,
-          "startDate": "2021-11-19",
-          "endDate": "2021-11-20",
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36"
-        }
-      ]
-    }
-    ```
-
-### Get all Bookings for a Spot based on the Spot's id
-
-Return all the bookings for a spot specified by id.
-
-* Require Authentication: true
-* Request
-  * Method: GET
-  * Route path: /api/spots/:spotId/bookings
-  * Body: none
-
-* Successful Response: If you ARE NOT the owner of the spot.
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "Bookings": [
-        {
-          "spotId": 1,
-          "startDate": "2021-11-19",
-          "endDate": "2021-11-20"
-        }
-      ]
-    }
-    ```
-
-* Successful Response: If you ARE the owner of the spot.
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "Bookings": [
-        {
-          "User": {
-            "id": 2,
-            "firstName": "John",
-            "lastName": "Smith"
-          },
-          "id": 1,
-          "spotId": 1,
-          "userId": 2,
-          "startDate": "2021-11-19",
-          "endDate": "2021-11-20",
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36"
-        }
-      ]
-    }
-    ```
-
-* Error response: Couldn't find a Spot with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Spot couldn't be found"
-    }
-    ```
-
-### Create a Booking from a Spot based on the Spot's id
-
-Create and return a new booking from a spot specified by id.
-
-* Require Authentication: true
-* Require proper authorization: Spot must NOT belong to the current user
-* Request
-  * Method: POST
-  * Route path: /api/spots/:spotId/bookings
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "startDate": "2021-11-19",
-      "endDate": "2021-11-20"
-    }
-    ```
-
-* Successful Response
-  * Status Code: 201
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "id": 1,
-      "spotId": 1,
-      "userId": 2,
-      "startDate": "2021-11-19",
-      "endDate": "2021-11-20",
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36"
-    }
-    ```
-
-* Error response: Body validation errors
-  * Status Code: 400
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
-      "errors": {
-        "startDate": "startDate cannot be in the past",
-        "endDate": "endDate cannot be on or before startDate"
-      }
-    }
-    ```
-
-* Error response: Couldn't find a Spot with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Spot couldn't be found"
-    }
-    ```
-
-* Error response: Booking conflict
-  * Status Code: 403
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Sorry, this spot is already booked for the specified dates",
-      "errors": {
-        "startDate": "Start date conflicts with an existing booking",
-        "endDate": "End date conflicts with an existing booking"
-      }
-    }
-    ```
-
-### Edit a Booking
-
-Update and return an existing booking.
-
-* Require Authentication: true
-* Require proper authorization: Booking must belong to the current user
-* Request
-  * Method: PUT
-  * Route path: /api/bookings/:bookingId
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "startDate": "2021-11-19",
-      "endDate": "2021-11-20"
-    }
-    ```
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "id": 1,
-      "spotId": 1,
-      "userId": 2,
-      "startDate": "2021-11-19",
-      "endDate": "2021-11-20",
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-20 10:06:40"
-    }
-    ```
-
-* Error response: Body validation errors
-  * Status Code: 400
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
-      "errors": {
-        "startDate": "startDate cannot be in the past",
-        "endDate": "endDate cannot be on or before startDate"
-      }
-    }
-    ```
-
-* Error response: Couldn't find a Booking with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Booking couldn't be found"
-    }
-    ```
-
-* Error response: Can't edit a booking that's past the end date
-  * Status Code: 403
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Past bookings can't be modified"
-    }
-    ```
-
-* Error response: Booking conflict
-  * Status Code: 403
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Sorry, this spot is already booked for the specified dates",
-      "errors": {
-        "startDate": "Start date conflicts with an existing booking",
-        "endDate": "End date conflicts with an existing booking"
-      }
-    }
-    ```
-
-### Delete a Booking
-
-Delete an existing booking.
-
-* Require Authentication: true
-* Require proper authorization: Booking must belong to the current user or the
-  Spot must belong to the current user
-* Request
-  * Method: DELETE
-  * Route path: /api/bookings/:bookingId
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Successfully deleted"
-    }
-    ```
-
-* Error response: Couldn't find a Booking with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Booking couldn't be found"
-    }
-    ```
-
-* Error response: Bookings that have been started can't be deleted
-  * Status Code: 403
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Bookings that have been started can't be deleted"
-    }
-    ```
-
-## IMAGES
-
-### Delete a Spot Image
-
-Delete an existing image for a Spot.
-
-* Require Authentication: true
-* Require proper authorization: Spot must belong to the current user
-* Request
-  * Method: DELETE
-  * Route path: /api/spot-images/:imageId
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Successfully deleted"
-    }
-    ```
-
-* Error response: Couldn't find a Spot Image with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Spot Image couldn't be found"
-    }
-    ```
-
-### Delete a Review Image
-
-Delete an existing image for a Review.
-
-* Require Authentication: true
-* Require proper authorization: Review must belong to the current user
-* Request
-  * Method: DELETE
-  * Route path: /api/review-images/:imageId
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Successfully deleted"
-    }
-    ```
-
-* Error response: Couldn't find a Review Image with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Review Image couldn't be found"
-    }
-    ```
-
-## Add Query Filters to Get All Spots
-
-Return spots filtered by query parameters.
-
-* Require Authentication: false
-* Request
-  * Method: GET
-  * Route path: /api/spots
-  * Query Parameters
-    * page: integer, minimum: 1, default: 1
-    * size: integer, minimum: 1, maximum: 20, default: 20
-    * minLat: decimal, optional
-    * maxLat: decimal, optional
-    * minLng: decimal, optional
-    * maxLng: decimal, optional
-    * minPrice: decimal, optional, minimum: 0
-    * maxPrice: decimal, optional, minimum: 0
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "Spots": [
-        {
-          "id": 1,
-          "ownerId": 1,
-          "address": "123 Disney Lane",
-          "city": "San Francisco",
-          "state": "California",
-          "country": "United States of America",
-          "lat": 37.7645358,
-          "lng": -122.4730327,
-          "name": "App Academy",
-          "description": "Place where web developers are created",
-          "price": 123,
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36",
-          "avgRating": 4.5,
-          "previewImage": "image url"
-        }
-      ],
-      "page": 2,
-      "size": 20
-    }
-    ```
-
-* Error Response: Query parameter validation errors
-  * Status Code: 400
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
-      "errors": {
-        "page": "Page must be greater than or equal to 1",
-        "size": "Size must be between 1 and 20",
-        "maxLat": "Maximum latitude is invalid",
-        "minLat": "Minimum latitude is invalid",
-        "minLng": "Maximum longitude is invalid",
-        "maxLng": "Minimum longitude is invalid",
-        "minPrice": "Minimum price must be greater than or equal to 0",
-        "maxPrice": "Maximum price must be greater than or equal to 0"
-      }
     }
     ```

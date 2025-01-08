@@ -209,6 +209,26 @@ button:hover {
     background-color: #ff17455a;
 }
 
+.fA {
+    background-color: #00e677a6;
+}
+
+.fB {
+    background-color: #c8ff00a6;
+}
+
+.fC {
+    background-color: #ffea00a6;
+}
+
+.fD {
+    background-color: #ff9100a6;
+}
+
+.fF {
+    background-color: #ff1745a6;
+}
+
 .noGrade {
     background-color: #0000004b;
 }

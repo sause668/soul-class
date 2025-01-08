@@ -1,119 +1,131 @@
-## Pages
+# Flask React Project
 
-### Landing Page
-* As a logged out user, I should be able to view the landing page.
-    * When on the `/` page:
-        * I can create a new profile.
-        * I can log into an existing profile.
+This is the starter for the Flask React project.
 
-### Dashboard Page (Teacher)
-* As a logged in teacher user, I should be able to view the dashboard page. 
-    * When on the `/` page:
-        * I can view all my classes with the number of students in each.
-        * I can navigate to the grade book page of an individual class.
-        * I can create, edit, and delete a class.
-        
-### Dashboard Page (Student)
-* As a logged in student user, I should be able to view the dashboard page. 
-    * When on the `/` page:
-        * I can view all my classes with my current grade in each of them.
-        * I can navigate to the grade page of an individual class.
-        
-### Grade Book Page
-* As a logged in teacher user, I should be able to view the grade book page. 
-    * When on the `/gradebook/:classId` page:
-        * I can view all students, assignments and grades associated with one of my individual classes.
-        * I can create, edit, and delete an assignment.
-        * I can create, edit, and delete a grade.
+## Getting started
 
-### Grades Page
-* As a logged in student user, I should be able to view the grade page. 
-    * When on the `/grades/:classId` page:
-        * I can view all assignments and grades associated with one of my individual classes.
+1. Clone this repository (only this branch).
 
-## Classes
+2. Install dependencies.
 
-### Create Class
-* As a logged-in teacher user, I should be able to create a new class.
-    * When on the `/` page:
-       * I can create a new class.
-        * I should receive a message confirming the new class was created successfully.
-       * I should be able to view the new class on my class list after creation.
-       * If I am not authenticated, I should receive a 401 error with the message "Authentication required."
-       * If I am not a teacher user, I should receive a 401 error with the message "Teacher account required."
+   ```bash
+   pipenv install -r requirements.txt
+   ```
 
-### Edit Class
-* As a logged-in teacher user, I should be able to edit my classes.
-    * When on the `/` page:
-       * I can edit a class from my class list.
-        * I should receive a message confirming the class was edited successfully.
-       * I should be able to view the changes to my class in my class list after confirmation.
-       * If I am not authenticated, I should receive a 401 error with the message "Authentication required."
-       * If I am not a teacher user, I should receive a 401 error with the message "Teacher account required."
+3. Create a __.env__ file based on the example with proper settings for your
+   development environment.
 
-### Delete Class
-* As a logged-in teacher user, I should be able to delete my classes.
-    * When on the `/` page:
-       * I can delete a class from my class list.
-        * I should receive a message confirming the class was deleted successfully.
-       * I should not be able to see the deleted class in my class list after confirmation.
-       * If I am not authenticated, I should receive a 401 error with the message "Authentication required."
-       * If I am not a teacher user, I should receive a 401 error with the message "Teacher account required."
+4. Make sure the SQLite3 database connection URL is in the __.env__ file.
 
-## Assignments
+5. This starter organizes all tables inside the `flask_schema` schema, defined
+   by the `SCHEMA` environment variable.  Replace the value for
+   `SCHEMA` with a unique name, **making sure you use the snake_case
+   convention.**
 
-### Create Assignment
-* As a logged-in teacher user, I should be able to create a new assignment.
-    * When on the `/gradebook/:classId` page:
-       * I can create a new assignment.
-        * I should receive a message confirming the new assignment was created successfully.
-       * I should be able to view the new assignment on my grade book table after creation.
-       * If I am not authenticated, I should receive a 401 error with the message "Authentication required."
-       * If I am not a teacher user, I should receive a 401 error with the message "Teacher account required."
+6. Get into your pipenv, migrate your database, seed your database, and run your
+   Flask app:
 
-### Edit Assignment
-* As a logged-in teacher user, I should be able to edit my assignments.
-    * When on the `/gradebook/:classId` page:
-       * I can edit an assignment from my grade book table.
-        * I should receive a message confirming the assignment was edited successfully.
-       * I should be able to view the changes to my assignment in my grade book table after confirmation.
-       * If I am not authenticated, I should receive a 401 error with the message "Authentication required."
-       * If I am not a teacher user, I should receive a 401 error with the message "Teacher account required."
+   ```bash
+   pipenv shell
+   ```
 
-### Delete Assignment
-* As a logged-in teacher user, I should be able to delete my assignments.
-    * When on the `/gradebook/:classId` page:
-       * I can delete an assignment from my grade book table.
-        * I should receive a message confirming the assignment was deleted successfully.
-       * I should not be able to see the deleted assignment in my grade book table after confirmation.
-       * If I am not authenticated, I should receive a 401 error with the message "Authentication required."
-       * If I am not a teacher user, I should receive a 401 error with the message "Teacher account required."
+   ```bash
+   flask db upgrade
+   ```
 
-## Grades
+   ```bash
+   flask seed all
+   ```
 
-### Create Grade
-* As a logged-in teacher user, I should be able to create a new grade.
-    * When on the `/gradebook/:classId` page:
-       * I can create a new grade.
-        * I should receive a message confirming the new grade was created successfully.
-       * I should be able to view the new grade on my grade book table after creation.
-       * If I am not authenticated, I should receive a 401 error with the message "Authentication required."
-       * If I am not a teacher user, I should receive a 401 error with the message "Teacher account required."
+   ```bash
+   flask run
+   ```
 
-### Edit Grade
-* As a logged-in teacher user, I should be able to edit my grades.
-    * When on the `/gradebook/:classId` page:
-       * I can edit a grade from my grade book table.
-        * I should receive a message confirming the grade was edited successfully.
-       * I should be able to view the changes to my grade in my grade book table after confirmation.
-       * If I am not authenticated, I should receive a 401 error with the message "Authentication required."
-       * If I am not a teacher user, I should receive a 401 error with the message "Teacher account required."
+7. The React frontend has no styling applied. Copy the __.css__ files from your
+   Authenticate Me project into the corresponding locations in the
+   __react-vite__ folder to give your project a unique look.
 
-### Delete Grade
-* As a logged-in teacher user, I should be able to delete my grade.
-    * When on the `/gradebook/:classId` page:
-       * I can delete a grade from my grade book table.
-        * I should receive a message confirming the grade was deleted successfully.
-       * I should not be able to see the deleted grade in my grade book table after confirmation.
-       * If I am not authenticated, I should receive a 401 error with the message "Authentication required."
-       * If I am not a teacher user, I should receive a 401 error with the message "Teacher account required."
+8. To run the React frontend in development, `cd` into the __react-vite__
+   directory and run `npm i` to install dependencies. Next, run `npm run build`
+   to create the `dist` folder. The starter has modified the `npm run build`
+   command to include the `--watch` flag. This flag will rebuild the __dist__
+   folder whenever you change your code, keeping the production version up to
+   date.
+
+## Deployment through Render.com
+
+First, recall that Vite is a development dependency, so it will not be used in
+production. This means that you must already have the __dist__ folder located in
+the root of your __react-vite__ folder when you push to GitHub. This __dist__
+folder contains your React code and all necessary dependencies minified and
+bundled into a smaller footprint, ready to be served from your Python API.
+
+Begin deployment by running `npm run build` in your __react-vite__ folder and
+pushing any changes to GitHub.
+
+Refer to your Render.com deployment articles for more detailed instructions
+about getting started with [Render.com], creating a production database, and
+deployment debugging tips.
+
+From the Render [Dashboard], click on the "New +" button in the navigation bar,
+and click on "Web Service" to create the application that will be deployed.
+
+Select that you want to "Build and deploy from a Git repository" and click
+"Next". On the next page, find the name of the application repo you want to
+deploy and click the "Connect" button to the right of the name.
+
+Now you need to fill out the form to configure your app. Most of the setup will
+be handled by the __Dockerfile__, but you do need to fill in a few fields.
+
+Start by giving your application a name.
+
+Make sure the Region is set to the location closest to you, the Branch is set to
+"main", and Runtime is set to "Docker". You can leave the Root Directory field
+blank. (By default, Render will run commands from the root directory.)
+
+Select "Free" as your Instance Type.
+
+### Add environment variables
+
+In the development environment, you have been securing your environment
+variables in a __.env__ file, which has been removed from source control (i.e.,
+the file is gitignored). In this step, you will need to input the keys and
+values for the environment variables you need for production into the Render
+GUI.
+
+Add the following keys and values in the Render GUI form:
+
+- SECRET_KEY (click "Generate" to generate a secure secret for production)
+- FLASK_ENV production
+- FLASK_APP app
+- SCHEMA (your unique schema name, in snake_case)
+
+In a new tab, navigate to your dashboard and click on your Postgres database
+instance.
+
+Add the following keys and values:
+
+- DATABASE_URL (copy value from the **External Database URL** field)
+
+**Note:** Add any other keys and values that may be present in your local
+__.env__ file. As you work to further develop your project, you may need to add
+more environment variables to your local __.env__ file. Make sure you add these
+environment variables to the Render GUI as well for the next deployment.
+
+### Deploy
+
+Now you are finally ready to deploy! Click "Create Web Service" to deploy your
+project. The deployment process will likely take about 10-15 minutes if
+everything works as expected. You can monitor the logs to see your Dockerfile
+commands being executed and any errors that occur.
+
+When deployment is complete, open your deployed site and check to see that you
+have successfully deployed your Flask application to Render! You can find the
+URL for your site just below the name of the Web Service at the top of the page.
+
+**Note:** By default, Render will set Auto-Deploy for your project to true. This
+setting will cause Render to re-deploy your application every time you push to
+main, always keeping it up to date.
+
+[Render.com]: https://render.com/
+[Dashboard]: https://dashboard.render.com/
