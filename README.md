@@ -1,5 +1,5 @@
 # Soul Academy
-Brief Description
+This site is based on my previous career as a middle school teacher.  The online portal was helpful anf efficient for my while teaching so I wanted to make my own.  The site has two login, teacher and student, that go to different views of the site.  The students are able to view the class information and grade. The teachers able to view their class information with all their students.  The can create/edit classes and add/ remove students. They and also modify assignments add grades.  All changes for reflected on the students side then they log in.
 
 Contact: [LinkedIn](https://www.linkedin.com/in/kamara-reynolds-41248686/)
 
@@ -37,56 +37,6 @@ https://soul-class.onrender.com/
 [dash-student]: ./images/dash-student.png
 [gradebook]: ./images/gradebook.png
 [grades]: ./images/grades.png
-
-
-<!-- # Installation 
-1. Clone this repository (only this branch).
-
-2. Install dependencies.
-
-   ```bash
-   pipenv install -r requirements.txt
-   ```
-
-3. Create a __.env__ file based on the example with proper settings for your
-   development environment.
-
-4. Make sure the SQLite3 database connection URL is in the __.env__ file.
-
-5. This starter organizes all tables inside the `flask_schema` schema, defined
-   by the `SCHEMA` environment variable.  Replace the value for
-   `SCHEMA` with a unique name, **making sure you use the snake_case
-   convention.**
-
-6. Get into your pipenv, migrate your database, seed your database, and run your
-   Flask app:
-
-   ```bash
-   pipenv shell
-   ```
-
-   ```bash
-   flask db upgrade
-   ```
-
-   ```bash
-   flask seed all
-   ```
-
-   ```bash
-   flask run
-   ```
-
-7. The React frontend has no styling applied. Copy the __.css__ files from your
-   Authenticate Me project into the corresponding locations in the
-   __react-vite__ folder to give your project a unique look.
-
-8. To run the React frontend in development, `cd` into the __react-vite__
-   directory and run `npm i` to install dependencies. Next, run `npm run build`
-   to create the `dist` folder. The starter has modified the `npm run build`
-   command to include the `--watch` flag. This flag will rebuild the __dist__
-   folder whenever you change your code, keeping the production version up to
-   date. -->
 
 
 # Endpoints
