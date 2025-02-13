@@ -18,7 +18,7 @@ class Student(db.Model):
 
     user = db.relationship("User", back_populates="student")
     classes = db.relationship("Class", uselist=True, secondary=students_classes, back_populates="students")
-    siblings = db.relationship("Student", uselist=True, secondary=_siblings, back_populates="students")
+    siblings = db.relationship("User", uselist=True, secondary=_siblings)
 
     def to_dict(self):
         return {
@@ -34,7 +34,7 @@ class Student(db.Model):
             'grade': self.grade,
             'first_name': self.user.first_name,
             'last_name': self.user.last_name,
-            'siblings': [sibling.info_sibling() for sibling in self.siblings]
+            'siblings': [sibling.to_dict() for sibling in self.siblings]
         }
     
     def info_sibling(self):
