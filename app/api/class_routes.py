@@ -21,7 +21,8 @@ def get_all_classes():
             join(StudentClass, Class.id == StudentClass.class_id).\
             filter_by(student_id=current_user.student.id).all()
         return jsonify([class_.grades(current_user.student.id) for class_ in classes])
-    
+      
+
 @class_routes.route('/<int:class_id>', methods=['GET'])
 @login_required
 def get_class_by_id(class_id):

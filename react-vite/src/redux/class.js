@@ -44,9 +44,48 @@ export const fetchClasses = () => async (dispatch) => {
     }
 };
 
+export const fetchStudentClasses = (params) => async (dispatch) => {
+    const { studentId } = params;
+	const response = await csrfFetch(`/api/students/${studentId}/classes`);
+    
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClasses(data));
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
+};
+
 export const fetchClass = (params) => async (dispatch) => {
     const { classId } = params
 	const response = await csrfFetch(`/api/classes/${classId}`);
+    
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClass(data));
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            console.log(errorMessages)
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
+};
+
+export const fetchStudentClass = (params) => async (dispatch) => {
+    const { studentId, classId } = params
+	const response = await csrfFetch(`/api/students/${studentId}/classes/${classId}`);
     
     if (response.ok) {
         const data = await response.json();

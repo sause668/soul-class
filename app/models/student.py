@@ -34,14 +34,15 @@ class Student(db.Model):
             'grade': self.grade,
             'first_name': self.user.first_name,
             'last_name': self.user.last_name,
-            'siblings': [sibling.to_dict() for sibling in self.siblings]
         }
     
-    def info_sibling(self):
+    def search_info(self):
         return {
             'id': self.id,
             'user_id': self.user_id,
+            'email': self.user.email,
             'grade': self.grade,
             'first_name': self.user.first_name,
             'last_name': self.user.last_name,
+            'siblings': [sibling.sibling_info() for sibling in self.siblings],
         }

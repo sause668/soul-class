@@ -53,6 +53,13 @@ class User(db.Model, UserMixin):
                 'student': self.student.to_dict()
             }
         
+    def sibling_info(self):
+        return {
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'student': self.student.to_dict()
+        }
+        
     def signup_id(self):
         return self.id
     

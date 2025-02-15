@@ -3,6 +3,8 @@ import HomePage from '../components/HomePage/HomePage';
 import GradeBook from '../components/GradeBook/GradeBook';
 import Grades from '../components/Grades/Grades';
 import Layout from './Layout';
+import StudentsPage from '../components/StudentsPage/StudentsPage';
+import StudentPage from '../components/StudentPage/StudentPage';
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +38,19 @@ export const router = createBrowserRouter([
             path: ":classId",
             element: <Grades/>,
           },
+        ]
+      },
+      {
+        path: 'students/',
+        children: [
+          {
+            path: '',
+            element: <StudentsPage/>
+          },
+          {
+            path: ':studentId',
+            element: <StudentPage/>
+          }
         ]
       }
       

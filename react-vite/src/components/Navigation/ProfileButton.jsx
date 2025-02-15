@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaUserCircle } from 'react-icons/fa';
 import { thunkLogout } from "../../redux/session";
 import "./Navigation.css";
+import { useNavigate } from "react-router-dom";
 
 function ProfileButton() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const user = useSelector((store) => store.session.user);
   const ulRef = useRef();
@@ -14,6 +16,11 @@ function ProfileButton() {
     e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
     setShowMenu(!showMenu);
   };
+
+  const handleNavStudents = () => {
+    navigate(`/students`)
+    setShowMenu(false);
+  }
 
   useEffect(() => {
     if (!showMenu) return;
@@ -46,6 +53,9 @@ function ProfileButton() {
         <div className={"profile-dropdown whiteBox"} ref={ulRef}>
           <div className="navDropdownItem">{user.first_name} {user.last_name}</div>
           <div className="navDropdownItem">{user.email}</div>
+          <div className="navDropdownItem">
+            <button id="navLogout" onClick={handleNavStudents}>Student Search</button>
+          </div>
           <div className="navDropdownItem">
             <button id="navLogout" onClick={logout}>Log Out</button>
           </div>
