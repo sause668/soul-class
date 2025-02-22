@@ -5,6 +5,7 @@ import Grades from '../components/Grades/Grades';
 import Layout from './Layout';
 import StudentsPage from '../components/StudentsPage/StudentsPage';
 import StudentPage from '../components/StudentPage/StudentPage';
+import StudentGrades from '../components/StudentGrades/StudentGrades';
 
 export const router = createBrowserRouter([
   {
@@ -48,8 +49,18 @@ export const router = createBrowserRouter([
             element: <StudentsPage/>
           },
           {
-            path: ':studentId',
-            element: <StudentPage/>
+            path: ':studentId/',
+            children : [
+              {
+                path: '',
+                element: <StudentPage/>
+              },
+              {
+                path: 'classes/:classId',
+                element: <StudentGrades/>
+              }
+            ]
+            
           }
         ]
       }
