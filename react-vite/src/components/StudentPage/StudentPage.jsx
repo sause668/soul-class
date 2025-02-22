@@ -21,15 +21,15 @@ export default function StudentPage() {
     navigate(0);
   }
 
-//   const handleGrades = (classId) => {
-//     navigate(`/grades/${classId}`)
-//   }
+  const handleGrades = (classId) => {
+    navigate(`/students/${studentId}/classes/${classId}`)
+  }
 
   useEffect(() => {
     dispatch(fetchStudent({studentId}))
     .then(() => dispatch(fetchStudentClasses({studentId})))
     .then(() => setIsLoaded(true));
-  }, [dispatch]);
+  }, [dispatch, studentId]);
 
   
 
@@ -48,10 +48,13 @@ export default function StudentPage() {
                     <h2 className="profileInfoDB">{student.first_name} {student.last_name}</h2>
                     <h4 className="profileInfoDB">Student</h4>
                     <h4 className="profileInfoDB">Grade: {student.grade}th</h4>
-                    <h4>Siblings</h4>
-                    {student.siblings.map((sibling, index) => (
-                        <h3 onClick={()=>handleNavStudent(sibling.student.id)} key={`sibling${index}`}>{sibling.first_name} {sibling.last_name}</h3>
-                    ))}
+                    {student.siblings.length > 0 && (<>
+                        <h3>Siblings:</h3>
+                        {student.siblings.map((sibling, index) => (
+                            <button onClick={()=>handleNavStudent(sibling.student.id)} key={`sibling${index}`}>{sibling.first_name} {sibling.last_name}</button>
+                        ))}
+                    </>)}
+                    
                 </div>
               </div>
             </div>
