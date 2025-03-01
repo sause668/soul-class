@@ -9,11 +9,16 @@ export default function StudentsPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const students = useSelector((state) => state.student.students);
+  const [rowHighlight, setRowHighlight] = useState(-1)
   const [isLoaded, setIsLoaded] = useState(false);
 
   const handleNavStudent = (studentId) => {
     navigate(`/students/${studentId}`)
   }
+
+//   const handleMouseOver = (index) => {
+
+//   }
 
   useEffect(() => {
     dispatch(fetchStudents()).then(() => setIsLoaded(true));
@@ -26,16 +31,16 @@ export default function StudentsPage() {
     <>
       {isLoaded && (
         <div id='studentsCon'>
-            <div id="HeaderConSS">
-                <div id="titleConSS">
+            <div id="headerConSS">
+                <div id="titleConSS" className="lightBlueBox">
                     <h1 id="titleSS">Student Search</h1>
                 </div>
-                <div id="searchConSS">
+                <div id="searchConSS" className="lightBlueBox">
                     <input type="text" name="studentSearch" id="searchInputSS" placeholder="Search" />
                 </div>
             </div>
 
-            <div id="tableConSS">
+            <div id="tableConSS" className="lightBlueBox">
                 <table id="tableSS">
                     <thead id="tableHeadSS">
                         <tr className="tableHeadRowCC">
@@ -45,17 +50,27 @@ export default function StudentsPage() {
                         </tr>
                     </thead>
                     <tbody id="tableBodySS">
-                        {students.map((student, index) => (
-                            <tr 
-                                className="tableBodyRowCC" 
-                                key={`studentSearchTable${index}`}
-                                onClick={()=>handleNavStudent(student.id)}
-                            >
-                                <td className="tableCellSS" >{student.last_name}</td>
-                                <td className="tableCellSS" >{student.first_name}</td>
-                                <td className="tableCellSS" >{student.grade}</td>
-                            </tr>
-                        ))}
+                        {students.map((student, index) => {
+
+                            const studentInfo = [student.last_name, student.first_name, student.grade]
+                            return (
+                                <tr 
+                                    className="tableBodyRowCC" 
+                                    key={`studentSearchTable${index}`}
+                                    onClick={()=>handleNavStudent(student.id)}
+                                >
+                                    {studentInfo.map((info, index2) => (
+                                        <td 
+                                            key={`studentInfo${index}-${index2}`}
+                                            className={`tableCellSS tableBodyCellSS ${index === rowHighlight && 'cellHighlightSS'}`} 
+                                            onMouseOver={()=> setRowHighlight(index)} 
+                                            onMouseLeave={()=> setRowHighlight(-1)}
+                                        >{info}</td>
+                                    ))}
+                                </tr>
+                            )
+                            
+                        })}
                     </tbody>
                 </table>
             </div>
