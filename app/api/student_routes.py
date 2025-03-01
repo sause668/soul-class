@@ -1,6 +1,7 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from flask_login import login_required
-from app.models import Student
+from sqlalchemy import or_
+from app.models import Student, User
 from app.models import Class
 from app.models import StudentClass
 
@@ -13,8 +14,17 @@ def users():
     """
     Get all student users
     """
-    students = Student.query.all()
-    return jsonify([student.info() for student in students])
+    search = request.args.get('search')
+    if search:
+        students = Student.query.\
+            join(User, Student.user_id == User.id).\
+            filter((User.first_name.ilike(f'{search}%')) | (User.last_name.ilike(f'{search}%')))
+
+        return jsonify([student.info() for student in students])
+    else: 
+        students = Student.query.all()
+        return jsonify([student.info() for student in students])
+
 
 @student_routes.route('/<int:student_id>')
 @login_required

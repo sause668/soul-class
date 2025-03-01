@@ -43,6 +43,26 @@ export const fetchStudents = () => async (dispatch) => {
     }
 };
 
+export const fetchSearchStudents = (params) => async (dispatch) => {
+    const { search } = params;
+	const response = await csrfFetch(`/api/students?search=${search}`);
+    
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setStudents(data));
+        return data
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
+};
+
 export const fetchStudent = (params) => async (dispatch) => {
     const { studentId } = params;
 	const response = await csrfFetch(`/api/students/${studentId}`);
