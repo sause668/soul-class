@@ -3,22 +3,34 @@ import { useDispatch, useSelector } from "react-redux";
 
 import "./StudentsPage.css";
 import { useNavigate } from "react-router-dom";
-import { fetchStudents } from "../../redux/student";
+import { fetchSearchStudents, fetchStudents } from "../../redux/student";
 
 export default function StudentsPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const students = useSelector((state) => state.student.students);
-  const [rowHighlight, setRowHighlight] = useState(-1)
+  const [search, setSearch] = useState('')
+  const [rowHighlight, setRowHighlight] = useState(-1);
   const [isLoaded, setIsLoaded] = useState(false);
 
   const handleNavStudent = (studentId) => {
     navigate(`/students/${studentId}`)
   }
 
-//   const handleMouseOver = (index) => {
-
-//   }
+  const handleSearch = (e) => {
+    // const newSearch = 
+    setSearch(e.target.value);
+    dispatch(fetchSearchStudents({search: e.target.value}))
+        .then((res) => {
+            if (res && res.errors) {
+            // setErrors(res.errors)
+            console.log('nah')
+            } else {
+            // setIsLoaded(true)
+            console.log('bah')
+            }
+        })
+  }
 
   useEffect(() => {
     dispatch(fetchStudents()).then(() => setIsLoaded(true));
@@ -36,7 +48,14 @@ export default function StudentsPage() {
                     <h1 id="titleSS">Student Search</h1>
                 </div>
                 <div id="searchConSS" className="lightBlueBox">
-                    <input type="text" name="studentSearch" id="searchInputSS" placeholder="Search" />
+                    <input 
+                        type="text" 
+                        name="studentSearch" 
+                        id="searchInputSS" 
+                        placeholder="Search" 
+                        value={search}
+                        onChange={handleSearch}
+                    />
                 </div>
             </div>
 
