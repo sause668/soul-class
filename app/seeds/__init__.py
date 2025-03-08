@@ -2,6 +2,7 @@ from flask.cli import AppGroup
 from .users import seed_users, undo_users
 from .teachers import seed_teachers, undo_teachers
 from .students import seed_students, undo_students
+from .siblings import seed_siblings, undo_siblings
 from .classes import seed_classes, undo_classes
 from .students_classes import seed_students_classes, undo_students_classes
 from .assignments import seed_assignments, undo_assignments
@@ -21,6 +22,7 @@ def seed():
     undo_assignments()
     undo_students_classes()
     undo_classes()
+    undo_siblings()
     undo_students()
     undo_teachers()
     undo_users()
@@ -29,6 +31,7 @@ def seed():
     seed_teachers()
     seed_students()
     seed_classes()
+    seed_siblings()
     seed_students_classes()
     seed_assignments()
     seed_grades()
@@ -41,6 +44,7 @@ def undo():
     undo_assignments()
     undo_students_classes()
     undo_classes()
+    undo_siblings()
     undo_students()
     undo_teachers()
     undo_users()

@@ -27,3 +27,13 @@
     color: white;
     margin-right: 1rem;
 }
+
+@media (max-width:400px) {
+    #aboutConF {
+        padding-left: .5rem;
+    }
+
+    #soulSiteBtn {
+        margin-right: .5rem;
+    }
+}
