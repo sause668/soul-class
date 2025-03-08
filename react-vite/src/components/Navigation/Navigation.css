@@ -22,6 +22,33 @@
   box-shadow: 0px 3px 3px #a6a6a6;
 }
 
+#backButtonCon {
+  border-radius: 90px;
+  margin-left: 1rem;
+}
+
+#backButton {
+  padding: .3rem;
+  border-radius: 50px;
+}
+
+#backButton:hover {
+  background-color: #007AFF;
+  border-color: #007AFF;
+}
+
+#backButtonIcon {
+  height: 2rem;
+  width: 2rem;
+  color: white;
+  transition: color .2s;
+}
+
+#backButtonIcon:hover {
+  color: #005ec3;
+  transition: color .2s;
+}
+
 #navLogoCon {
   padding: .5rem;
   opacity: 0;
