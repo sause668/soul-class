@@ -88,6 +88,17 @@
     transition: background-color .2s;
 }
 
+@media (max-width:600px) {
+    #headerConSS {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 1rem;
+        /* width: 40%; */
+        margin-bottom: 1rem;
+    }
+}
+
 
 
 

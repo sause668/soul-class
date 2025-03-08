@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./StudentsPage.css";
 import { useNavigate } from "react-router-dom";
 import { fetchSearchStudents, fetchStudents } from "../../redux/student";
+import { sortStudents } from "../../utils/Grading";
 
 export default function StudentsPage() {
   const dispatch = useDispatch();
@@ -23,11 +24,11 @@ export default function StudentsPage() {
     dispatch(fetchSearchStudents({search: e.target.value}))
         .then((res) => {
             if (res && res.errors) {
-            // setErrors(res.errors)
-            console.log('nah')
+            // setErrors(res.errors);
+            // console.log('nah')
             } else {
             // setIsLoaded(true)
-            console.log('bah')
+            // console.log('bah')
             }
         })
   }
@@ -69,8 +70,7 @@ export default function StudentsPage() {
                         </tr>
                     </thead>
                     <tbody id="tableBodySS">
-                        {students.map((student, index) => {
-
+                        {students.sort((s1, s2) => sortStudents(s1, s2)).map((student, index) => {
                             const studentInfo = [student.last_name, student.first_name, student.grade]
                             return (
                                 <tr 
