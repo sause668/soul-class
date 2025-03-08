@@ -24,7 +24,7 @@
 
 #backButtonCon {
   border-radius: 90px;
-  margin-left: 1rem;
+  /* margin-left: .5rem; */
 }
 
 #backButton {
@@ -116,6 +116,6 @@
 
 @media (max-width:450px) {
   #navTitle {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 }

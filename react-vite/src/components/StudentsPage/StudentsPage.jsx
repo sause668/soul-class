@@ -10,7 +10,8 @@ export default function StudentsPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const students = useSelector((state) => state.student.students);
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState('');
+  const [searchDelay, setSearchDelay] = useState(setTimeout(()=>null, 5000))
   const [rowHighlight, setRowHighlight] = useState(-1);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -19,9 +20,14 @@ export default function StudentsPage() {
   }
 
   const handleSearch = (e) => {
-    // const newSearch = 
+    clearTimeout(searchDelay);
     setSearch(e.target.value);
-    dispatch(fetchSearchStudents({search: e.target.value}))
+    setSearchDelay(setTimeout(()=>studentSearch(e.target.value), 250));
+  }
+
+  const studentSearch = (searchStr) => {
+    // setSearch(searchStr);
+    dispatch(fetchSearchStudents({search: searchStr}))
         .then((res) => {
             if (res && res.errors) {
             // setErrors(res.errors);
@@ -88,19 +94,10 @@ export default function StudentsPage() {
                                     ))}
                                 </tr>
                             )
-                            
                         })}
                     </tbody>
                 </table>
             </div>
-            
-            {/* <div id="studentsCon">
-            {students.map((student, index) => (
-                <div key={`studentInfo${index}`}>
-                    <h3 onClick={()=>handleNavStudent(student.id)} >{student.first_name} {student.last_name}</h3>
-                </div>
-            ))}
-            </div> */}
         </div>
         
       )}
