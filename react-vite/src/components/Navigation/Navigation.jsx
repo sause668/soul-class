@@ -22,7 +22,7 @@ function Navigation() {
           </button>
         </div>
       )}
-      <div id="navTitleCon">
+      <div id={(currentPath === '/') ? 'navTitleCon':''} >
         <h1 id="navTitle" onClick={()=>nav('/')}>Soul Academy</h1>
       </div>
       <ProfileButton/>
