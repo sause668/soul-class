@@ -14,6 +14,7 @@ export default function StudentsPage() {
   const [searchDelay, setSearchDelay] = useState(setTimeout(()=>null, 5000))
   const [rowHighlight, setRowHighlight] = useState(-1);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const handleNavStudent = (studentId) => {
     navigate(`/students/${studentId}`)
@@ -26,16 +27,11 @@ export default function StudentsPage() {
   }
 
   const studentSearch = (searchStr) => {
-    // setSearch(searchStr);
     dispatch(fetchSearchStudents({search: searchStr}))
         .then((res) => {
             if (res && res.errors) {
-            // setErrors(res.errors);
-            // console.log('nah')
-            } else {
-            // setIsLoaded(true)
-            // console.log('bah')
-            }
+                setErrors(res.errors);
+            } 
         })
   }
 
@@ -98,6 +94,7 @@ export default function StudentsPage() {
                     </tbody>
                 </table>
             </div>
+            {errors.message && <p className='labelTitle error'>{errors.message}</p>}
         </div>
         
       )}
