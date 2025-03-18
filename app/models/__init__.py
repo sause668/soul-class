@@ -1,5 +1,6 @@
 from .db import db
 from .user import User
+from .admin import Admin
 from .teacher import Teacher
 from .student import Student
 from .sibling import Sibling
