@@ -33,3 +33,14 @@ class Teacher(db.Model):
             'first_name': self.user.first_name,
             'last_name': self.user.last_name
         }
+    
+    def search_info(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'email': self.user.email,
+            'primary_grade': self.primary_grade,
+            'primary_subject': self.primary_subject,
+            'first_name': self.user.first_name,
+            'last_name': self.user.last_name,
+        }
