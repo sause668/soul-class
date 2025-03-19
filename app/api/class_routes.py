@@ -12,6 +12,10 @@ def get_all_classes():
     """
     Get all classes (Teacher & Student)
     """
+    if current_user.type == 'admin': 
+        classes = Class.query.all()
+        return jsonify([class_.teacher_dash() for class_ in classes])
+
     if current_user.type == 'teacher':
         classes = Class.query.filter_by(teacher_id=current_user.teacher.id).all()
         return jsonify([class_.teacher_dash() for class_ in classes])
