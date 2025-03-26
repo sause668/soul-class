@@ -36,33 +36,49 @@ def teacher_info(teacher_id):
 @teacher_routes.route('/<int:teacher_id>/classes', methods=['GET'])
 @login_required
 def get_all_teacher_classes(teacher_id):
-    """
-    Get all teacher classes
-    """
-
-    teacher = Teacher.query.filter_by(id=teacher_id).first()
-
-    if not teacher:
-            return jsonify({"message": "Teacher not found"}), 404
-
-    classes = Class.query.filter_by(teacher_id=current_user.teacher.id).all()
+    classes = Class.query.filter_by(teacher_id=teacher_id).all()
     return jsonify([class_.teacher_dash() for class_ in classes])
-
-@teacher_routes.route('/<int:teacher_id>/classes/<int:class_id>', methods=['GET'])
+     
+@teacher_routes.route('/<int:teacher_id>/gradebook/<int:class_id>', methods=['GET'])
 @login_required
-def get_teacher_class_by_id(teacher_id, class_id):
-    """
-    Get teacher class by ID 
-    """
-
-    teacher = Teacher.query.filter_by(id=teacher_id).first()
-
-    if not teacher:
-            return jsonify({"message": "Teacher not found"}), 404
-    
-    class_ = Class.query.filter_by(id=class_id, teacher_id=current_user.teacher.id).first()
+def get_class_gradebook(teacher_id, class_id):
+    class_ = Class.query.filter_by(id=class_id, teacher_id=teacher_id).first()
 
     if not class_:
         return jsonify({"message": "Class not found"}), 404
 
     return jsonify(class_.grade_book())
+
+# @teacher_routes.route('/<int:teacher_id>/classes', methods=['GET'])
+# @login_required
+# def get_all_teacher_classes(teacher_id):
+#     """
+#     Get all teacher classes
+#     """
+
+#     teacher = Teacher.query.filter_by(id=teacher_id).first()
+
+#     if not teacher:
+#             return jsonify({"message": "Teacher not found"}), 404
+
+#     classes = Class.query.filter_by(teacher_id=current_user.teacher.id).all()
+#     return jsonify([class_.teacher_dash() for class_ in classes])
+
+# @teacher_routes.route('/<int:teacher_id>/classes/<int:class_id>', methods=['GET'])
+# @login_required
+# def get_teacher_class_by_id(teacher_id, class_id):
+#     """
+#     Get teacher class by ID 
+#     """
+
+#     teacher = Teacher.query.filter_by(id=teacher_id).first()
+
+#     if not teacher:
+#             return jsonify({"message": "Teacher not found"}), 404
+    
+#     class_ = Class.query.filter_by(id=class_id, teacher_id=current_user.teacher.id).first()
+
+#     if not class_:
+#         return jsonify({"message": "Class not found"}), 404
+
+#     return jsonify(class_.grade_book())

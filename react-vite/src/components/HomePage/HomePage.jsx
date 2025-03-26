@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import "./HomePage.css";
-import Dashboard from "../Dashboard/Dashboard";
 import Landing from "../Landing/Landing";
 import AdminDashboard from "../Dashboard/AdminDashboard/AdminDashboard";
 import TeacherDashboard from "../Dashboard/TeacherDashboard/TeacherDashboard";

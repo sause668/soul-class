@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FiUser } from "react-icons/fi";
 
 import "../Dashboard.css";
-import { fetchClasses } from "../../../redux/class";
+import { fetchTeacherClasses } from "../../../redux/class";
 import EditClassModal from "../EditClassModal";
 import OpenModalButton from "../../OpenModalButton/OpenModalButton";
 import CreateClassModal from "../CreateClassModal";
@@ -22,8 +22,8 @@ function TeacherDashboard() {
   }
 
   useEffect(() => {
-    dispatch(fetchClasses()).then(() => setIsLoaded(true));
-  }, [dispatch]);
+    dispatch(fetchTeacherClasses({teacherId: user.teacher.id})).then(() => setIsLoaded(true));
+  }, [dispatch, user]);
 
   
 

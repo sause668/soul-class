@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./StudentGrades.css";
 import { useParams } from "react-router-dom";
-import { fetchStudentClass } from "../../redux/class";
+import { fetchGradesClass } from "../../redux/class";
 import { calcFinalGradeStudent, calcLetterGrade, sortAssignments } from "../../utils/Grading";
 
 function StudentGrades() {
@@ -16,7 +16,7 @@ function StudentGrades() {
 
 
   useEffect(() => {
-    dispatch(fetchStudentClass({studentId, classId}))
+    dispatch(fetchGradesClass({studentId, classId}))
       .then((res) => {
         if (res && res.errors) {
           setErrors(res.errors)

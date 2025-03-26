@@ -51,6 +51,41 @@ def get_class_by_id(class_id):
         
         return jsonify(class_.grades(current_user.student.id))
 
+@class_routes.route('teacher/<int:teacher_id>/dashboard', methods=['GET'])
+@login_required
+def get_all_teacher_classes(teacher_id):
+    classes = Class.query.filter_by(teacher_id=teacher_id).all()
+    return jsonify([class_.teacher_dash() for class_ in classes])
+     
+@class_routes.route('teacher/<int:teacher_id>/gradebook/<int:class_id>', methods=['GET'])
+@login_required
+def get_class_gradebook(teacher_id, class_id):
+    class_ = Class.query.filter_by(id=class_id, teacher_id=teacher_id).first()
+
+    if not class_:
+        return jsonify({"message": "Class not found"}), 404
+
+    return jsonify(class_.grade_book())
+     
+@class_routes.route('student/<int:student_id>/dashboard', methods=['GET'])
+@login_required
+def get_all_student_classes(student_id):
+    classes = Class.query.\
+        join(StudentClass, Class.id == StudentClass.class_id).\
+        filter_by(student_id=student_id).all()
+    return jsonify([class_.grades(current_user.student.id) for class_ in classes])
+     
+@class_routes.route('student/<int:student_id>/grades/<int:class_id>', methods=['GET'])
+@login_required
+def get_class_grades(student_id, class_id):
+    class_ = Class.query.\
+        join(StudentClass, Class.id == StudentClass.class_id).\
+        filter_by(student_id=student_id, class_id=class_id).first()
+    
+    if not class_:
+        return jsonify({"message": "Class not found"}), 404
+    
+    return jsonify(class_.grades(current_user.student.id))
     
 @class_routes.route('', methods=['POST'])
 @login_required
