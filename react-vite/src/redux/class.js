@@ -44,6 +44,25 @@ export const fetchClasses = () => async (dispatch) => {
     }
 };
 
+export const fetchTeacherClasses = (params) => async (dispatch) => {
+    const { teacherId } = params;
+	const response = await csrfFetch(`/api/teachers/${teacherId}/classes`);
+    
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClasses(data));
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
+};
+
 export const fetchStudentClasses = (params) => async (dispatch) => {
     const { studentId } = params;
 	const response = await csrfFetch(`/api/students/${studentId}/classes`);
@@ -83,9 +102,29 @@ export const fetchClass = (params) => async (dispatch) => {
     }
 };
 
-export const fetchStudentClass = (params) => async (dispatch) => {
+export const fetchGradebookClass = (params) => async (dispatch) => {
+    const { teacherId, classId } = params
+	const response = await csrfFetch(`/api/teachers/${teacherId}/gradebook/${classId}`);
+    
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClass(data));
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            console.log(errorMessages)
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
+};
+
+export const fetchGradesClass = (params) => async (dispatch) => {
     const { studentId, classId } = params
-	const response = await csrfFetch(`/api/students/${studentId}/classes/${classId}`);
+	const response = await csrfFetch(`/api/students/${studentId}/grades/${classId}`);
     
     if (response.ok) {
         const data = await response.json();

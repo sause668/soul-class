@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FiUser } from "react-icons/fi";
 
 import "../Dashboard.css";
-import { fetchClasses } from "../../../redux/class";
+import { fetchStudentClasses } from "../../../redux/class";
 import { useNavigate } from "react-router-dom";
 import { calcFinalGradeStudent } from "../../../utils/Grading";
 
@@ -19,8 +19,8 @@ function StudentDashboard() {
   }
 
   useEffect(() => {
-    dispatch(fetchClasses()).then(() => setIsLoaded(true));
-  }, [dispatch]);
+    dispatch(fetchStudentClasses({studentId: user.student.id})).then(() => setIsLoaded(true));
+  }, [dispatch, user]);
 
   
 

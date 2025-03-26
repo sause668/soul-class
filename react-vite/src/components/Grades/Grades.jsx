@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Grades.css";
 import { Navigate, useParams } from "react-router-dom";
-import { fetchClass } from "../../redux/class";
+import { fetchGradesClass } from "../../redux/class";
 import { calcFinalGradeStudent, calcLetterGrade, sortAssignments } from "../../utils/Grading";
 
 function Grades() {
@@ -17,7 +17,7 @@ function Grades() {
 
 
   useEffect(() => {
-    dispatch(fetchClass({classId}))
+    dispatch(fetchGradesClass({studentId: user.student.id, classId}))
       .then((res) => {
         if (res && res.errors) {
           setErrors(res.errors)
@@ -25,7 +25,7 @@ function Grades() {
           setIsLoaded(true)
         }
       })
-  }, [dispatch, classId]);
+  }, [dispatch, classId, user]);
 
   if (!user || user.type != 'student') return <Navigate to="/" replace={true} />;
 
