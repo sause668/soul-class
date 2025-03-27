@@ -10,43 +10,24 @@ class_routes = Blueprint('classes', __name__)
 @login_required
 def get_all_classes():
     """
-    Get all classes (Teacher & Student)
+    Get all classes (For class search)
     """
-    if current_user.type == 'teacher':
-        classes = Class.query.filter_by(teacher_id=current_user.teacher.id).all()
-        return jsonify([class_.teacher_dash() for class_ in classes])
-    
-    else:
-        classes = Class.query.\
-            join(StudentClass, Class.id == StudentClass.class_id).\
-            filter_by(student_id=current_user.student.id).all()
-        return jsonify([class_.grades(current_user.student.id) for class_ in classes])
+    classes = Class.query.all()
+    return jsonify([class_.class_search() for class_ in classes])
       
 
 @class_routes.route('/<int:class_id>', methods=['GET'])
 @login_required
 def get_class_by_id(class_id):
     """
-    Get class by ID (Teacher & Student)
+    Get class by ID (for class page)
     """
-    if current_user.type == 'teacher':
-        class_ = Class.query.filter_by(id=class_id, teacher_id=current_user.teacher.id).first()
+    class_ = Class.query.filter_by(id=class_id,).first()
 
-        if not class_:
-            return jsonify({"message": "Class not found"}), 404
-    
-        return jsonify(class_.grade_book())
-    
-    else:
-        class_ = Class.query.\
-            join(StudentClass, Class.id == StudentClass.class_id).\
-            filter_by(student_id=current_user.student.id, class_id=class_id).first()
-        
-        if not class_:
-            return jsonify({"message": "Class not found"}), 404
-        
-        return jsonify(class_.grades(current_user.student.id))
+    if not class_:
+        return jsonify({"message": "Class not found"}), 404
 
+    return jsonify(class_.class_info())
     
 @class_routes.route('', methods=['POST'])
 @login_required

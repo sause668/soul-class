@@ -32,7 +32,7 @@ class Class(db.Model):
             "room": self.room,
             "num_students": len(self.students)
         }
-    
+
     def student_dash(self):
         return {
             "id": self.id,
@@ -71,6 +71,33 @@ class Class(db.Model):
             "current_grade": "To be worked on",
             "assignments": [assignment.grade(student_id) for assignment in self.assignments],
             "teacher": self.teacher.info()
+        }
+    
+    def class_search(self):
+        return {
+            "id": self.id,
+            "teacher_id": self.teacher_id,
+            "name": self.name,
+            "subject": self.subject,
+            "grade": self.grade,
+            "period": self.period,
+            "room": self.room,
+            "teacher": self.teacher.info(),
+            "students": [student.info() for student in self.students]
+        }
+    
+    def class_info(self):
+        return {
+            "id": self.id,
+            "teacher_id": self.teacher_id,
+            "name": self.name,
+            "subject": self.subject,
+            "grade": self.grade,
+            "period": self.period,
+            "room": self.room,
+            "teacher": self.teacher.info(),
+            "students": [student.info() for student in self.students],
+            "assignments": [assignment.grade_book() for assignment in self.assignments]
         }
     
     

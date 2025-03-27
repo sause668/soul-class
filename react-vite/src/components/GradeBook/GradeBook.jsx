@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./GradeBook.css";
 import { Navigate, useParams } from "react-router-dom";
-import { fetchClass } from "../../redux/class";
+import { fetchGradebookClass } from "../../redux/class";
 import OpenModalButton from "../OpenModalButton/OpenModalButton";
 import AddStudentModal from "./AddStudentModal";
 import NewAssignmentModal from "./NewAssignmentModal";
@@ -25,7 +25,7 @@ function GradeBook() {
   
 
   useEffect(() => {
-    dispatch(fetchClass({classId}))
+    dispatch(fetchGradebookClass({teacherId: user.teacher.id, classId}))
       .then((res) => {
         if (res && res.errors) {
           setErrors(res.errors)
@@ -33,7 +33,7 @@ function GradeBook() {
           setIsLoaded(true)
         }
       })
-  }, [dispatch, classId]);
+  }, [dispatch, classId, user]);
 
   if (!user || user.type != 'teacher') return <Navigate to="/" replace={true} />;
 

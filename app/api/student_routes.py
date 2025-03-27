@@ -43,32 +43,19 @@ def student_info(student_id):
 @login_required
 def get_all_student_classes(student_id):
     """
-    Get all student classes
+    Get all student class by ID
     """
-
-    student = Student.query.filter_by(id=student_id).first()
-
-    if not student:
-            return jsonify({"message": "Student not found"}), 404
-
     classes = Class.query.\
         join(StudentClass, Class.id == StudentClass.class_id).\
         filter_by(student_id=student_id).all()
-    
     return jsonify([class_.grades(student_id) for class_ in classes])
-
-@student_routes.route('/<int:student_id>/classes/<int:class_id>', methods=['GET'])
+     
+@student_routes.route('/<int:student_id>/grades/<int:class_id>', methods=['GET'])
 @login_required
-def get_student_class_by_id(student_id, class_id):
+def get_class_grades(student_id, class_id):
     """
-    Get student class by ID 
+    Get class by ID (for grades page)
     """
-
-    student = Student.query.filter_by(id=student_id).first()
-
-    if not student:
-            return jsonify({"message": "Student not found"}), 404
-    
     class_ = Class.query.\
         join(StudentClass, Class.id == StudentClass.class_id).\
         filter_by(student_id=student_id, class_id=class_id).first()

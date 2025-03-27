@@ -4,6 +4,15 @@ from sqlalchemy.sql import text
 
 def seed_users():
 
+    admins = [
+        {
+            'username': 'adumbledore', 
+            'email': 'adumbledore@soulacademy.com', 
+            'first_name': 'Albus',
+            'last_name': 'Dumbledore',
+        }
+    ]
+
     teachers = [
         {
             'username': 'ssnape', 
@@ -18,8 +27,8 @@ def seed_users():
             'last_name': 'Xavier',
         },
         {
-            'username': 'adumbledor', 
-            'email': 'adumbledor@soulacademy.com', 
+            'username': 'adumbledor',
+            'email': 'adumbledor@soulacademy.com',
             'first_name': 'Albus',
             'last_name': 'Dumbledore',
         },
@@ -281,6 +290,8 @@ def seed_users():
         
     ]
 
+    
+
     for teacher in teachers:
         db.session.add(User(
             username=teacher['username'], 
@@ -299,6 +310,16 @@ def seed_users():
             first_name=student['first_name'],
             last_name=student['last_name'],
             type='student',
+        ))
+
+    for admin in admins:
+        db.session.add(User(
+            username=admin['username'], 
+            email=admin['email'], 
+            password='password',
+            first_name=admin['first_name'],
+            last_name=admin['last_name'],
+            type='admin',
         ))
 
     db.session.commit()

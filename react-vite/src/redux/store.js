@@ -8,11 +8,15 @@ import thunk from "redux-thunk";
 import sessionReducer from "./session";
 import classReducer from "./class";
 import studentReducer from "./student";
+import teacherReducer from "./teacher";
+import adminReducer from "./admin";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   class: classReducer,
-  student: studentReducer
+  student: studentReducer,
+  teacher: teacherReducer,
+  admin: adminReducer,
 });
 
 let enhancer;

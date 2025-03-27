@@ -46,6 +46,7 @@ function ProfileButton() {
   const logout = (e) => {
     e.preventDefault();
     dispatch(thunkLogout());
+    navigate(`/`);
     closeMenu();
   };
 
@@ -56,8 +57,6 @@ function ProfileButton() {
       </button>
       {showMenu && (
         <div className={"profile-dropdown whiteBox"} ref={ulRef}>
-          {/* <div className="navDropdownItem">{user.first_name} {user.last_name}</div>
-          <div className="navDropdownItem">{user.email}</div> */}
           <div className="navDropdownItem">
             <button id="navLogout" onClick={handleNavDashboard}>Dashboard</button>
           </div>
