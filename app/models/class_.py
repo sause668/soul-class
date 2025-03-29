@@ -86,4 +86,18 @@ class Class(db.Model):
             "students": [student.info() for student in self.students]
         }
     
+    def class_info(self):
+        return {
+            "id": self.id,
+            "teacher_id": self.teacher_id,
+            "name": self.name,
+            "subject": self.subject,
+            "grade": self.grade,
+            "period": self.period,
+            "room": self.room,
+            "teacher": self.teacher.info(),
+            "students": [student.info() for student in self.students],
+            "assignments": [assignment.grade_book() for assignment in self.assignments]
+        }
+    
     
