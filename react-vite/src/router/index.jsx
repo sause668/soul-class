@@ -6,6 +6,7 @@ import Layout from './Layout';
 import StudentsPage from '../components/StudentsPage/StudentsPage';
 import StudentPage from '../components/StudentPage/StudentPage';
 import StudentGrades from '../components/StudentGrades/StudentGrades';
+import ClassPage from '../components/ClassPage/ClassPage';
 
 export const router = createBrowserRouter([
   {
@@ -63,8 +64,20 @@ export const router = createBrowserRouter([
             
           }
         ]
+      },
+      {
+        path: 'classes/',
+        children: [
+          {
+            path: '',
+            element: ''
+          },
+          {
+            path: ':classId/',
+            element: <ClassPage/>
+          }
+        ]
       }
-      
     ],
   },
 ]);
