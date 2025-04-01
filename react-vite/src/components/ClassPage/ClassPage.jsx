@@ -35,15 +35,15 @@ function ClassPage() {
   return (
     <>
       {(isLoaded) && (
-        <div id="gradeBookCon">
-          <div id="headerConGB">
-            <div id="titleConGB" className="lightBlueBox">
-              <h1 id="titleGB">{class_.grade}th Grade {class_.name} - Period {class_.period}</h1>
-              <h4 className="classInfoDB">Room - {class_.room}, {class_.students.length} Students</h4>
+        <div id="classConC">
+          <div id="headerConC">
+            <div id="titleConC" className="lightBlueBox">
+              <h1 id="titleC">{class_.grade}th Grade {class_.name} - Period {class_.period}</h1>
+              <h4 className="classInfoC">Room - {class_.room}, {class_.students.length} Students</h4>
             </div>
-            <div id="optionsConGB" className="lightBlueBox">
+            <div id="optionsConC" className="lightBlueBox">
               <button onClick={()=>nav(`/gradebook/${class_.id}`)}>Grade Book</button>
-              <div className='quarterSelectConGB'>
+              <div className='quarterSelectConC'>
                 <label htmlFor='quarter'>
                   <p className=''>
                     Quarter
@@ -52,7 +52,7 @@ function ClassPage() {
                 <select 
                   name="quarter" 
                   id="quarter" 
-                  className="quarterSelectGB"
+                  className="quarterSelectC"
                   value={quarter} 
                   onChange={(e) => setQuarter(parseInt(e.target.value))}
                 >
@@ -64,20 +64,27 @@ function ClassPage() {
               </div>
             </div>
           </div>
+          <div id="classInfoFormatConC">
           <div id="classInfoConC">
-            <div id="assignmentsConC">
-                {class_.assignments
-                    .filter(a => a.quarter == quarter)
-                    .sort((a1, a2) => sortAssignments(a1, a2))
-                    .map((assignment, index) => (
-                        <div className={`assignConC lightBlueBox ${assignment.type}`} key={`assignClass${index}`}>
-                            <h3 className="assignNameC">{assignment.name}</h3>
-                            <h4 className="assignDueDateS">{typeToString(assignment.type)}</h4>
-                            <h4 className="assignDueDateS">{assignment.due_date.slice(0, 16)}</h4>
-                        </div>
-                      
-                    ))}
+            <div className="gridItemFormatC">
+                <div id="assignmentsConC">
+                
+                    {class_.assignments
+                        .filter(a => a.quarter == quarter)
+                        .sort((a1, a2) => sortAssignments(a1, a2))
+                        .map((assignment, index) => (
+                            <div className={`assignConC lightBlueBox ${assignment.type}`} key={`assignClass${index}`}>
+                                <div className="assignInfoConC">
+                                    <h3 className="assignNameC">{assignment.name}</h3>
+                                    <h4 className="assignTypeC">{typeToString(assignment.type)}</h4>
+                                </div>
+                                <h4 className="assignDueDateC">{assignment.due_date.slice(0, 16)}</h4>
+                            </div>
+                        ))
+                    }
+                </div>
             </div>
+            <div className="gridItemFormatC">
             <div id="studentsConC">
                 {class_.students
                     .sort((s1, s2) => sortStudents(s1, s2))
@@ -85,7 +92,7 @@ function ClassPage() {
                         let finalGrade = calcFinalGradeTeacher(class_.assignments.filter(a => a.quarter == quarter), student.id);
                         let finalLetterGrade = calcLetterGrade(finalGrade);
                         return (
-                            <div className={`studentCon lightBlueBox ${finalGrade != 'N/A' ? finalLetterGrade:'noGrade'}`} key={`studentClass${index}`}>
+                            <div className={`studentConC lightBlueBox ${finalGrade != 'N/A' ? finalLetterGrade:'noGrade'}`} key={`studentClass${index}`}>
                                 <h3 className="studentNameC">{student.last_name}, {student.first_name}</h3>
                                 <h4 className="studentGradeC">{finalGrade != 'N/A' ? `${finalGrade} (${finalLetterGrade})`:'N/A'}</h4>
                             </div>
@@ -93,6 +100,9 @@ function ClassPage() {
                     })
                 }
             </div>
+            </div>
+            
+          </div>
           </div>
         </div>
       )}
