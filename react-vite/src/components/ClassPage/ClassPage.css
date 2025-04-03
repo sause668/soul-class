@@ -12,7 +12,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%
+    width: 100%;
+    margin-bottom: 1rem;
 }
 
 #titleConC {
@@ -83,11 +84,21 @@
     width: 50%;
 }
 
+.subTitleConC {
+    display: flex;
+    /* justify-content: center; */
+}
+
+.subTitleC {
+    text-decoration-line: underline;
+    margin-left: 1rem;
+}
+
 #assignmentsConC {
     display: flex;
     flex-direction: column;
     gap: .5rem;
-    width: 75%;
+    width: 90%;
    
 }
 
@@ -113,7 +124,7 @@
     display: flex;
     flex-direction: column;
     gap: .5rem;
-    width: 75%;
+    width: 90%;
 
 }
 
@@ -131,6 +142,58 @@
 
 }
 
+@media (max-width:920px) {
+    #headerConC {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    #titleConC {
+        align-items: center;
+    }
+    #classInfoConC {
+        width: 90%;
+    }
+
+    #assignmentsConC,#studentsConC {
+        width: 95%;
+    }
+}
+
+@media (max-width:700px) {
+    #classInfoConC {
+        width: 100%;
+    }
+
+    #assignmentsConC,#studentsConC {
+        width: 98%;
+    }
+}
+
+@media (max-width:600px) {
+    #classInfoConC {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        width: 100%;
+    }
+
+    .gridItemFormatC {
+        width: 100%;
+    }
+}
+
+@media (max-width:540px) {
+    #titleC {
+        font-size: 1.75rem;
+    }
+
+    
+
+    
+}
 
 
 
