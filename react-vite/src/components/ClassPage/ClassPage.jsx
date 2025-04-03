@@ -68,7 +68,9 @@ function ClassPage() {
           <div id="classInfoConC">
             <div className="gridItemFormatC">
                 <div id="assignmentsConC">
-                
+                    <div className="subTitleConC">
+                        <h2 className="subTitleC">Assignments</h2>
+                    </div>
                     {class_.assignments
                         .filter(a => a.quarter == quarter)
                         .sort((a1, a2) => sortAssignments(a1, a2))
@@ -86,6 +88,9 @@ function ClassPage() {
             </div>
             <div className="gridItemFormatC">
             <div id="studentsConC">
+                <div className="subTitleConC">
+                    <h2 className="subTitleC">Students</h2>
+                </div>
                 {class_.students
                     .sort((s1, s2) => sortStudents(s1, s2))
                     .map((student, index) => {
