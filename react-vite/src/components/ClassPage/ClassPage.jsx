@@ -97,7 +97,11 @@ function ClassPage() {
                         let finalGrade = calcFinalGradeTeacher(class_.assignments.filter(a => a.quarter == quarter), student.id);
                         let finalLetterGrade = calcLetterGrade(finalGrade);
                         return (
-                            <div className={`studentConC lightBlueBox ${finalGrade != 'N/A' ? finalLetterGrade:'noGrade'}`} key={`studentClass${index}`}>
+                            <div 
+                                className={`studentConC lightBlueBox ${finalGrade != 'N/A' ? finalLetterGrade:'noGrade'}`} 
+                                key={`studentClass${index}`}
+                                onClick={()=>nav(`/students/${student.id}`)}
+                            >
                                 <h3 className="studentNameC">{student.last_name}, {student.first_name}</h3>
                                 <h4 className="studentGradeC">{finalGrade != 'N/A' ? `${finalGrade} (${finalLetterGrade})`:'N/A'}</h4>
                             </div>
