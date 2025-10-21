@@ -1,3 +1,6 @@
+@import "tailwindcss";
+/* @import "tailwindcss/preflight"; */
+/* @import "tailwindcss/utilities";       */
 @font-face {
     font-family: 'Sour Gummy';
     font-style: normal;
@@ -47,210 +50,244 @@
     src: url('/fonts/RobotoFlex-Regular.ttf');
 }
 
-body {
-    font-family: 'Roboto Flex';
-    padding: 0px 0px;
-    margin: 0px;
+@theme {
+    --font-sour-gummy: 'Sour Gummy';
+    --font-chewy: 'Chewy';
+    --font-delius: 'Delius';
+    --font-balsamiq-sans: 'BalsamiqSans';
+    --font-roboto-flex: 'Roboto Flex';
+    --color-blue: #007AFF;
+    --color-light-blue: #007bff4b;
+    --color-dark-blue: #005ec3;
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-gray: #9bb4cf;
+    --color-red: #ff1744;
+    --color-green: #00e677;
+    --color-yellow: #ffea00;
+    --color-orange: #ff9100;
+    --color-A: #00e67761;
+    --color-B: #c8ff005f;
+    --color-C: #ffea0068;
+    --color-D: #ff91005f;
+    --color-F: #ff17455a;
+    --color-fA: #00e677a6;
+    --color-fB: #c8ff00a6;
+    --color-fC: #ffea00a6;
+    --color-fD: #ff9100a6;
+    --color-fF: #ff1745a6;
+    --color-no-grade: #0000004b;
+    --color-HW: #00aeff4a;
+    --color-CW: #00aeff4a;
+    --color-Q: #d400f954;
+    --color-T: #f500564e;
+    --color-P: #f500564e;
 }
 
-#mainPageCon {
-    position: relative;
-    min-height: 100vh;
-}
-
-#subPageCon {
-    padding-bottom: 45px;
-}
-
-h1,h2  {
-    font-family: 'Sour Gummy';
-    margin: 0px;
-}
-
-h3,h4 {
-    font-family: 'BalsamiqSans';
-    margin: 0px;
-}
-
-h5,h6,p {
-    font-family: 'Roboto Flex';
-    margin: 0px;
-}
-
-button {
-    font-family: 'Delius';
-    border: 1px solid #007AFF;
-    background-color: #007AFF;
-    transition: background-color .2s;
-    color: white;
-    border-radius: 10px;
-    padding: .5rem 1rem;
-    font-size: 1rem;
-    cursor: pointer;
-}
-
-button:hover {
-    border: 1px solid #005ec3;
-    background-color: #005ec3;
-    transition: background-color .2s;
-}
-
-.whiteBox {
-    background-color: white;
-    border: 1px solid #007AFF;
-    border-radius: 20px;
+@layer base {
+    body {
+        font-family: 'Roboto Flex';
+        padding: 0px 0px;
+        margin: 0px;
+    }
+    h1,h2  {
+        font-family: 'Sour Gummy';
+        margin: 0px;
+    }
     
-}
-
-.blueBox {
-    background-color: #007AFF;
-    border: 1px solid #007AFF;
-    border-radius: 20px;
-    color: white;
-}
-
-.lightBlueBox {
-    background-color: #007bff4b;
-    border-radius: 20px;
-}
-
-
-
-.formCon {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem 1rem;
-}
-
-.inputTitle {
-    margin-bottom: .8rem;
-}
-
-.inputCon {
-    margin-bottom: 1rem;
-}
-
-.labelCon {
-
-}
-
-.labelTitle {
-    margin-bottom: .3rem;
-}
-
-.error {
-    color: #ff1744;
-    margin-top: .2rem;
-}
-
-.formInput {
-    width: 200px;
-    border: 1px solid #007AFF;
-    border-radius: 5px;
-    padding: .5rem;
-}
-
-.formInput:focus {
-    border-color: #005ec3;
-    outline: none;
-}
-
-
-.submitCon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 1rem;
-}
-
-.confirmButtonCon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: .7rem;
-    margin-top: 1rem;
-}
-
-.submitButton {
+    h3,h4 {
+        font-family: 'BalsamiqSans';
+        margin: 0px;
+    }
     
+    h5,h6,p {
+        font-family: 'Roboto Flex';
+        margin: 0px;
+    }
+
+    button {
+        font-family: 'Delius';
+        border: 1px solid #007AFF;
+        background-color: #007AFF;
+        transition: background-color .2s;
+        color: white;
+        border-radius: 10px;
+        padding: .5rem 1rem;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+    #mainPageCon {
+        position: relative;
+        min-height: 100vh;
+    }
     
-}
-
-.submitButton:disabled {
-    border: 1px solid #9bb4cf;
-    background-color: #9bb4cf;
-}
-
-.confirmText {
-    text-align: center;
+    #subPageCon {
+        padding-bottom: 45px;
+    }
 }
 
 
-.A {
-    background-color: #00e67761;
+
+
+@layer components {
+    .whiteBox {
+        background-color: white;
+        border: 1px solid #007AFF;
+        border-radius: 20px;
+        
+    }
+
+    .blueBox {
+        background-color: #007AFF;
+        border: 1px solid #007AFF;
+        border-radius: 20px;
+        color: white;
+    }
+
+    .lightBlueBox {
+        background-color: #007bff4b;
+        border-radius: 20px;
+    }
+
+
+
+    .formCon {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem 1rem;
+    }
+
+    .inputTitle {
+        margin-bottom: .8rem;
+    }
+
+    .inputCon {
+        margin-bottom: 1rem;
+    }
+
+    .labelCon {
+
+    }
+
+    .labelTitle {
+        margin-bottom: .3rem;
+    }
+
+    .error {
+        color: #ff1744;
+        margin-top: .2rem;
+    }
+
+    .formInput {
+        width: 200px;
+        border: 1px solid #007AFF;
+        border-radius: 5px;
+        padding: .5rem;
+    }
+
+    .formInput:focus {
+        border-color: #005ec3;
+        outline: none;
+    }
+
+
+    .submitCon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .confirmButtonCon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: .7rem;
+        margin-top: 1rem;
+    }
+
+    .submitButton {
+        
+        
+    }
+
+    .submitButton:disabled {
+        border: 1px solid #9bb4cf;
+        background-color: #9bb4cf;
+    }
+
+    .confirmText {
+        text-align: center;
+    }
 }
 
-.B {
-    background-color: #c8ff005f;
-}
+@layer utilities {
+    .A {
+        background-color: #00e67761;
+    }
 
-.C {
-    background-color: #ffea0068;
-}
+    .B {
+        background-color: #c8ff005f;
+    }
 
-.D {
-    background-color: #ff91005f;
-}
+    .C {
+        background-color: #ffea0068;
+    }
 
-.F {
-    background-color: #ff17455a;
-}
+    .D {
+        background-color: #ff91005f;
+    }
 
-.fA {
-    background-color: #00e677a6;
-}
+    .F {
+        background-color: #ff17455a;
+    }
 
-.fB {
-    background-color: #c8ff00a6;
-}
+    .fA {
+        background-color: #00e677a6;
+    }
 
-.fC {
-    background-color: #ffea00a6;
-}
+    .fB {
+        background-color: #c8ff00a6;
+    }
 
-.fD {
-    background-color: #ff9100a6;
-}
+    .fC {
+        background-color: #ffea00a6;
+    }
 
-.fF {
-    background-color: #ff1745a6;
-}
+    .fD {
+        background-color: #ff9100a6;
+    }
 
-.noGrade {
-    background-color: #0000004b;
-}
+    .fF {
+        background-color: #ff1745a6;
+    }
 
-.HW {
-    background-color: #00aeff4a;   
-}
+    .noGrade {
+        background-color: #0000004b;
+    }
 
-.CW {
-    background-color: #00aeff4a;
-}
+    .HW {
+        background-color: #00aeff4a;   
+    }
 
-.Q {
-    background-color: #d400f954;
-}
+    .CW {
+        background-color: #00aeff4a;
+    }
 
-.T {
-    background-color: #f500564e;
-}
+    .Q {
+        background-color: #d400f954;
+    }
 
-.P {
-    background-color: #f500564e;
-    ;
-}
+    .T {
+        background-color: #f500564e;
+    }
 
+    .P {
+        background-color: #f500564e;
+        }
+
+}
