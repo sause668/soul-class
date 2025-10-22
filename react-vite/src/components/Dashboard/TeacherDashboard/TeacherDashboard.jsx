@@ -24,6 +24,29 @@ function TeacherDashboard() {
   //   navigate(`/gradebook/${classId}`)
   // }
 
+  const appointments = [
+    {
+      date: '10/4/25',
+      name: 'Harry Potter',
+      time: '10:00 AM',
+    },
+    {
+      date: '10/5/25',
+      name: 'Hermione Granger',
+      time: '11:00 AM',
+    },
+    {
+      date: '10/6/25',
+      name: 'Ron Weasley',
+      time: '12:00 PM',
+    },
+    {
+      date: '10/7/25',
+      name: 'Draco Malfoy',
+      time: '1:00 PM',
+    },
+  ]
+
   useEffect(() => {
     dispatch(fetchTeacherClasses({teacherId: user.teacher.id})).then(() => setIsLoaded(true));
   }, [dispatch, user]);
@@ -34,54 +57,55 @@ function TeacherDashboard() {
   return (
     <>
       {isLoaded && (
-        <div className="dashboardCon">
-          <div id='profileSideDB'>
-            <div>
-              <div id="profileConDB"className="">
-                <div id="profilePicConDB">
-                  <FiUser id='profilePicDB'/>
-                </div>
-                <div id="profileInfoConDB">
-                  <h2 className="profileInfoDB">{user.first_name} {user.last_name}</h2>
-                  <h4 className="profileInfoDB">Teacher</h4>
-                  <h4 className="profileInfoDB">Primary Grade: {user.teacher.primary_grade}</h4>
-                  <h4 className="profileInfoDB">Primary Subject: {user.teacher.primary_subject}</h4>
-                  
-                </div>
+        <div id="dashboardConCon" className="flex justify-center">
+        <div id="dashboardCon" className=" flex justify-center gap-[1rem] mt-[1rem] w-[70%] ">
+          <div id='profileSideDB' className="w-[30%] flex flex-col justify-flex-start items-center gap-2">
+            <div id="profileConDB"className="whiteBox p-2">
+              <div id="profilePicConDB ">
+                <FiUser id='profilePicDB' className="text-[10rem] bg-white rounded-full"/>
               </div>
-              <div id="appsConDB">
-                <h2 id="appsTitleDB">Appointments</h2>
-                <div id="appsListDB">
-                  <div id="appsItemDB">
-                    <div id="appsPicConDB">
-                      <FiUser id='appsPicDB'/>
+              <div id="profileInfoConDB">
+                <h3 className="profileInfoDB text-2xl font-bold">{user.first_name} {user.last_name}</h3>
+                <h4 className="profileInfoDB text-lg">Teacher</h4>
+                <h4 className="profileInfoDB text-zinc-500">{user.teacher.primary_grade}th Grade {user.teacher.primary_subject}</h4>
+                
+              </div>
+            </div>
+            <div id="appsConDB" className="whiteBox">
+              <h2 id="appsTitleDB" className="text-xl text-center font-bold bg-blue-500 text-white p-2 rounded-t-lg">Appointments</h2>
+              <div id="appsListDB" className="flex flex-col justify-flex-start items-flex-start gap-2 m-1">
+                {appointments.map((appointment, index) => (
+                  <div className=" appsItemDB flex justify-flex-start items-center gap-2" key={`appsItemT${index}`}>
+                    <div className="appsPicConDB">
+                      <FiUser className="appsPicDB text-2xl bg-white rounded-full"/>
                     </div>
-                    <div id="appsInfoConDB">
-                      <h3 id="appsDateDB">10/4/2025</h3>
-                      <h4 id="appsNameDB">Harry Potter</h4>
+                    <div className="appsInfoConDB flex flex-row justify-flex-start items-flex-start gap-4">
+                      <h3 className="appsDateDB text-sm">{appointment.date}</h3>
+                      <h3 className="appsTimeDB text-sm">{appointment.time}</h3>
+                      <h4 className="appsNameDB text-sm">{appointment.name}</h4>
                     </div>
                   </div>
-                </div>
+                ))}
               </div>
-              <div id="focusStudentsConDB">
-                <h2 id="focusStudentsTitleDB">Focus Students</h2>
-                <div id="focusStudentsListDB">
-                  <div id="focusStudentsItemDB">
-                    <div id="focusStudentsPicConDB">
-                      <FiUser id='focusStudentsPicDB'/>
-                    </div>
-                    <div id="focusStudentsInfoConDB">
-                      <h3 id="focusStudentsNameDB">Harry Potter</h3>
-                      <h4 id="focusStudentsGradeDB">10th Grade</h4>
-                    </div>
-                    <div id="focusStudentsPNDB">Priority: At Risk</div>
+            </div>
+            <div id="focusStudentsConDB" className="whiteBox">
+              <h2 id="focusStudentsTitleDB">Focus Students</h2>
+              <div id="focusStudentsListDB">
+                <div id="focusStudentsItemDB">
+                  <div id="focusStudentsPicConDB">
+                    <FiUser id='focusStudentsPicDB'/>
                   </div>
+                  <div id="focusStudentsInfoConDB">
+                    <h3 id="focusStudentsNameDB">Harry Potter</h3>
+                    <h4 id="focusStudentsGradeDB">10th Grade</h4>
+                  </div>
+                  <div id="focusStudentsPNDB">Priority: At Risk</div>
                 </div>
               </div>
             </div>
           </div>
-          <div id="contentSideDB">
-            <div id="classesConDB">
+          <div id="contentSideDB" className="w-[70%] flex flex-col justify-flex-start items-flex-start">
+            <div id="classesConDB" className="whiteBox">
               <div id="classTitleConDB">
                 <h3 id="classTitleDB">CurrentClasses</h3>
                 <OpenModalButton
@@ -123,7 +147,7 @@ function TeacherDashboard() {
                 </table>
               </div>
             </div>
-            <div id="announcementsConDB">
+            <div id="announcementsConDB" className="whiteBox">
               <h2 id="announcementsTitleDB">Announcements</h2>
               <div id="announcementsListDB">
                 <div id="announcementItemDB">
@@ -166,6 +190,7 @@ function TeacherDashboard() {
               </div>
             ))} */}
           </div>
+        </div>
         </div>
       )}
     </>
