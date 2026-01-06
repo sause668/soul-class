@@ -31,3 +31,7 @@ export const typeToString = (type) => {
         break;
     }
 }
+
+export const nameToString = (firstName, lastName) => {
+    return `${firstName[0]}. ${lastName}`;
+}
