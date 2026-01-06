@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FiUser } from "react-icons/fi";
 import { MdEdit } from "react-icons/md";
+import { FiPlus } from "react-icons/fi";
 
 
 import "../Dashboard.css";
@@ -11,6 +12,7 @@ import OpenModalButton from "../../OpenModalButton/OpenModalButton";
 import CreateClassModal from "../CreateClassModal";
 // import DeleteClassModal from "../DeleteClassModal";
 import { useNavigate } from "react-router-dom";
+import { nameToString } from "../../../utils/TypeConvertion";
 
 function TeacherDashboard() {
   const dispatch = useDispatch();
@@ -24,29 +26,132 @@ function TeacherDashboard() {
   //   navigate(`/gradebook/${classId}`)
   // }
 
-  const appointments = [
+  const appointments = [ 
     {
       date: '10/4/25',
-      name: 'Harry Potter',
+      firstName: 'Harry',
+      lastName: 'Potter',
       time: '10:00 AM',
     },
     {
       date: '10/5/25',
-      name: 'Hermione Granger',
       time: '11:00 AM',
+      firstName: 'Hermione',
+      lastName: 'Granger',
     },
     {
       date: '10/6/25',
-      name: 'Ron Weasley',
       time: '12:00 PM',
+      firstName: 'Ron',
+      lastName: 'Weasley',
     },
     {
       date: '10/7/25',
-      name: 'Draco Malfoy',
       time: '1:00 PM',
+      firstName: 'Draco',
+      lastName: 'Malfoy',
     },
   ]
 
+  const focusStudents = [
+    {
+      firstName: 'Harry',
+      lastName: 'Potter',
+      grade: '10th Grade',
+      priority: 'At Risk',
+    },
+    {
+      firstName: 'Hermione',
+      lastName: 'Granger',
+      grade: '10th Grade',
+      priority: 'At Risk',
+    },
+    {
+      firstName: 'Ron',
+      lastName: 'Weasley',
+      grade: '10th Grade',
+      priority: 'At Risk',
+    },
+  ]
+
+  const highlightStudents = [
+    {
+      firstName: 'Ginny',
+      lastName: 'Weasley',
+      grade: '10th Grade',
+      priority: 'Accelerate',
+    },
+    {
+      firstName: 'Luna',
+      lastName: 'Lovegood',
+      grade: '10th Grade',
+      priority: 'Accelerate',
+    },
+    {
+      firstName: 'Draco',
+      lastName: 'Malfoy',
+      grade: '10th Grade',
+      priority: 'Doing Well',
+    },
+  ]
+
+  const classHeaders = [
+    {
+      header: 'Grade',
+      key: 'grade',
+    },
+    {
+      header: 'Class',
+      key: 'name',
+    },
+    {
+      header: 'Period',
+      key: 'period',
+    },
+    {
+      header: 'Room',
+      key: 'room',
+    },
+    {
+      header: 'Students',
+      key: 'num_students',
+    },
+    {
+      header: 'Actions',
+      key: 'actions',
+    },
+  ]
+
+  const announcements = [
+    {
+      
+      date: '10/4/2025',
+      authorFirstName: 'Harry',
+      authorLastName: 'Potter',
+      authorType: 'Teacher',
+      title: 'Announcement 1',
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      image: 'https://via.placeholder.com/150',
+    },
+    {
+      date: '10/5/2025',
+      authorFirstName: 'Hermione',
+      authorLastName: 'Granger',
+      authorType: 'Teacher',
+      title: 'Announcement 2',
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    },
+    {
+      date: '10/6/2025',
+      authorFirstName: 'Ron',
+      authorLastName: 'Weasley',
+      authorType: 'Teacher',
+      title: 'Announcement 3',
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      image: 'https://via.placeholder.com/150',
+    },
+  ]
+  
   useEffect(() => {
     dispatch(fetchTeacherClasses({teacherId: user.teacher.id})).then(() => setIsLoaded(true));
   }, [dispatch, user]);
@@ -82,63 +187,78 @@ function TeacherDashboard() {
                     <div className="appsInfoConDB flex flex-row justify-flex-start items-flex-start gap-4">
                       <h3 className="appsDateDB text-sm">{appointment.date}</h3>
                       <h3 className="appsTimeDB text-sm">{appointment.time}</h3>
-                      <h4 className="appsNameDB text-sm">{appointment.name}</h4>
+                      <h4 className="appsNameDB text-sm">{nameToString(appointment.firstName, appointment.lastName)}</h4>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
+            <div id="highlightStudentsConDB" className="whiteBox">
+              <h2 id="highlightStudentsTitleDB" className="text-xl text-center font-bold bg-blue-500 text-white p-2 rounded-t-lg">Highlight Students</h2>
+              <div id="highlightStudentsListDB" className="flex flex-col justify-flex-start items-flex-start gap-2 m-1">
+                {highlightStudents.map((student, index) => (
+                  <div className="highlightStudentsItemDB flex justify-flex-start items-center gap-2" key={`highlightStudentsItemT${index}`}>
+                    <FiUser className="highlightStudentsPicDB text-2xl bg-white rounded-full"/>
+                    <div className="highlightStudentsInfoConDB flex flex-row justify-flex-start items-flex-start gap-4">
+                      <h3 className="highlightStudentsNameDB text-sm">{nameToString(student.firstName, student.lastName)}</h3>
+                    </div>
+                    <h3 className="highlightStudentsPNDB text-sm">Priority: {student.priority}</h3>
+                  </div>
+                ))}
+              </div>
+            </div>
             <div id="focusStudentsConDB" className="whiteBox">
-              <h2 id="focusStudentsTitleDB">Focus Students</h2>
-              <div id="focusStudentsListDB">
-                <div id="focusStudentsItemDB">
-                  <div id="focusStudentsPicConDB">
-                    <FiUser id='focusStudentsPicDB'/>
+              <h2 id="focusStudentsTitleDB" className="text-xl text-center font-bold bg-blue-500 text-white p-2 rounded-t-lg">Focus Students</h2>
+              <div id="focusStudentsListDB" className="flex flex-col justify-flex-start items-flex-start gap-2 m-1">
+                {focusStudents.map((student, index) => (
+                  <div className="focusStudentsItemDB flex justify-flex-start items-center gap-2" key={`focusStudentsItemT${index}`}>
+                    <FiUser className="focusStudentsPicDB text-2xl bg-white rounded-full"/>
+                    <div className="focusStudentsInfoConDB flex flex-row justify-flex-start items-flex-start gap-4">
+                      <h3 className="focusStudentsNameDB text-sm">{nameToString(student.firstName, student.lastName)}</h3>
+                    </div>
+                    {/* <h4 className="focusStudentsGradeDB text-sm">{student.grade}</h4> */}
+                    <h3 className="focusStudentsPNDB text-sm">Priority: {student.priority}</h3>
                   </div>
-                  <div id="focusStudentsInfoConDB">
-                    <h3 id="focusStudentsNameDB">Harry Potter</h3>
-                    <h4 id="focusStudentsGradeDB">10th Grade</h4>
-                  </div>
-                  <div id="focusStudentsPNDB">Priority: At Risk</div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
-          <div id="contentSideDB" className="w-[70%] flex flex-col justify-flex-start items-flex-start">
-            <div id="classesConDB" className="whiteBox">
-              <div id="classTitleConDB">
-                <h3 id="classTitleDB">CurrentClasses</h3>
+          <div id="contentSideDB" className="w-[70%] flex flex-col justify-flex-start items-flex-start gap-2 height-full">
+            <div id="classesConDB" className="whiteBox flex flex-col justify-flex-start items-flex-start ">
+              <div id="classTitleConDB" className="flex justify-between items-center p-2 bg-blue-500 text-white rounded-t-lg">
+                <h3 id="classTitleDB" className="text-xl font-bold">Current Classes</h3>
                 <OpenModalButton
-                  buttonText={'New Class'}
+                  buttonText={<FiPlus className="text-2xl" />}
                   modalComponent={<CreateClassModal />}
-                  cssClasses={'newClassButtonDB'}
+                  cssClasses={'newClassButtonDB text-2xl m-0 p-1 bg-blue-500 text-white rounded-full'}
                 />
               </div>
-              <div id="classTableConDB">
-                <table id="classTableDB">
+              <div id="classTableConDB" className="w-full">
+                <table id="classTableDB" className="w-full">
                   <thead>
-                    <tr>
-                      <th id="classTableHeaderDB">Grade</th>
-                      <th id="classTableHeaderDB">Class</th>
-                      <th id="classTableHeaderDB">Period</th>
-                      <th id="classTableHeaderDB">Room</th>
-                      <th id="classTableHeaderDB">Students</th>
-                      <th id="classTableHeaderDB">Actions</th>
+                    <tr className="bg-gray-200 text-black border-b border-gray-300">
+                      {classHeaders.map((header, index) => (
+                        <th className={`classTableHeaderDB${index} `} key={`classTableHeaderT${index}`}>{header.header}</th>
+                      ))}
                     </tr>
                   </thead>
                   <tbody>
                     {classes.map((class_, index) => (
-                      <tr key={`classRowT${index}`}>
+                      <tr 
+                      key={`classRowT${index}`} 
+                      className={`${index < classes.length - 1 ? 'border-b border-gray-300' : ''} hover:bg-gray-100 transition-colors duration-300 cursor-pointer`}
+                      onClick={()=>navigate(`/classes/${class_.id}`)}
+                      >
                         <td id="classTableCellDB">{class_.grade}th Grade</td>
                         <td id="classTableCellDB">{class_.name}</td>
                         <td id="classTableCellDB">{class_.period}</td>
                         <td id="classTableCellDB">{class_.room}</td>
-                        <td id="classTableCellDB">{class_.num_students} Students</td>
+                        <td id="classTableCellDB">{class_.num_students}</td>
                         <td id="classTableCellDB">
                           <OpenModalButton
                             buttonText={<MdEdit />}
                             modalComponent={<EditClassModal classEdit={class_} />}
-                            cssClasses={'classButtonDB editDB'}
+                            cssClasses={'classButtonDB editDB text-2xl m-0 p-1 bg-blue-500 text-white rounded-full'}
                           />
                         </td>
                       </tr>
@@ -148,49 +268,46 @@ function TeacherDashboard() {
               </div>
             </div>
             <div id="announcementsConDB" className="whiteBox">
-              <h2 id="announcementsTitleDB">Announcements</h2>
-              <div id="announcementsListDB">
-                <div id="announcementItemDB">
-                  <div id="announcementProfileConDB">
-                    <div id="announcementProfilePicConDB">
-                      <FiUser id='announcementProfilePicDB'/>
+              <div id="announcementsTitleConDB" className="flex justify-between items-center p-2 bg-blue-500 text-white rounded-t-lg">
+                <h3 id="announcementsTitleDB" className="text-xl font-bold">Announcements</h3>
+                <OpenModalButton
+                  buttonText={<FiPlus className="text-2xl" />}
+                  modalComponent={<></>}
+                  cssClasses={'newClassButtonDB text-2xl m-0 p-1 bg-blue-500 text-white rounded-full'}
+                />
+              </div>
+              <div id="announcementsListConDB" className="flex flex-col justify-flex-start items-flex-start gap-5 p-2">
+                {announcements.map((announcement, index) => (
+                  <div className={`announcementItemDB flex flex-col justify-flex-start items-flex-start gap-1 ${index > 0 ? 'border-t border-gray-300 pb-2 pt-2' : ''}`} key={`announcementItemT${index}`}>
+                    <div className="announcementProfileConDB flex justify-between items-center">
+                      <div className="announcementProfileInfoConDB flex justify-flex-start items-center gap-2">
+                        <div className="announcementProfilePicConDB">
+                          <FiUser className="announcementProfilePicDB text-2xl bg-white rounded-full"/>
+                        </div>
+                        <div className="announcementProfileDisConDB gap-0.1">
+                          <h3 className="announcementProfileNameDB text-sm m-0 p-0">{nameToString(announcement.authorFirstName, announcement.authorLastName)}</h3>
+                          <h4 className="announcementProfilePositionDB text-xs m-0 p-0 text-zinc-500">{announcement.authorType}</h4>
+                        </div>
+                      </div>
+                      <div className="announcementProfileOptionsConDB">
+                        <h4 className="announcementProfileOptionsDB text-sm m-0 p-0 text-zinc-500">{announcement.date}</h4>
+                      </div>
                     </div>
-                    <div id="announcementProfileInfoConDB">
-                      <h3 id="announcementProfileNameDB">Harry Potter</h3>
-                      <h4 id="announcementProfilePositionDB">10th Grade</h4>
-                      <h4 id="announcementProfileDateDB">10/4/2025</h4>
+                    <div id="announcementContentConDB" className="flex flex-col justify-flex-start items-flex-start gap-1">
+                      <h3 id="announcementContentTitleDB">{announcement.title}</h3>
+                      <p id="announcementContentTextDB">{announcement.content}</p>
+                      {announcement.image && (
+                        <div id="announcementContentPicConDB">
+                          <img id="announcementContentPicDB" src={announcement.image} alt="Announcement 1 picture" />
+                        </div>
+                      )}
                     </div>
                   </div>
-                  <div id="announcementContentConDB">
-                    <h3 id="announcementContentTitleDB">Announcement 1 title</h3>
-                    <p id="announcementContentTextDB">Announcement 1 content</p>
-                    <div id="announcementContentPicConDB">
-                      <img id="announcementContentPicDB" src="https://via.placeholder.com/150" alt="Announcement 1 picture" />
-                    </div>
-                  </div>
+                ))}
+                </div>
                 </div>
               </div>
             </div>
-            {/* {classes.map((class_, index) => (
-              <div className="classGridConDB" key={`classConT${index}`}>
-                <div className="classConDB lightBlueBox" onClick={()=>navigate(`/classes/${class_.id}`)}>
-                  <div>
-                    <h3 className="classInfoDB">{class_.grade}th Grade {class_.name} - Period {class_.period}</h3>
-                    <h4 className="classInfoDB">Room - {class_.room}, {class_.num_students} Students</h4>
-                  </div>
-                  
-                  <div className="classButtonsConDB">
-                    <OpenModalButton
-                      buttonText={<MdEdit />}
-                      modalComponent={<EditClassModal classEdit={class_} />}
-                      cssClasses={'classButtonDB editDB'}
-                    />
-                  </div>
-                </div>
-              </div>
-            ))} */}
-          </div>
-        </div>
         </div>
       )}
     </>
