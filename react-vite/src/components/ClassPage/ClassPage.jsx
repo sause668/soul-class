@@ -35,24 +35,25 @@ function ClassPage() {
   return (
     <>
       {(isLoaded) && (
-        <div id="classConC">
-          <div id="headerConC">
-            <div id="titleConC" className="lightBlueBox">
-              <h1 id="titleC">{class_.grade}th Grade {class_.name} - Period {class_.period}</h1>
-              <h4 className="classInfoC">Room - {class_.room}, {class_.students.length} Students</h4>
+        <div className="flex justify-center items-center pt-5 pb-5">
+        <div id="classConC" className="flex justify-center items-flex-start w-[70%]">
+          <div id="headerConC" className="flex flex-col justify-flex-start items-center w-[40%] gap-2">
+            <div id="titleConC" className="whiteBox p-2">
+              <h1 id="titleC" className="text-3xl font-bold">{class_.grade}th Grade {class_.name}</h1>
+              <h3 id="periodC" className="text-lg font-bold">Period {class_.period}</h3>
+              <h4 id="classInfoC" className="text-md">Room - {class_.room}, {class_.students.length} Students</h4>
+              <h4 id="teacherNameC" className="text-md">{class_.teacher.last_name}, {class_.teacher.first_name}</h4>
             </div>
-            <div id="optionsConC" className="lightBlueBox">
+            <div id="optionsConC" className="whiteBox p-2 flex justify-between items-center gap-2">
               <button onClick={()=>nav(`/gradebook/${class_.id}`)}>Grade Book</button>
-              <div className='quarterSelectConC'>
+              <div className='quarterSelectConC flex justify-between items-center gap-1'>
                 <label htmlFor='quarter'>
-                  <p className=''>
-                    Quarter
-                  </p>
+                  <p className='text-md'>Quarter</p>
                 </label>
                 <select 
                   name="quarter" 
                   id="quarter" 
-                  className="quarterSelectC"
+                  className="quarterSelectC "
                   value={quarter} 
                   onChange={(e) => setQuarter(parseInt(e.target.value))}
                 >
@@ -63,33 +64,10 @@ function ClassPage() {
                 </select>
               </div>
             </div>
-          </div>
-          <div id="classInfoFormatConC">
-          <div id="classInfoConC">
-            <div className="gridItemFormatC">
-                <div id="assignmentsConC">
-                    <div className="subTitleConC">
-                        <h2 className="subTitleC">Assignments</h2>
-                    </div>
-                    {class_.assignments
-                        .filter(a => a.quarter == quarter)
-                        .sort((a1, a2) => sortAssignments(a1, a2))
-                        .map((assignment, index) => (
-                            <div className={`assignConC lightBlueBox ${assignment.type}`} key={`assignClass${index}`}>
-                                <div className="assignInfoConC">
-                                    <h3 className="assignNameC">{assignment.name}</h3>
-                                    <h4 className="assignTypeC">{typeToString(assignment.type)}</h4>
-                                </div>
-                                <h4 className="assignDueDateC">{assignment.due_date.slice(0, 16)}</h4>
-                            </div>
-                        ))
-                    }
-                </div>
-            </div>
-            <div className="gridItemFormatC">
-            <div id="studentsConC">
-                <div className="subTitleConC">
-                    <h2 className="subTitleC">Students</h2>
+            {/* <div className="gridItemFormatC"> */}
+            <div id="studentsConC" className="whiteBox w-[80%]">
+                <div className="subTitleConC p-2 bg-blue-500 text-white rounded-t-lg text-center">
+                  <h2 className="subTitleC text-xl font-bold">Students</h2>
                 </div>
                 {class_.students
                     .sort((s1, s2) => sortStudents(s1, s2))
@@ -98,7 +76,7 @@ function ClassPage() {
                         let finalLetterGrade = calcLetterGrade(finalGrade);
                         return (
                             <div 
-                                className={`studentConC lightBlueBox ${finalGrade != 'N/A' ? finalLetterGrade:'noGrade'}`} 
+                                className={`studentCon flex justify-between items-center gap-2 p-2 ${finalGrade != 'N/A' ? finalLetterGrade:'noGrade'} ${index < class_.students.length - 1 ? 'border-b border-gray-300' : ''} cursor-pointer hover:opacity-80 transition-opacity duration-300`} 
                                 key={`studentClass${index}`}
                                 onClick={()=>nav(`/students/${student.id}`)}
                             >
@@ -109,10 +87,33 @@ function ClassPage() {
                     })
                 }
             </div>
-            </div>
-            
+            {/* </div> */}
           </div>
+          {/* <div id="classInfoFormatConC"> */}
+          <div id="classInfoConC" className="flex flex-col justify-flex-start items-center w-[60%]">
+            {/* <div className="gridItemFormatC"> */}
+                <div id="assignmentsConC" className="whiteBox w-[80%]">
+                    <div className="subTitleConC p-2 bg-blue-500 text-white rounded-t-lg text-center">
+                        <h2 className="subTitleC text-xl font-bold">Assignments</h2>
+                    </div>
+                    {class_.assignments
+                        .filter(a => a.quarter == quarter)
+                        .sort((a1, a2) => sortAssignments(a1, a2))
+                        .map((assignment, index) => (
+                            <div className={`assignConC p-2 flex justify-between items-center ${assignment.type} ${index < class_.assignments.filter(a => a.quarter == quarter).length - 1 ? 'border-b border-gray-300' : ''}`} key={`assignClass${index}`}>
+                                <div className="assignInfoConC flex flex-col justify-flex-start items-flex-start gap-1">
+                                    <h3 className="assignNameC">{assignment.name}</h3>
+                                    <h4 className="assignTypeC">{typeToString(assignment.type)}</h4>
+                                </div>
+                                <h4 className="assignDueDateC">{assignment.due_date.slice(0, 16)}</h4>
+                            </div>
+                        ))
+                    }
+                </div>
+            {/* </div> */}
           </div>
+          {/* </div> */}
+        </div>
         </div>
       )}
       {errors.message && (<h1>{errors.message}</h1>)}
