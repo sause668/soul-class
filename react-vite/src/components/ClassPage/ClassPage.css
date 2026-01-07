@@ -1,4 +1,8 @@
-#classConC {
+@import "tailwindcss";
+/* @import "tailwindcss/preflight";
+@import "tailwindcss/utilities";       */
+
+/* #classConC {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -7,7 +11,6 @@
     padding: 1rem;
 }
 
-/* Header */
 #headerConC {
     display: flex;
     justify-content: space-between;
@@ -72,9 +75,6 @@
 }
 
 #classInfoConC {
-    /* display: grid;
-    grid-template-columns: 50% 50%;
-    grid-row: auto; */
     display: flex;
     justify-content: center;
     width: 80%;
@@ -86,7 +86,6 @@
 
 .subTitleConC {
     display: flex;
-    /* justify-content: center; */
 }
 
 .subTitleC {
@@ -197,4 +196,4 @@
 }
 
 
-
+ */
