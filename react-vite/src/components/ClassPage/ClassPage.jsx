@@ -12,7 +12,7 @@ function ClassPage() {
   const { classId } = useParams();
   const user = useSelector((state) => state.session.user);
   const class_ = useSelector((state) => state.class.class);
-  const [quarter, setQuarter] = useState(1)
+  const [quarter, setQuarter] = useState(1);
   const [isLoaded, setIsLoaded] = useState(false);
   const [errors, setErrors] = useState({});
 
