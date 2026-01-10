@@ -250,23 +250,23 @@
     }
 
     .fA {
-        background-color: #00e677a6;
+        background-color: #00e67779;
     }
 
     .fB {
-        background-color: #c8ff00a6;
+        background-color: #c8ff0079;
     }
 
     .fC {
-        background-color: #ffea00a6;
+        background-color: #ffea0079;
     }
 
     .fD {
-        background-color: #ff9100a6;
+        background-color: #ff910079;
     }
 
     .fF {
-        background-color: #ff1745a6;
+        background-color: #ff174579;
     }
 
     .noGrade {
@@ -292,5 +292,47 @@
     .P {
         background-color: #f500564e;
         }
+
+    .atRisk {
+        background-color: #f321984e;
+    }
+
+    .struggling {
+        background-color: #bb21f34e;
+    }
+
+    .onPar {
+        background-color: #218af34e;
+    }
+
+    .doingWell {
+        background-color: #21f0f34e;
+    }
+
+    .accelerate {
+        background-color: #21f37c4e;
+    }
+
+    .Poor {
+        background-color: #f3219839;
+    }
+
+    .Lacking {
+        background-color: #bb21f339;
+    }
+
+    .Average {
+        background-color: #218af339;
+    }
+
+    .Good {
+        background-color: #21f0f339;
+    }
+
+    .Excellent {
+        background-color: #21f37c39;
+    }
+
+
 
 }

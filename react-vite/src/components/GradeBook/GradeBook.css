@@ -1,4 +1,5 @@
-#gradeBookCon {
+@import "tailwindcss";
+/* #gradeBookCon {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -7,7 +8,7 @@
     padding: 1rem;
 }
 
-/* Header */
+
 #headerConGB {
     display: flex;
     justify-content: space-between;
@@ -60,8 +61,8 @@
     margin: 0rem;
 }
 
+*/
 
-/* Table */
 #tableConGB {
     max-width: 100%;
     display: flex;
@@ -86,6 +87,9 @@ th,td {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    white-space: nowrap;
+    width: max-content;
+    width: 150px;
 }
 
 #tableGradesConGB {
@@ -107,8 +111,14 @@ th,td {
 
 .tableCellGB {
     text-align: center;
-    border: 1px solid #0000003b;
-    
+    border: 1px solid #0000003b;  
+    padding: 0rem 1rem;
+    width: max-content;
+    text-wrap: nowrap;
+}
+
+.tableCellBB {
+    padding: 0rem 1rem;
 }
 
 #tableHeadGB {
@@ -120,7 +130,7 @@ th,td {
 }
 
 .tableHeadCellGB {
-
+    text-wrap: wrap;
 }
 
 .studentsHeadCellGB {
@@ -183,7 +193,7 @@ th,td {
 .finalBodyCellGB {
     font-weight: bold;
     z-index: 9999;
-}
+} 
 
 
 /* Forms */
@@ -220,7 +230,7 @@ th,td {
     gap: .5rem;
 }
 
-@media (max-width:920px) {
+/* @media (max-width:920px) {
     #headerConGB {
         flex-direction: column;
         justify-content: flex-start;
@@ -233,4 +243,4 @@ th,td {
     #titleGB {
         font-size: 1.75rem;
     }
-}
+} */

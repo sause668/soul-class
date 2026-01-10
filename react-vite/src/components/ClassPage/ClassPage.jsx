@@ -92,7 +92,7 @@ function ClassPage() {
           {/* <div id="classInfoFormatConC"> */}
           <div id="classInfoConC" className="flex flex-col justify-flex-start items-center w-[60%]">
             {/* <div className="gridItemFormatC"> */}
-                <div id="assignmentsConC" className="whiteBox w-[80%]">
+                <div id="assignmentsConC" className="whiteBox w-[80%] overflow-hidden">
                     <div className="subTitleConC p-2 bg-blue-500 text-white rounded-t-lg text-center">
                         <h2 className="subTitleC text-xl font-bold">Assignments</h2>
                     </div>
