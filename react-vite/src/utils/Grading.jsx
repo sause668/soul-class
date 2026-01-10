@@ -127,3 +127,38 @@ export const convertBehaviorPriorityGrade = (grade) => {
       return 'N/A';
   }
 }
+
+export const convertBehaviorGradeColor = (grade) => {
+  switch (grade) {
+    case 'Poor':
+      return 'Poor';
+    case 'Lacking':
+      return 'Lacking';
+    case 'Average':
+      return 'Average';
+    case 'Good':
+      return 'Good';
+    case 'Excellent':
+      return 'Excellent';
+    default:
+      return 'N/A';
+  }
+}
+
+export const convertBehaviorPriorityGradeColor = (grade) => {
+  switch (grade) {
+    case 'At Risk':
+      return 'atRisk';
+    case 'Struggling':
+      return 'struggling';
+    case 'On Par':
+      return 'onPar';
+    case 'Doing Well':
+      return 'doingWell';
+    case 'Accelerate':
+      return 'accelerate';
+    default:
+      return 'N/A';
+  }
+}
+
