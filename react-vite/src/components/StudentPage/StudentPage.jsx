@@ -69,16 +69,20 @@ export default function StudentPage() {
                       <h4 className="profileInfoSP text-lg">Student</h4>
                       <h4 className="profileInfoSP text-zinc-500">Grade: {student.grade}th</h4>
                       {student.siblings.length > 0 && (<>
-                          <h3 className="text-md">Siblings:</h3>
+                          <h3 className="text-md pt-2 font-bold">Siblings:</h3>
                           {student.siblings.map((sibling, index) => (
-                              <button onClick={()=>handleNavStudent(sibling.student.id)} key={`sibling${index}`}>{sibling.first_name} {sibling.last_name}</button>
+                              <h3 
+                              onClick={()=>handleNavStudent(sibling.student.id)} 
+                              key={`sibling${index}`}
+                              className="text-md font-bold border-2 border-zinc-300 rounded-lg p-1 text-center cursor-pointer hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-all duration-300"
+                              >{sibling.first_name} {sibling.last_name}</h3>
                           ))}
                       </>)}
                   </div>
                 </div>
                 <div id="quarterSelectConSP" className='whiteBox p-2 flex justify-between items-center gap-1'>
                   <label htmlFor='quarter'>
-                    <p className='text-md'>Quarter</p>
+                    <p className='text-lg font-bold'>Quarter</p>
                   </label>
                   <select 
                     name="quarter" 

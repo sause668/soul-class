@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./ClassPage.css";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { fetchGradebookClass } from "../../redux/class";
-import { calcFinalGradeTeacher, calcLetterGrade, sortStudents, sortAssignments } from "../../utils/Grading";
+import { calcFinalGradeTeacher, calcLetterGrade, sortStudents, sortAssignments, convertBehaviorPriorityGrade, convertBehaviorPriorityGradeColor, calcBehaviorGrade } from "../../utils/Grading";
 import { typeToString } from "../../utils/TypeConvertion";
 
 function ClassPage() {
@@ -38,11 +38,11 @@ function ClassPage() {
         <div className="flex justify-center items-center pt-5 pb-5">
         <div id="classConC" className="flex justify-center items-flex-start w-[70%]">
           <div id="headerConC" className="flex flex-col justify-flex-start items-center w-[40%] gap-2">
-            <div id="titleConC" className="whiteBox p-2">
-              <h1 id="titleC" className="text-3xl font-bold">{class_.grade}th Grade {class_.name}</h1>
-              <h3 id="periodC" className="text-lg font-bold">Period {class_.period}</h3>
-              <h4 id="classInfoC" className="text-md">Room - {class_.room}, {class_.students.length} Students</h4>
-              <h4 id="teacherNameC" className="text-md">{class_.teacher.last_name}, {class_.teacher.first_name}</h4>
+            <div id="titleConC" className="whiteBox p-3 flex flex-col justify-flex-start items-start gap-0.5">
+              <h1 id="titleC" className="text-4xl font-bold">{class_.grade}th Grade {class_.name}</h1>
+              <h4 id="teacherNameC" className="text-lg ">Period {class_.period}: Room - {class_.room}</h4>
+              <h3 id="periodC" className="text-md text-zinc-500">{class_.teacher.last_name}, {class_.teacher.first_name}</h3>
+              {/* <h4 id="classInfoC" className="text-md">{class_.students.length} Students</h4> */}
             </div>
             <div id="optionsConC" className="whiteBox p-2 flex justify-between items-center gap-2">
               <button onClick={()=>nav(`/gradebook/${class_.id}`)}>Grade Book</button>
@@ -64,7 +64,6 @@ function ClassPage() {
                 </select>
               </div>
             </div>
-            {/* <div className="gridItemFormatC"> */}
             <div id="studentsConC" className="whiteBox w-[80%]">
                 <div className="subTitleConC p-2 bg-blue-500 text-white rounded-t-lg text-center">
                   <h2 className="subTitleC text-xl font-bold">Students</h2>
@@ -80,8 +79,31 @@ function ClassPage() {
                                 key={`studentClass${index}`}
                                 onClick={()=>nav(`/students/${student.id}`)}
                             >
-                                <h3 className="studentNameC">{student.last_name}, {student.first_name}</h3>
+                                <h3 className="studentNameC text-md font-bold">{student.last_name}, {student.first_name}</h3>
                                 <h4 className="studentGradeC">{finalGrade != 'N/A' ? `${finalGrade} (${finalLetterGrade})`:'N/A'}</h4>
+                            </div>
+                        );
+                    })
+                }
+            </div>
+            <div id="studentsConC" className="whiteBox w-[80%]">
+                <div className="subTitleConC p-2 bg-blue-500 text-white rounded-t-lg text-center">
+                  <h2 className="subTitleC text-xl font-bold">Behaviors</h2>
+                </div>
+                {class_.students
+                    .sort((s1, s2) => sortStudents(s1, s2))
+                    .map((student, index) => {
+                        const studentBehavior = class_.behaviors.find((behavior) => behavior.student_id === student.id);
+                        const finalBehavior = convertBehaviorPriorityGrade(calcBehaviorGrade(studentBehavior.attention, studentBehavior.learnability, studentBehavior.cooperation));
+                        const finalBehaviorColor = convertBehaviorPriorityGradeColor(finalBehavior);
+                        return (
+                            <div 
+                                className={`studentCon flex justify-between items-center gap-2 p-2 ${finalBehaviorColor} ${index < class_.students.length - 1 ? 'border-b border-gray-300' : ''} cursor-pointer hover:opacity-80 transition-opacity duration-300`} 
+                                key={`studentClass${index}`}
+                                onClick={()=>nav(`/students/${student.id}`)}
+                            >
+                                <h3 className="studentNameC text-md font-bold">{student.last_name}, {student.first_name}</h3>
+                                <h4 className="studentGradeC">{finalBehavior}</h4>
                             </div>
                         );
                     })
@@ -102,8 +124,8 @@ function ClassPage() {
                         .map((assignment, index) => (
                             <div className={`assignConC p-2 flex justify-between items-center ${assignment.type} ${index < class_.assignments.filter(a => a.quarter == quarter).length - 1 ? 'border-b border-gray-300' : ''}`} key={`assignClass${index}`}>
                                 <div className="assignInfoConC flex flex-col justify-flex-start items-flex-start gap-1">
-                                    <h3 className="assignNameC">{assignment.name}</h3>
-                                    <h4 className="assignTypeC">{typeToString(assignment.type)}</h4>
+                                    <h3 className="assignNameC text-md font-bold">{assignment.name}</h3>
+                                    <h4 className="assignTypeC text-md text-zinc-500">{typeToString(assignment.type)}</h4>
                                 </div>
                                 <h4 className="assignDueDateC">{assignment.due_date.slice(0, 16)}</h4>
                             </div>

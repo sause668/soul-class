@@ -45,12 +45,12 @@ export default function StudentsPage() {
   return (
     <>
       {isLoaded && (
-        <div id='studentsCon'>
-            <div id="headerConSS">
-                <div id="titleConSS" className="lightBlueBox">
-                    <h1 id="titleSS">Student Search</h1>
+        <div id='studentsCon' className="flex flex-col justify-start items-center gap-2 py-5">
+            <div id="headerConSS" className="flex flex-col justify-start items-center gap-2 w-full">
+                <div id="titleConSS" className="whiteBox p-2 text-center">
+                    <h1 id="titleSS" className="text-3xl font-bold">Student Search</h1>
                 </div>
-                <div id="searchConSS" className="lightBlueBox">
+                <div id="searchConSS" className="whiteBox p-2 text-lg">
                     <input 
                         type="text" 
                         name="studentSearch" 
@@ -62,7 +62,7 @@ export default function StudentsPage() {
                 </div>
             </div>
 
-            <div id="tableConSS" className="lightBlueBox">
+            <div id="tableConSS" className="whiteBox overflow-hidden">
                 <table id="tableSS">
                     <thead id="tableHeadSS">
                         <tr className="tableHeadRowCC">

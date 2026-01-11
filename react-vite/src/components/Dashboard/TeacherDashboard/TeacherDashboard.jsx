@@ -13,6 +13,7 @@ import CreateClassModal from "../CreateClassModal";
 // import DeleteClassModal from "../DeleteClassModal";
 import { useNavigate } from "react-router-dom";
 import { nameToString } from "../../../utils/TypeConvertion";
+import { convertBehaviorPriorityGradeColor } from "../../../utils/Grading";
 
 function TeacherDashboard() {
   const dispatch = useDispatch();
@@ -162,8 +163,8 @@ function TeacherDashboard() {
   return (
     <>
       {isLoaded && (
-        <div id="dashboardConCon" className="flex justify-center">
-        <div id="dashboardCon" className=" flex justify-center gap-[1rem] mt-[1rem] w-[70%] ">
+        <div id="dashboardConCon" className="flex justify-center py-5">
+        <div id="dashboardCon" className=" flex justify-center gap-[1rem] w-[70%] ">
           <div id='profileSideDB' className="w-[30%] flex flex-col justify-flex-start items-center gap-2">
             <div id="profileConDB"className="whiteBox p-2">
               <div id="profilePicConDB ">
@@ -176,44 +177,52 @@ function TeacherDashboard() {
                 
               </div>
             </div>
-            <div id="appsConDB" className="whiteBox">
+            <div id="appsConDB" className="whiteBox w-full">
               <h2 id="appsTitleDB" className="text-xl text-center font-bold bg-blue-500 text-white p-2 rounded-t-lg">Appointments</h2>
-              <div id="appsListDB" className="flex flex-col justify-flex-start items-flex-start gap-2 m-1">
+              <div id="appsListDB" className="flex flex-col justify-flex-start items-flex-start">
                 {appointments.map((appointment, index) => (
-                  <div className=" appsItemDB flex justify-flex-start items-center gap-2" key={`appsItemT${index}`}>
-                    <div className="appsPicConDB">
+                  <div className=" appsItemDB flex justify-between items-center gap-2 px-2 py-1.5 hover:bg-gray-100 transition-colors duration-300 cursor-pointer" key={`appsItemT${index}`}>
+                    <div className="appsPicConDB shrink-0 grow-0">
                       <FiUser className="appsPicDB text-2xl bg-white rounded-full"/>
                     </div>
-                    <div className="appsInfoConDB flex flex-row justify-flex-start items-flex-start gap-4">
-                      <h3 className="appsDateDB text-sm">{appointment.date}</h3>
-                      <h3 className="appsTimeDB text-sm">{appointment.time}</h3>
-                      <h4 className="appsNameDB text-sm">{nameToString(appointment.firstName, appointment.lastName)}</h4>
-                    </div>
+                    {/* <div className="appsInfoConDB flex flex-row justify-flex-start items-flex-start gap-4"> */}
+                      <h3 className="appsDateDB text-sm font-bold shrink grow">{appointment.date}</h3>
+                      <h3 className="appsTimeDB text-sm shrink grow">{appointment.time}</h3>
+                      <h4 className="appsNameDB text-sm shrink grow">{nameToString(appointment.firstName, appointment.lastName)}</h4>
+                    {/* </div> */}
                   </div>
                 ))}
               </div>
             </div>
-            <div id="highlightStudentsConDB" className="whiteBox">
+            <div id="highlightStudentsConDB" className="whiteBox w-full">
               <h2 id="highlightStudentsTitleDB" className="text-xl text-center font-bold bg-blue-500 text-white p-2 rounded-t-lg">Highlight Students</h2>
-              <div id="highlightStudentsListDB" className="flex flex-col justify-flex-start items-flex-start gap-2 m-1">
+              <div id="highlightStudentsListDB" className="flex flex-col justify-flex-start items-flex-start">
                 {highlightStudents.map((student, index) => (
-                  <div className="highlightStudentsItemDB flex justify-flex-start items-center gap-2" key={`highlightStudentsItemT${index}`}>
-                    <FiUser className="highlightStudentsPicDB text-2xl bg-white rounded-full"/>
+                  <div 
+                    className={`highlightStudentsItemDB flex justify-between items-center gap-2 px-2 py-1.5 ${convertBehaviorPriorityGradeColor(student.priority)} hover:opacity-80 transition-opacity duration-300 cursor-pointer`} 
+                    key={`highlightStudentsItemT${index}`}
+                    onClick={()=>navigate(`/students/${student.id}`)}
+                  >
                     <div className="highlightStudentsInfoConDB flex flex-row justify-flex-start items-flex-start gap-4">
-                      <h3 className="highlightStudentsNameDB text-sm">{nameToString(student.firstName, student.lastName)}</h3>
+                      <FiUser className="highlightStudentsPicDB text-2xl bg-white rounded-full"/>
+                      <h3 className="highlightStudentsNameDB text-sm font-bold">{nameToString(student.firstName, student.lastName)}</h3>
                     </div>
                     <h3 className="highlightStudentsPNDB text-sm">Priority: {student.priority}</h3>
                   </div>
                 ))}
               </div>
             </div>
-            <div id="focusStudentsConDB" className="whiteBox">
+            <div id="focusStudentsConDB" className="whiteBox w-full">
               <h2 id="focusStudentsTitleDB" className="text-xl text-center font-bold bg-blue-500 text-white p-2 rounded-t-lg">Focus Students</h2>
-              <div id="focusStudentsListDB" className="flex flex-col justify-flex-start items-flex-start gap-2 m-1">
+              <div id="focusStudentsListDB" className="flex flex-col justify-flex-start items-flex-start">
                 {focusStudents.map((student, index) => (
-                  <div className="focusStudentsItemDB flex justify-flex-start items-center gap-2" key={`focusStudentsItemT${index}`}>
-                    <FiUser className="focusStudentsPicDB text-2xl bg-white rounded-full"/>
+                  <div 
+                  className={`focusStudentsItemDB flex justify-between items-center gap-2 px-2 py-1.5 ${convertBehaviorPriorityGradeColor(student.priority)} hover:opacity-80 transition-opacity duration-300 cursor-pointer`} 
+                  key={`focusStudentsItemT${index}`}
+                  onClick={()=>navigate(`/students/${student.id}`)}
+                  >
                     <div className="focusStudentsInfoConDB flex flex-row justify-flex-start items-flex-start gap-4">
+                      <FiUser className="focusStudentsPicDB text-2xl bg-white rounded-full"/>
                       <h3 className="focusStudentsNameDB text-sm">{nameToString(student.firstName, student.lastName)}</h3>
                     </div>
                     {/* <h4 className="focusStudentsGradeDB text-sm">{student.grade}</h4> */}
