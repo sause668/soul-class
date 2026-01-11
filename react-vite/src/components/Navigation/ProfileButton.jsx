@@ -58,13 +58,13 @@ function ProfileButton() {
       {showMenu && (
         <div className={"profile-dropdown whiteBox"} ref={ulRef}>
           <div className="navDropdownItem">
-            <button id="navLogout" onClick={handleNavDashboard}>Dashboard</button>
+            <h3 className="navLogout" onClick={handleNavDashboard}>Dashboard</h3>
           </div>
           <div className="navDropdownItem">
-            <button id="navLogout" onClick={handleNavStudents}>Student Search</button>
+            <h3 className="navLogout" onClick={handleNavStudents}>Student Search</h3>
           </div>
           <div className="navDropdownItem">
-            <button id="navLogout" onClick={logout}>Log Out</button>
+            <h3 className="navLogout" onClick={logout}>Log Out</h3>
           </div>
         </div>
       )}

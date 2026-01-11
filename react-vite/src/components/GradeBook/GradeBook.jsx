@@ -68,8 +68,8 @@ function GradeBook() {
         <div className="flex justify-center items-center pt-5 pb-5">
         <div id="gradeBookCon" className="flex flex-col justify-start items-center gap-2 w-[95%]">
           <div id="headerConGB" className="flex justify-between items-center w-[75%]">
-            <div id="titleConGB" className="whiteBox p-2">
-              <h1 id="titleGB" className="text-3xl font-bold">{class_.grade}th Grade {class_.name}</h1>
+            <div id="titleConGB" className="whiteBox p-3 flex flex-col justify-flex-start items-start gap-0.5">
+              <h1 id="titleGB" className="text-4xl font-bold">{class_.grade}th Grade {class_.name}</h1>
               <h3 id="teacherNameGB" className="text-lg">{class_.teacher.last_name}, {class_.teacher.first_name}</h3>
               <h3 id="classRoomGB" className="text-md text-zinc-500">Period {class_.period}: Room - {class_.room}</h3>
             </div>

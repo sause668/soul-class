@@ -5,10 +5,11 @@
   flex-direction: column;
   justify-content:center;
   align-items: center;
-  gap: .2rem;
-  padding: .5rem .25rem;
+  /* gap: .2rem; */
+  /* padding: .5rem .25rem; */
   margin-top: .25rem;
   color: black;
+  overflow: hidden;
 }
 
 #navCon {
@@ -65,8 +66,8 @@
 }
 
 #navTitle {
-  font-size: 3rem;
-  cursor: pointer;
+  /* font-size: 3rem;
+  cursor: pointer; */
 }
 
 #navProfileButtonCon {
@@ -96,8 +97,18 @@
   transition: color .2s;
 }
 
-#navDropdownItem {
+.navDropdownItem {
+  padding: 0.3rem .7rem;
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+  width: 100%;
+  text-align: center;
+}
 
+.navDropdownItem:hover {
+  background-color: #007AFF;
+  color: white;
+  transition: all .3s ease-in-out;
 }
 
 #navLogout {
