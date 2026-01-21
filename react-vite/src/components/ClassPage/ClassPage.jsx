@@ -5,6 +5,7 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { fetchGradebookClass } from "../../redux/class";
 import { calcFinalGradeTeacher, calcLetterGrade, sortStudents, sortAssignments, convertBehaviorPriorityGrade, convertBehaviorPriorityGradeColor, calcBehaviorGrade } from "../../utils/Grading";
 import { typeToString } from "../../utils/TypeConvertion";
+import { MdEdit } from "react-icons/md";
 
 function ClassPage() {
   const dispatch = useDispatch();
@@ -16,7 +17,71 @@ function ClassPage() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [errors, setErrors] = useState({});
 
-  
+  const groups = [
+    {
+      id: 1,
+      name: 'Group 1',
+      students: [
+        {
+          id: 1,
+          firstName: 'Harry',
+          lastName: 'Potter',
+        },
+        {
+          id: 2,
+          firstName: 'Ron',
+          lastName: 'Weasley',
+        },
+        {
+          id: 3,
+          firstName: 'Hermione',
+          lastName: 'Granger',
+        },
+      ]
+    },
+    {
+      id: 2,
+      name: 'Group 2',
+      students: [
+        {
+          id: 4,
+          firstName: 'Draco',
+          lastName: 'Malfoy',
+        },
+        {
+          id: 5,
+          firstName: 'Neville',
+          lastName: 'Longbottom',
+        },
+        {
+          id: 6,
+          firstName: 'Luna',
+          lastName: 'Lovegood',
+        },
+      ]
+    },
+    {
+      id: 3,
+      name: 'Group 3',
+      students: [
+        {
+          id: 7,
+          firstName: 'Ginny',
+          lastName: 'Weasley',
+        },  
+        {
+          id: 8,
+          firstName: 'Fred',
+          lastName: 'Weasley',
+        },
+        {
+          id: 9,
+          firstName: 'George',
+          lastName: 'Weasley',
+        },
+      ]
+    }
+  ]
 
   useEffect(() => {
     dispatch(fetchGradebookClass({teacherId: user.teacher.id, classId}))
@@ -112,33 +177,51 @@ function ClassPage() {
             {/* </div> */}
           </div>
           {/* <div id="classInfoFormatConC"> */}
-          <div id="classInfoConC" className="flex flex-col justify-flex-start items-center w-[60%]">
-            {/* <div className="gridItemFormatC"> */}
-                <div id="assignmentsConC" className="whiteBox w-[80%] overflow-hidden">
-                    <div className="subTitleConC p-2 bg-blue-500 text-white rounded-t-lg text-center">
-                        <h2 className="subTitleC text-xl font-bold">Assignments</h2>
-                    </div>
-                    {class_.assignments
-                        .filter(a => a.quarter == quarter)
-                        .sort((a1, a2) => sortAssignments(a1, a2))
-                        .map((assignment, index) => (
-                            <div className={`assignConC p-2 flex justify-between items-center ${assignment.type} ${index < class_.assignments.filter(a => a.quarter == quarter).length - 1 ? 'border-b border-gray-300' : ''}`} key={`assignClass${index}`}>
-                                <div className="assignInfoConC flex flex-col justify-flex-start items-flex-start gap-1">
-                                    <h3 className="assignNameC text-md font-bold">{assignment.name}</h3>
-                                    <h4 className="assignTypeC text-md text-zinc-500">{typeToString(assignment.type)}</h4>
-                                </div>
-                                <h4 className="assignDueDateC">{assignment.due_date.slice(0, 16)}</h4>
-                            </div>
-                        ))
-                    }
+          <div id="classInfoConC" className="flex flex-col justify-flex-start items-center w-[60%] gap-2">
+            <div id="assignmentsConC" className="whiteBox w-[80%] overflow-hidden">
+                <div className="subTitleConC p-2 bg-blue-500 text-white rounded-t-lg text-center">
+                    <h2 className="subTitleC text-xl font-bold">Assignments</h2>
                 </div>
-            {/* </div> */}
+                {class_.assignments
+                    .filter(a => a.quarter == quarter)
+                    .sort((a1, a2) => sortAssignments(a1, a2))
+                    .map((assignment, index) => (
+                        <div className={`assignConC p-2 flex justify-between items-center ${assignment.type} ${index < class_.assignments.filter(a => a.quarter == quarter).length - 1 ? 'border-b border-gray-300' : ''}`} key={`assignClass${index}`}>
+                            <div className="assignInfoConC flex flex-col justify-flex-start items-flex-start gap-1">
+                                <h3 className="assignNameC text-md font-bold">{assignment.name}</h3>
+                                <h4 className="assignTypeC text-md text-zinc-500">{typeToString(assignment.type)}</h4>
+                            </div>
+                            <h4 className="assignDueDateC">{assignment.due_date.slice(0, 16)}</h4>
+                        </div>
+                    ))
+                }
+            </div>
+            <div id="groupConC" className="whiteBox w-[80%] overflow-hidden">
+              <div className="subTitleConC p-2 flex justify-between items-center bg-blue-500 text-white rounded-t-lg text-center">
+                <h2 className="subTitleC text-xl font-bold">Class Groups</h2>
+                <div id="groupEditConC" className="text-2xl bg-blue-500 text-white rounded-full p-1 cursor-pointer hover:bg-white hover:text-blue-500 transition-all duration-300">
+                  <MdEdit />
+                </div>
+              </div>
+              <div className="groupListConC">
+                {groups.map((group, index) => (
+                  <div id="groupConC" className={`flex justify-between items-center gap-2 p-2 ${index % 2 == 0 ? 'bg-blue-100' : 'bg-blue-50'} cursor-pointer hover:opacity-80 hover:bg-gray-100 transition-all duration-300 ${index < groups.length - 1 ? 'border-b border-gray-300' : ''}`} key={`groupConC${index}`}>
+                      <h3 className="groupNameC text-lg font-bold">{group.name}</h3>
+                      <div className="groupStudentsConC">
+                        {group.students.map((student, index) => (
+                          <div id="studentConC" className="flex justify-between items-center gap-2 p-2 cursor-pointer hover:opacity-80 hover:bg-gray-100 transition-all duration-300 " key={`studentConC${index}`}>
+                            <h3 className="studentNameC text-md ">{student.lastName}, {student.firstName}</h3>
+                          </div>
+                          ))}
+                        </div>
+                      </div>
+                ))}
+                </div>
+              </div>
+            </div> 
           </div>
-          {/* </div> */}
-        </div>
         </div>
       )}
-      {errors.message && (<h1>{errors.message}</h1>)}
     </>
   );
 }

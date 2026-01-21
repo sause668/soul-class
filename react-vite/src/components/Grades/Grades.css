@@ -1,4 +1,5 @@
-#gradesCon {
+@import "tailwindcss";
+/* #gradesCon {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -125,4 +126,4 @@
     #classAssignmentsConG {
         grid-template-columns: 100%;
     }
-}
+} */
