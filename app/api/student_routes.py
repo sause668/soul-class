@@ -65,61 +65,61 @@ def get_class_grades(student_id, class_id):
 
     class_info = class_.grades(student_id)
 
-    # Prepare data for behavior analysis
-    behavior_data = None
-    grades_data = None
+    # # Prepare data for behavior analysis
+    # behavior_data = None
+    # grades_data = None
     
-    # Extract behavior data if available
-    if class_info.get('behaviors'):
-        # Get the most recent behavior record for this student
-        latest_behavior = class_info.get('behaviors')
-        # for behavior in class_info['behaviors']:
-        #     if behavior and behavior.get('student_id') == student_id:
-        #         latest_behavior = behavior
-        #         break
+    # # Extract behavior data if available
+    # if class_info.get('behaviors'):
+    #     # Get the most recent behavior record for this student
+    #     latest_behavior = class_info.get('behaviors')
+    #     # for behavior in class_info['behaviors']:
+    #     #     if behavior and behavior.get('student_id') == student_id:
+    #     #         latest_behavior = behavior
+    #     #         break
         
-        if latest_behavior:
-            behavior_data = {
-                'Att': latest_behavior.get('attention'),
-                'Learn': latest_behavior.get('learnability'), 
-                'Coop': latest_behavior.get('cooperation')
-            }
+    #     if latest_behavior:
+    #         behavior_data = {
+    #             'Att': latest_behavior.get('attention'),
+    #             'Learn': latest_behavior.get('learnability'), 
+    #             'Coop': latest_behavior.get('cooperation')
+    #         }
     
-    # Extract grades data if available
-    if class_info.get('assignments'):
-        grades_data = {}
-        for assignment in class_info['assignments']:
-            if assignment.get('grade') is not None:
-                grades_data[assignment.get('name', 'Unknown Assignment')] = assignment.get('grade')
+    # # Extract grades data if available
+    # if class_info.get('assignments'):
+    #     grades_data = {}
+    #     for assignment in class_info['assignments']:
+    #         if assignment.get('grade') is not None:
+    #             grades_data[assignment.get('name', 'Unknown Assignment')] = assignment.get('grade')
     
-    # Call behavior analysis if we have data
-    ai_response = 'No behavior or grade data available for analysis'
+    # # Call behavior analysis if we have data
+    # ai_response = 'No behavior or grade data available for analysis'
     
-    if behavior_data or grades_data:
-        try:
-            from ..services.gemini_service import get_gemini_service, PromptTemplates
+    # if behavior_data or grades_data:
+    #     try:
+    #         from ..services.gemini_service import get_gemini_service, PromptTemplates
             
-            gemini_service = get_gemini_service()
-            template = PromptTemplates.get_behavior_analysis_template()
+    #         gemini_service = get_gemini_service()
+    #         template = PromptTemplates.get_behavior_analysis_template()
             
-            # Prepare the data for the template
-            behavior_str = behavior_data if behavior_data else 'No behavior data available'
-            grades_str = grades_data if grades_data else 'No grade data available'
+    #         # Prepare the data for the template
+    #         behavior_str = behavior_data if behavior_data else 'No behavior data available'
+    #         grades_str = grades_data if grades_data else 'No grade data available'
             
-            response = gemini_service.generate_with_template(
-                template,
-                behavior_data=behavior_str,
-                time_period='Current quarter',
-                grades_data=grades_str
-            )
+    #         response = gemini_service.generate_with_template(
+    #             template,
+    #             behavior_data=behavior_str,
+    #             time_period='Current quarter',
+    #             grades_data=grades_str
+    #         )
             
-            ai_response = response
+    #         ai_response = response
             
-        except Exception as e:
-            ai_response = f'Error generating AI analysis: {str(e)}'
+    #     except Exception as e:
+    #         ai_response = f'Error generating AI analysis: {str(e)}'
 
-    class_info['ai_response'] = ai_response
-    print(class_info['ai_response'])
+    # class_info['ai_response'] = ai_response
+    # print(class_info['ai_response'])
     
     return jsonify(class_info)
 
