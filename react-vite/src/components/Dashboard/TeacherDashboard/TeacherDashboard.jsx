@@ -181,7 +181,7 @@ function TeacherDashboard() {
               <h2 id="appsTitleDB" className="text-xl text-center font-bold bg-blue-500 text-white p-2 rounded-t-lg">Appointments</h2>
               <div id="appsListDB" className="flex flex-col justify-flex-start items-flex-start">
                 {appointments.map((appointment, index) => (
-                  <div className=" appsItemDB flex justify-between items-center gap-2 px-2 py-1.5 hover:bg-gray-100 transition-colors duration-300 cursor-pointer" key={`appsItemT${index}`}>
+                  <div className=" appsItemDB flex justify-between items-center gap-2 px-2 py-1.5 hover:bg-blue-100 transition-colors duration-300 cursor-pointer" key={`appsItemT${index}`}>
                     <div className="appsPicConDB shrink-0 grow-0">
                       <FiUser className="appsPicDB text-2xl bg-white rounded-full"/>
                     </div>
@@ -239,7 +239,7 @@ function TeacherDashboard() {
                 <OpenModalButton
                   buttonText={<FiPlus className="text-2xl" />}
                   modalComponent={<CreateClassModal />}
-                  cssClasses={'newClassButtonDB text-2xl m-0 p-1 bg-blue-500 text-white rounded-full'}
+                  cssClasses={'newClassButtonDB text-2xl m-0 p-1 bg-blue-500 text-white rounded-full hover:bg-white hover:text-blue-500 hover:border-blue-500 transition-colors duration-300'}
                 />
               </div>
               <div id="classTableConDB" className="w-full">
@@ -255,7 +255,7 @@ function TeacherDashboard() {
                     {classes.map((class_, index) => (
                       <tr 
                       key={`classRowT${index}`} 
-                      className={`${index < classes.length - 1 ? 'border-b border-gray-300' : ''} hover:bg-gray-100 transition-colors duration-300 cursor-pointer`}
+                      className={`${index < classes.length - 1 ? 'border-b border-gray-300' : ''} hover:bg-blue-100 transition-colors duration-300 cursor-pointer`}
                       onClick={()=>navigate(`/classes/${class_.id}`)}
                       >
                         <td id="classTableCellDB">{class_.grade}th Grade</td>
@@ -282,7 +282,7 @@ function TeacherDashboard() {
                 <OpenModalButton
                   buttonText={<FiPlus className="text-2xl" />}
                   modalComponent={<></>}
-                  cssClasses={'newClassButtonDB text-2xl m-0 p-1 bg-blue-500 text-white rounded-full'}
+                  cssClasses={'newClassButtonDB text-2xl m-0 p-1 bg-blue-500 text-white rounded-full hover:bg-white hover:text-blue-500 hover:border-blue-500 transition-colors duration-300'}
                 />
               </div>
               <div id="announcementsListConDB" className="flex flex-col justify-flex-start items-flex-start gap-5 p-2">
