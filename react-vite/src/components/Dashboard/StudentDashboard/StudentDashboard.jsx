@@ -6,13 +6,14 @@ import "../Dashboard.css";
 import { fetchStudentClasses } from "../../../redux/class";
 import { useNavigate } from "react-router-dom";
 import { nameToString } from "../../../utils/TypeConvertion";
-import { calcFinalGradeStudent, calcLetterGrade } from "../../../utils/Grading";
+import { calcFinalGradeStudent, calcLetterGrade, convertBehaviorGrade, convertBehaviorPriorityGrade, calcBehaviorGrade, convertBehaviorPriorityGradeColor } from "../../../utils/Grading";
 
 function StudentDashboard() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.session.user);
   const classes = useSelector((state) => state.class.classes);
+
   const [isLoaded, setIsLoaded] = useState(false);
 
   const classHeaders = [
@@ -100,7 +101,25 @@ function StudentDashboard() {
                 
               </div>
             </div>
-            {/* <div id="behaviorConDB" className="whiteBox w-full"> */}
+            <div id="behaviorConDB" className="whiteBox w-full overflow-hidden">
+              <h2 id="behaviorTitleDB" className="text-xl text-center font-bold bg-blue-500 text-white p-2 rounded-t-lg">Behavior</h2>
+              <div id="behaviorListDB" className="flex flex-col justify-flex-start items-flex-start"> 
+                {classes.map((class_, index) => {
+                  // const attentionGrade = convertBehaviorGrade(class_.behaviors.attention);
+                  // const learnabilityGrade = convertBehaviorGrade(class_.behaviors.learnability);
+                  // const cooperationGrade = convertBehaviorGrade(class_.behaviors.cooperation);
+                  const priorityGrade = convertBehaviorPriorityGrade(calcBehaviorGrade(class_.behaviors.attention, class_.behaviors.learnability, class_.behaviors.cooperation));
+                  const priorityGradeColor = convertBehaviorPriorityGradeColor(priorityGrade);
+                return (
+                  <div id="behaviorListItemDB" className={`flex justify-between items-center p-2 px-4 w-full ${index < classes.length - 1 ? 'border-b border-gray-300' : ''} ${priorityGradeColor} hover:opacity-80 transition-opacity duration-300 cursor-pointer`} key={`behaviorGradeT${index}`}>
+                    <h3 id="behaviorTitleDB" className={`text-md font-bold`}>{class_.name}</h3>
+                    <h3 id="behaviorGradeDB" className={`text-md `}>{priorityGrade}</h3>
+                  </div>
+                )
+              })}</div>
+              
+              
+            </div>
             {/* <div id="appsConDB" className="whiteBox w-full">
               <h2 id="appsTitleDB" className="text-xl text-center font-bold bg-blue-500 text-white p-2 rounded-t-lg">Appointments</h2>
               <div id="appsListDB" className="flex flex-col justify-flex-start items-flex-start">
