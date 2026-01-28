@@ -30,6 +30,17 @@ class StudentBehavior(db.Model):
             'cooperation': self.cooperation,
             'notes': self.notes
         }
+
+    def teacher_dash(self):
+        return {
+            'id': self.id,
+            'student_id': self.student_id,
+            'student': self.student.info(),
+            'class_id': self.class_id,
+            'attention': self.attention,
+            'learnability': self.learnability,
+            'cooperation': self.cooperation,
+        }
     
     def info(self, student_id=None):
         """
