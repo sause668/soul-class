@@ -91,7 +91,7 @@ export const sortAssignments = (assign1, assign2) => {
 
 export const calcBehaviorGrade = (att, learn, coop) => {
   const total = att + learn * 1.5 + coop / 2
-  return Math.round(total / 3)
+  return total / 3
 }
 
 export const convertBehaviorGrade = (grade) => {
@@ -112,7 +112,8 @@ export const convertBehaviorGrade = (grade) => {
 }
 
 export const convertBehaviorPriorityGrade = (grade) => {
-  switch (grade) {
+  const roundedGrade = Math.round(grade);
+  switch (roundedGrade) {
     case 1:
       return 'At Risk';
     case 2:
@@ -162,3 +163,41 @@ export const convertBehaviorPriorityGradeColor = (grade) => {
   }
 }
 
+export const getPriorityStudents = (classes) => {
+  if (!classes || classes.length === 0 || classes[0]?.behaviors?.length === 0) return { highlightStudents: [], focusStudents: [] };
+  const highlightStudents = [];
+  const focusStudents = [];
+
+  classes.map((class_) => class_?.behaviors?.map((behavior) => {
+    const studentPriorityNumber = calcBehaviorGrade(behavior.attention, behavior.learnability, behavior.cooperation);
+    const studentPriority = convertBehaviorPriorityGrade(studentPriorityNumber);
+    let studentIndex = 0;
+
+    while (studentIndex < 2) {
+      if (highlightStudents[studentIndex] === undefined || studentPriorityNumber >= highlightStudents[studentIndex].priorityNumber) {
+        highlightStudents.splice(studentIndex, 0, {
+          id: behavior.student.id,
+          firstName: behavior.student.first_name,
+          lastName: behavior.student.last_name,
+          priorityNumber: studentPriorityNumber,
+          priority: studentPriority,
+        });
+        if (highlightStudents.length > 3) highlightStudents.pop();
+        break;
+      } else if (focusStudents[studentIndex] === undefined || studentPriorityNumber <= focusStudents[studentIndex].priorityNumber) {
+        focusStudents.splice(studentIndex, 0, {
+          id: behavior.student.id,
+          firstName: behavior.student.first_name,
+          lastName: behavior.student.last_name,
+          priorityNumber: studentPriorityNumber,
+          priority: studentPriority,
+        });
+        if (focusStudents.length > 3) focusStudents.pop();
+        break;
+      }
+      studentIndex++;
+    }
+  }));
+
+  return { highlightStudents, focusStudents };
+}

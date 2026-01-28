@@ -31,7 +31,8 @@ class Class(db.Model):
             "grade": self.grade,
             "period": self.period,
             "room": self.room,
-            "num_students": len(self.students)
+            "num_students": len(self.students),
+            "behaviors": [behavior.teacher_dash() for behavior in self.behaviors]
         }
 
     def student_dash(self):

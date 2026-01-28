@@ -13,19 +13,22 @@ import CreateClassModal from "../CreateClassModal";
 // import DeleteClassModal from "../DeleteClassModal";
 import { useNavigate } from "react-router-dom";
 import { nameToString } from "../../../utils/TypeConvertion";
-import { convertBehaviorPriorityGradeColor } from "../../../utils/Grading";
+import { convertBehaviorPriorityGradeColor, getPriorityStudents } from "../../../utils/Grading";
 
 function TeacherDashboard() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.session.user);
   const classes = useSelector((state) => state.class.classes);
+  const { highlightStudents, focusStudents } = getPriorityStudents(classes);
   const [isLoaded, setIsLoaded] = useState(false);
 
   // const handleGradeBook = (e, classId) => {
   //   e.stopPropagation()
   //   navigate(`/gradebook/${classId}`)
   // }
+
+  
 
   const appointments = [ 
     {
@@ -51,48 +54,6 @@ function TeacherDashboard() {
       time: '1:00 PM',
       firstName: 'Draco',
       lastName: 'Malfoy',
-    },
-  ]
-
-  const focusStudents = [
-    {
-      firstName: 'Harry',
-      lastName: 'Potter',
-      grade: '10th Grade',
-      priority: 'At Risk',
-    },
-    {
-      firstName: 'Hermione',
-      lastName: 'Granger',
-      grade: '10th Grade',
-      priority: 'At Risk',
-    },
-    {
-      firstName: 'Ron',
-      lastName: 'Weasley',
-      grade: '10th Grade',
-      priority: 'At Risk',
-    },
-  ]
-
-  const highlightStudents = [
-    {
-      firstName: 'Ginny',
-      lastName: 'Weasley',
-      grade: '10th Grade',
-      priority: 'Accelerate',
-    },
-    {
-      firstName: 'Luna',
-      lastName: 'Lovegood',
-      grade: '10th Grade',
-      priority: 'Accelerate',
-    },
-    {
-      firstName: 'Draco',
-      lastName: 'Malfoy',
-      grade: '10th Grade',
-      priority: 'Doing Well',
     },
   ]
 
