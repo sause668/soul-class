@@ -21,6 +21,7 @@ class Class(db.Model):
     students = db.relationship("Student", uselist=True, secondary=students_classes, back_populates="classes")
     assignments = db.relationship("Assignment", uselist=True, back_populates="class_", cascade="all, delete-orphan")
     behaviors = db.relationship("StudentBehavior", uselist=True, back_populates="class_", cascade="all, delete-orphan")
+    groups = db.relationship("Group", uselist=True, back_populates="class_")
 
     def teacher_dash(self):
         return {
@@ -60,7 +61,8 @@ class Class(db.Model):
             "room": self.room,
             "students": [student.info() for student in self.students],
             "assignments": [assignment.grade_book() for assignment in self.assignments],
-            "behaviors": [behavior.info() for behavior in self.behaviors]
+            "behaviors": [behavior.info() for behavior in self.behaviors],
+            "groups": [group.info() for group in self.groups]
         }
 
     def behavior_book(self):
@@ -79,6 +81,17 @@ class Class(db.Model):
     def grades(self, student_id):
 
         current_behavior = None
+        current_group = {'name': 'No Group', 'students': []}
+
+        for group in self.groups:
+            groupInfo = group.info()
+            for student in groupInfo['students']:
+                if student['id'] == student_id:
+                    current_group = {
+                        'name': groupInfo['name'],
+                        'students': [student.info() for student in group.students]
+                    }
+                    break
 
         for behavior in self.behaviors:
             behaviorInfo = behavior.to_dict()
@@ -101,7 +114,8 @@ class Class(db.Model):
             "current_grade": "To be worked on",
             "assignments": [assignment.grade(student_id) for assignment in self.assignments],
             "behaviors": current_behavior,
-            "teacher": self.teacher.info()
+            "teacher": self.teacher.info(),
+            "group": current_group
         }
     
     def class_search(self):

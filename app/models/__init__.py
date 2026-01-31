@@ -9,4 +9,6 @@ from .class_ import Class
 from .assignment import Assignment
 from .grade import Grade
 from .student_behavior import StudentBehavior
+from .groups import Group
+from .students_groups import StudentsGroups
 from .db import environment, SCHEMA

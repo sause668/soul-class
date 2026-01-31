@@ -89,11 +89,11 @@ function Grades() {
                 </div>
               </div>
             </div>
-            <div id="groupConC" className="whiteBox flex flex-col justify-flex-start items-start gap-0.5 w-[80%]">
-              <h2 id="groupTitleC" className="text-xl font-bold text-center bg-blue-500 text-white rounded-t-lg p-2 w-full">Class Group: {group.name}</h2>
-              <div id="groupStudentsConC" className="flex flex-col justify-flex-start items-start gap-0.5 w-full">
-                {group.students.map((student, index) => (
-                  <h3 id="groupStudentC" className={`text-md p-2 w-full ${index < group.students.length - 1 ? 'border-b border-gray-300' : ''}`} key={`groupStudentC${index}`}>{student.lastName}, {student.firstName}</h3>
+            <div id="groupConC" className="whiteBox flex flex-col justify-flex-start items-start w-[80%] overflow-hidden">
+              <h2 id="groupTitleC" className="text-xl font-bold text-center bg-blue-500 text-white rounded-t-lg p-2 w-full">Class Group: {class_.group.name}</h2>
+              <div id="groupStudentsConC" className="flex flex-col justify-flex-start items-start w-full min-h-10">
+                {class_.group.students.filter(student => student.id != user.student.id).map((student, index) => (
+                  <h3 id="groupStudentC" className={`text-md p-2 w-full ${index % 2 == 0 ? 'bg-blue-100' : 'bg-blue-50'} ${index < class_.group.students.length - 2 ? 'border-b border-gray-300' : ''}`} key={`groupStudentC${index}`}>{student.last_name}, {student.first_name}</h3>
                 ))}
               </div>
             </div>
