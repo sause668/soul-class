@@ -204,13 +204,13 @@ function ClassPage() {
                 </div>
               </div>
               <div className="groupListConC">
-                {groups.map((group, index) => (
+                {class_.groups.map((group, index) => (
                   <div id="groupConC" className={`flex justify-between items-center gap-2 p-2 ${index % 2 == 0 ? 'bg-blue-100' : 'bg-blue-50'} cursor-pointer hover:opacity-80 hover:bg-gray-100 transition-all duration-300 ${index < groups.length - 1 ? 'border-b border-gray-300' : ''}`} key={`groupConC${index}`}>
                       <h3 className="groupNameC text-lg font-bold">{group.name}</h3>
                       <div className="groupStudentsConC">
                         {group.students.map((student, index) => (
                           <div id="studentConC" className="flex justify-between items-center gap-2 p-2 cursor-pointer hover:opacity-80 hover:bg-gray-100 transition-all duration-300 " key={`studentConC${index}`}>
-                            <h3 className="studentNameC text-md ">{student.lastName}, {student.firstName}</h3>
+                            <h3 className="studentNameC text-md ">{student.last_name}, {student.first_name}</h3>
                           </div>
                           ))}
                         </div>

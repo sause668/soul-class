@@ -9,7 +9,8 @@ from .students_classes import seed_students_classes, undo_students_classes
 from .assignments import seed_assignments, undo_assignments
 from . grades import seed_grades, undo_grades
 from .student_behaviors import seed_student_behaviors, undo_student_behaviors
-
+from .groups import seed_groups, undo_groups
+from .students_groups import seed_students_groups, undo_students_groups
 from app.models.db import db, environment, SCHEMA
 
 # Creates a seed group to hold our commands
@@ -20,6 +21,8 @@ seed_commands = AppGroup('seed')
 # Creates the `flask seed all` command
 @seed_commands.command('all')
 def seed():
+    undo_students_groups()
+    undo_groups()
     undo_student_behaviors()
     undo_grades()
     undo_assignments()
@@ -41,11 +44,15 @@ def seed():
     seed_assignments()
     seed_grades()
     seed_student_behaviors()
+    seed_groups()
+    seed_students_groups()
 
 
 # Creates the `flask seed undo` command
 @seed_commands.command('undo')
 def undo():
+    undo_students_groups()
+    undo_groups()
     undo_student_behaviors()
     undo_grades()
     undo_assignments()
@@ -54,5 +61,5 @@ def undo():
     undo_siblings()
     undo_students()
     undo_teachers()
-    # undo_admins()
+    undo_admins()
     undo_users()

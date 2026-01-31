@@ -263,6 +263,40 @@ function GradeBook() {
               </div>
             </div>
           </div>
+          {/* Group Book */}
+          <div id="groupsConGB" className="whiteBox p-2 flex flex-col justify-flex-start items-center text-center w-[40%]">
+            <div id="classGroupConGB" className="flex justify-center items-start p-2 rounded-lg text-center">
+              {class_.groups.map((group, index) => (
+                <div className="groupConGB flex flex-col justify-flex-start items-center p-2 rounded-lg text-center" key={`groupConGB${index}`}>
+                  <h3 className="groupNameGB text-lg font-bold mb-1">{group.name}</h3>
+                  <div className="groupStudentsConGB flex flex-col justify-start items-center gap-2 p-2 rounded-lg text-center bg-blue-50 border border-slate-300">
+                    {group.students.map((student, index) => (
+                      <div 
+                        className="studentConGB flex justify-flex-start items-center gap-2 p-2 rounded-lg text-center bg-blue-300" key={`studentConGB${index}`}
+                        draggable="true"
+                      >  
+                        <h3 className="studentNameGB">{student.last_name}, {student.first_name}</h3>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div id="noGroupConGB" className="flex flex-col justify-flex-start items-center p-2 rounded-lg text-center">
+              <h3 id="studentListTitleGB" className="text-lg font-bold mb-1">No Group</h3>
+              <div id="studentListConGB" className="flex flex-wrap justify-center items-start gap-2 p-2 rounded-lg text-center bg-slate-50 border border-slate-300 min-w-30 min-h-10">  
+                {class_.students
+                .filter(student => {
+                  return !student.groups.some(group => group.class_id === class_.id)
+                })
+                .map((student, index) => (
+                  <div className="studentConGB flex justify-flex-start items-center gap-2 p-2 rounded-lg text-center bg-slate-300" key={`studentConGB${index}`}>
+                    <h3 className="studentNameGB">{student.last_name}, {student.first_name}</h3>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
         </div>
       )}

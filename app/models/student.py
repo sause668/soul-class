@@ -1,9 +1,11 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from .student_class import StudentClass
 from .sibling import Sibling
+from .students_groups import StudentsGroups
 
 students_classes = StudentClass.__table__
 _siblings = Sibling.__table__
+students_groups = StudentsGroups.__table__
 
 
 class Student(db.Model):
@@ -20,6 +22,7 @@ class Student(db.Model):
     classes = db.relationship("Class", uselist=True, secondary=students_classes, back_populates="students")
     siblings = db.relationship("User", uselist=True, secondary=_siblings)
     behaviors = db.relationship("StudentBehavior", uselist=True, back_populates="student", cascade="all, delete-orphan")
+    groups = db.relationship("Group", uselist=True, secondary=students_groups, back_populates="students")
 
     def to_dict(self):
         return {
@@ -35,6 +38,7 @@ class Student(db.Model):
             'grade': self.grade,
             'first_name': self.user.first_name,
             'last_name': self.user.last_name,
+            'groups': [group.to_dict() for group in self.groups],
         }
     
     def search_info(self):
