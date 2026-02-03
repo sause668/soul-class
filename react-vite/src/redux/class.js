@@ -466,6 +466,87 @@ export const createBehavior = (params) => async (dispatch) => {
     }
 };
 
+
+// Groups
+export const addGroupStudent = (params) => async (dispatch) => {
+    const { classId, studentId, groupIdAdd } = params;
+	const response = await csrfFetch(`/api/classes/${classId}/groups/student`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            student_id: studentId,
+            group_id: groupIdAdd
+        })
+      });
+
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClass(data))
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
+};
+
+export const removeGroupStudent = (params) => async (dispatch) => {
+    const { classId, studentId, groupIdRemove } = params;
+	const response = await csrfFetch(`/api/classes/${classId}/groups/student`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            student_id: studentId,
+            group_id: groupIdRemove
+        })
+      });
+
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClass(data))
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
+};
+
+export const editGroupStudent = (params) => async (dispatch) => {
+    const { classId, studentId, groupIdRemove, groupIdAdd } = params;
+	const response = await csrfFetch(`/api/classes/${classId}/groups/student`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            student_id: studentId,
+            group_id_remove: groupIdRemove,
+            group_id_add: groupIdAdd
+        })
+      });
+    
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClass(data))
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
+};
+
 const initialState = { 
     class: null,
     classes: null, 

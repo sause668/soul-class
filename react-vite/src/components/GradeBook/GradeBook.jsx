@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./GradeBook.css";
 import { Navigate, useParams } from "react-router-dom";
-import { fetchGradebookClass } from "../../redux/class";
+import { fetchGradebookClass, editGroupStudent, addGroupStudent, removeGroupStudent } from "../../redux/class";
 import { calcBehaviorGrade, convertBehaviorGrade, convertBehaviorGradeColor, convertBehaviorPriorityGrade, convertBehaviorPriorityGradeColor } from "../../utils/Grading";
 import OpenModalButton from "../OpenModalButton/OpenModalButton";
 import AddStudentModal from "./AddStudentModal";
@@ -22,6 +22,7 @@ function GradeBook() {
   const [quarter, setQuarter] = useState(1)
   const [isLoaded, setIsLoaded] = useState(false);
   const [errors, setErrors] = useState({});
+  const [groupStudent, setGroupStudent] = useState(null);
 
   // Define the three behavior assignments
   const behaviorAssignments = [
@@ -30,23 +31,27 @@ function GradeBook() {
     { id: 'cooperation', name: 'Cooperation', type: 'behavior', quarter: 1 }
   ];
 
-  // Get behavior grade for a student
-  // const getStudentBehaviorGrade = (studentId) => {
-  //   return behaviorGrades.find(bg => bg.student.id === studentId) || null;
-  // };
+  const handleDragStart = (e, studentId, groupIdRemove = null) => {
+    setGroupStudent({studentId, groupIdRemove});
+  }
 
-  // Get behavior grade for a student and assignment
-  // const getBehaviorGrade = (studentId, assignmentId) => {
-  //   const studentGrade = getStudentBehaviorGrade(studentId);
-  //   return studentGrade ? studentGrade[assignmentId] : '';
-  // };
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  }
 
-   // Calculate behavior final grade (average of the three behavior scores)
-   const calcBehaviorFinalGrade = (studentId) => {
-    /*const studentGrade = getStudentBehaviorGrade(studentId);
-    return studentGrade ? studentGrade.final_grade : 'N/A';*/
-    return 'N/A';
-  };
+  const handleDrop = (e, groupIdAdd = null) => {
+    e.preventDefault();
+    const {studentId, groupIdRemove} = groupStudent;
+
+    if (!groupIdRemove) {
+      dispatch(addGroupStudent({classId, studentId, groupIdAdd}));
+    } else if (!groupIdAdd) {
+      dispatch(removeGroupStudent({classId, studentId, groupIdRemove}));
+    } else {
+      dispatch(editGroupStudent({classId, studentId, groupIdRemove, groupIdAdd}));
+    }
+  }
+  
 
   useEffect(() => {
     dispatch(fetchGradebookClass({teacherId: user.teacher.id, classId}))
@@ -269,11 +274,16 @@ function GradeBook() {
               {class_.groups.map((group, index) => (
                 <div className="groupConGB flex flex-col justify-flex-start items-center p-2 rounded-lg text-center" key={`groupConGB${index}`}>
                   <h3 className="groupNameGB text-lg font-bold mb-1">{group.name}</h3>
-                  <div className="groupStudentsConGB flex flex-col justify-start items-center gap-2 p-2 rounded-lg text-center bg-blue-50 border border-slate-300">
+                  <div 
+                    className="groupStudentsConGB flex flex-col justify-start items-center gap-2 p-2 rounded-lg text-center bg-blue-50 border border-slate-300 min-w-30 min-h-10"
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={(e) => handleDrop(e, group.id)}
+                  >
                     {group.students.map((student, index) => (
                       <div 
                         className="studentConGB flex justify-flex-start items-center gap-2 p-2 rounded-lg text-center bg-blue-300" key={`studentConGB${index}`}
                         draggable="true"
+                        onDragStart={(e) => handleDragStart(e, student.id, group.id)}
                       >  
                         <h3 className="studentNameGB">{student.last_name}, {student.first_name}</h3>
                       </div>
@@ -284,13 +294,23 @@ function GradeBook() {
             </div>
             <div id="noGroupConGB" className="flex flex-col justify-flex-start items-center p-2 rounded-lg text-center">
               <h3 id="studentListTitleGB" className="text-lg font-bold mb-1">No Group</h3>
-              <div id="studentListConGB" className="flex flex-wrap justify-center items-start gap-2 p-2 rounded-lg text-center bg-slate-50 border border-slate-300 min-w-30 min-h-10">  
+              <div 
+                id="studentListConGB" 
+                className="flex flex-wrap justify-center items-start gap-2 p-2 rounded-lg text-center bg-gray-100 border border-slate-300 min-w-30 min-h-10"
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={(e) => handleDrop(e, null)}
+              >  
                 {class_.students
                 .filter(student => {
                   return !student.groups.some(group => group.class_id === class_.id)
                 })
                 .map((student, index) => (
-                  <div className="studentConGB flex justify-flex-start items-center gap-2 p-2 rounded-lg text-center bg-slate-300" key={`studentConGB${index}`}>
+                  <div 
+                    className="studentConGB flex justify-flex-start items-center gap-2 p-2 rounded-lg text-center bg-slate-300" 
+                    key={`studentConGB${index}`}
+                    draggable="true"
+                    onDragStart={(e) => handleDragStart(e, student.id, null)}
+                  >
                     <h3 className="studentNameGB">{student.last_name}, {student.first_name}</h3>
                   </div>
                 ))}

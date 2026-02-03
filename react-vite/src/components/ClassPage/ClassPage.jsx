@@ -205,17 +205,27 @@ function ClassPage() {
               </div>
               <div className="groupListConC">
                 {class_.groups.map((group, index) => (
-                  <div id="groupConC" className={`flex justify-between items-center gap-2 p-2 ${index % 2 == 0 ? 'bg-blue-100' : 'bg-blue-50'} cursor-pointer hover:opacity-80 hover:bg-gray-100 transition-all duration-300 ${index < groups.length - 1 ? 'border-b border-gray-300' : ''}`} key={`groupConC${index}`}>
+                  <div id="groupConC" className={`flex justify-between items-center gap-2 p-2 ${index % 2 == 0 ? 'bg-blue-100' : 'bg-blue-50'} border-b border-gray-300`} key={`groupConC${index}`}>
                       <h3 className="groupNameC text-lg font-bold">{group.name}</h3>
                       <div className="groupStudentsConC">
                         {group.students.map((student, index) => (
-                          <div id="studentConC" className="flex justify-between items-center gap-2 p-2 cursor-pointer hover:opacity-80 hover:bg-gray-100 transition-all duration-300 " key={`studentConC${index}`}>
+                          <div id="studentConC" className="flex justify-between items-center gap-2 p-2" key={`studentConC${index}`}>
                             <h3 className="studentNameC text-md ">{student.last_name}, {student.first_name}</h3>
                           </div>
-                          ))}
-                        </div>
+                        ))}
                       </div>
-                ))}
+                    </div>
+                  ))}
+                  <div id="noGroupConC" className="flex justify-between items-center gap-2 p-2 bg-gray-100 rounded-lg text-center">
+                    <h3 className="noGroupNameC text-lg font-bold">No Group</h3>
+                    <div className="noGroupStudentsConC">
+                      {class_.students.filter(student => !student.groups.some(group => group.class_id === class_.id)).map((student, index) => (
+                        <div id="studentConC" className="flex justify-between items-center gap-2 p-2" key={`studentConC${index}`}>
+                          <h3 className="studentNameC text-md ">{student.last_name}, {student.first_name}</h3>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div> 

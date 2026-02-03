@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import db, Class, StudentClass, Student, Assignment, StudentBehavior
-from app.forms import ClassForm, AssignmentForm, StudentBehaviorForm
+from app.models import db, Class, StudentClass, Student, Assignment, StudentBehavior, StudentsGroups
+from app.forms import ClassForm, AssignmentForm, StudentBehaviorForm, AddGroupStudentForm, RemoveGroupStudentForm, ChangeGroupStudentForm
 from datetime import datetime
 
 class_routes = Blueprint('classes', __name__)
@@ -211,6 +211,104 @@ def create_assignment(class_id):
         return jsonify(class_.grade_book()), 201
 
     return form.errors, 400
+
+@class_routes.route('/<int:class_id>/groups/student', methods=['POST'])
+@login_required
+def add_group_student(class_id):
+    """
+    Add a student to a group
+    """
+    if current_user.type != 'teacher':
+        return jsonify({"message": "Teacher Authorization Required"}), 401
+    
+    form = AddGroupStudentForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        
+        group_student_check = StudentsGroups.query.filter_by(student_id=form.data['student_id'], group_id=form.data['group_id']).first()
+        if group_student_check:
+            return jsonify({"message": "Student already in the group"}), 404
+        
+        group_student_new = StudentsGroups(
+            student_id=form.data['student_id'],
+            group_id=form.data['group_id']
+        )
+
+        db.session.add(group_student_new)
+        db.session.commit()
+
+        class_ = Class.query.filter_by(id=class_id, teacher_id=current_user.teacher.id).first()
+        
+        return jsonify(class_.grade_book()), 201
+
+    return form.errors, 400
+
+
+@class_routes.route('/<int:class_id>/groups/student', methods=['DELETE'])
+@login_required
+def remove_group_student(class_id):
+    """
+    Remove a student from a group
+    """
+    if current_user.type != 'teacher':
+        return jsonify({"message": "Teacher Authorization Required"}), 401
+    
+    form = RemoveGroupStudentForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        
+        students_groups_remove = StudentsGroups.query.filter_by(student_id=form.data['student_id'], group_id=form.data['group_id']).first()
+        
+        if not students_groups_remove:
+            return jsonify({"message": "Student is not in the group to remove"}), 404
+        
+        db.session.delete(students_groups_remove)
+        db.session.commit()
+
+        class_ = Class.query.filter_by(id=class_id, teacher_id=current_user.teacher.id).first()
+
+        return jsonify(class_.grade_book()), 201
+    
+    return form.errors, 400
+
+@class_routes.route('/<int:class_id>/groups/student', methods=['PUT'])
+@login_required
+def edit_group_student(class_id):
+    """
+    Edit a group student (remove from one group and add to another)
+    """
+    if current_user.type != 'teacher':
+        return jsonify({"message": "Teacher Authorization Required"}), 401
+    
+    form = ChangeGroupStudentForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+
+        students_groups_remove = StudentsGroups.query.filter_by(student_id=form.data['student_id'], group_id=form.data['group_id_remove']).first()
+        students_groups_add_check = StudentsGroups.query.filter_by(student_id=form.data['student_id'], group_id=form.data['group_id_add']).first()
+
+        if not students_groups_remove:
+            return jsonify({"message": "Student is not in the group to remove"}), 404
+
+        if students_groups_add_check:
+            return jsonify({"message": "Student is already in the group to add"}), 404
+
+        students_groups_add = StudentsGroups(
+            student_id=form.data['student_id'],
+            group_id=form.data['group_id_add']
+        )
+        
+        db.session.delete(students_groups_remove)
+        db.session.add(students_groups_add)
+
+        db.session.commit()
+
+        class_ = Class.query.filter_by(id=class_id, teacher_id=current_user.teacher.id).first()
+
+        return jsonify(class_.grade_book()), 201
+    
+    return form.errors, 400
+
 '''    
 @class_routes.route('/<int:class_id>/behaviors', methods=['POST'])
 @login_required
