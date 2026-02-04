@@ -3,6 +3,8 @@ from wtforms import StringField, IntegerField
 from wtforms.validators import InputRequired
 from .validators import length, range
 
+class GroupForm(FlaskForm):
+    name = StringField('name', validators=[InputRequired(), length(100)])
 
 class AddGroupStudentForm(FlaskForm):
     student_id = IntegerField('student_id', validators=[InputRequired()])

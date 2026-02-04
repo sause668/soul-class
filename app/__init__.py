@@ -12,6 +12,8 @@ from .api.assignment_routes import assignment_routes
 from .api.student_routes import student_routes
 from .api.teacher_routes import teacher_routes
 from .api.admin_routes import admin_routes
+from .api.student_behavior_routes import student_behavior_routes
+from .api.group_routes import group_routes
 # from .api.gemini_routes import gemini_routes
 from .seeds import seed_commands
 from .config import Config
@@ -39,6 +41,8 @@ app.register_blueprint(assignment_routes, url_prefix='/api/assignments')
 app.register_blueprint(student_routes, url_prefix='/api/students')
 app.register_blueprint(teacher_routes, url_prefix='/api/teachers')
 app.register_blueprint(admin_routes, url_prefix='/api/admins')
+app.register_blueprint(student_behavior_routes, url_prefix='/api/student_behaviors')
+app.register_blueprint(group_routes, url_prefix='/api/groups')
 # app.register_blueprint(gemini_routes, url_prefix='/api/gemini')
 
 db.init_app(app)

@@ -66,7 +66,7 @@ function EditAssignmentModal({assignment}) {
           <select 
             name="type" 
             id="type" 
-            className="typeSelectGB"
+            className="selectGB"
             value={type} 
             onChange={(e) => setType(e.target.value)}
           >
