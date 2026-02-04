@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import db, Class, StudentClass, Student, Assignment, StudentBehavior, StudentsGroups
-from app.forms import ClassForm, AssignmentForm, StudentBehaviorForm, AddGroupStudentForm, RemoveGroupStudentForm, ChangeGroupStudentForm
+from app.forms import ClassForm, AssignmentForm, StudentBehaviorForm, AddGroupStudentForm, RemoveGroupStudentForm, ChangeGroupStudentForm, GroupForm
 from datetime import datetime
 
 class_routes = Blueprint('classes', __name__)
@@ -114,7 +114,7 @@ def delete_class(class_id):
     return jsonify([class_.teacher_dash() for class_ in classes]), 200
     
     
-
+#Students
 @class_routes.route('/<int:class_id>/students/<int:student_id>', methods=['POST'])
 @login_required
 def add_student(class_id, student_id):
@@ -146,7 +146,7 @@ def add_student(class_id, student_id):
     return jsonify(class_.grade_book()), 201
     
     
-
+#Assignments
 
 @class_routes.route('/<int:class_id>/students/<int:student_id>', methods=['DELETE'])
 @login_required
@@ -210,6 +210,75 @@ def create_assignment(class_id):
         
         return jsonify(class_.grade_book()), 201
 
+    return form.errors, 400
+
+#Student Behaviors
+@class_routes.route('/<int:class_id>/students/<int:student_id>/behaviors', methods=['POST'])
+@login_required
+def create_behavior(class_id, student_id):
+    """
+    Create a behavior
+    """
+    if current_user.type != 'teacher':
+        return jsonify({"message": "Teacher Authorization Required"}), 401
+    
+    form = StudentBehaviorForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        
+        if not Class.query.filter_by(id=class_id, teacher_id=current_user.teacher.id).first():
+            return jsonify({"message": "Class not found"}), 404
+
+        behavior_new = StudentBehavior(
+            class_id=class_id,
+            student_id=student_id,
+            attention=form.data['attention'],
+            learnability=form.data['learnability'],
+            cooperation=form.data['cooperation'],
+            # notes=form.data['notes']
+        )
+
+        db.session.add(behavior_new)
+        db.session.commit()
+
+        class_ = Class.query.filter_by(id=class_id, teacher_id=current_user.teacher.id).first()
+        
+        return jsonify(class_.grade_book()), 201
+    
+    return form.errors, 400
+
+#Groups
+@class_routes.route('/<int:class_id>/groups', methods=['POST'])
+@login_required
+def create_group(class_id):
+    """
+    Create a group
+    """
+    if current_user.type != 'teacher':
+        return jsonify({"message": "Teacher Authorization Required"}), 401
+    
+    form = GroupForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        
+        if not Class.query.filter_by(id=class_id, teacher_id=current_user.teacher.id).first():
+            return jsonify({"message": "Class not found"}), 404
+        
+        if Group.query.filter_by(class_id=class_id, name=form.data['name']).first():
+            return jsonify({"message": "Group already exists"}), 404
+        
+        group_new = Group(
+            class_id=class_id,
+            name=form.data['name']
+        )
+
+        db.session.add(group_new)
+        db.session.commit()
+
+        class_ = Class.query.filter_by(id=class_id, teacher_id=current_user.teacher.id).first()
+        
+        return jsonify(class_.grade_book()), 201
+    
     return form.errors, 400
 
 @class_routes.route('/<int:class_id>/groups/student', methods=['POST'])
@@ -308,39 +377,3 @@ def edit_group_student(class_id):
         return jsonify(class_.grade_book()), 201
     
     return form.errors, 400
-
-'''    
-@class_routes.route('/<int:class_id>/behaviors', methods=['POST'])
-@login_required
-def create_behavior(class_id):
-    """
-    Create a behavior
-    """
-    if current_user.type != 'teacher':
-        return jsonify({"message": "Teacher Authorization Required"}), 401
-    
-    form = StudentBehaviorForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
-    if form.validate_on_submit():
-        
-        if not Class.query.filter_by(id=class_id, teacher_id=current_user.teacher.id).first():
-            return jsonify({"message": "Class not found"}), 404
-
-        behavior_new = StudentBehavior(
-            class_id=class_id,
-            student_id=form.data['student_id'],
-            attention=form.data['attention'],
-            learnability=form.data['learnability'],
-            cooperation=form.data['cooperation'],
-            notes=form.data['notes']
-        )
-
-        db.session.add(behavior_new)
-        db.session.commit()
-
-        class_ = Class.query.filter_by(id=class_id, teacher_id=current_user.teacher.id).first()
-        
-        return jsonify(class_.grade_book()), 201
-    
-    return form.errors, 400
-'''

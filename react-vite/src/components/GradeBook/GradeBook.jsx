@@ -11,8 +11,12 @@ import OpenModalCell from "../OpenModalTableCell/OpenModalTableCell";
 import CreateGradeModal from "./CreateGradeModal";
 import EditGradeModal from "./EditGradeModal";
 import StudentInfoModal from "./StudentInfoModal";
+import EditStudentBehaviorModal from "./EditStudentBehaviorModal";
+import CreateGroupModal from "./CreateGroupModal";
+import EditGroupModal from "./EditGroupModal";
 import { calcFinalGradeTeacher, calcLetterGrade, sortStudents, sortAssignments } from "../../utils/Grading";
 import AssignmentInfo from "./AssignmentInfo";
+import { FaPlus } from "react-icons/fa6";
 
 function GradeBook() {
   const dispatch = useDispatch();
@@ -242,20 +246,23 @@ function GradeBook() {
                       let attentionGrade = convertBehaviorGrade(studentBehavior.attention);
                       let learnabilityGrade = convertBehaviorGrade(studentBehavior.learnability);
                       let cooperationGrade = convertBehaviorGrade(studentBehavior.cooperation);
+                      let behaviors = [attentionGrade, learnabilityGrade, cooperationGrade];
                       let behaviorGrade = calcBehaviorGrade(studentBehavior.attention, studentBehavior.learnability, studentBehavior.cooperation);
                       let behaviorPriorityGrade = convertBehaviorPriorityGrade(behaviorGrade);
                       let behaviorPriorityGradeColor = convertBehaviorPriorityGradeColor(behaviorPriorityGrade);
                       return (
-                      <tr className="tableBodyRowGB" key={`studentName${iStudent}`}>
-                        <td className={`tableCellGB tableCellBB tableBodyCellGB gradeBodyCellGB ${convertBehaviorGradeColor(attentionGrade)}`}>
-                          {attentionGrade}
-                        </td>
-                        <td className={`tableCellGB tableCellBB tableBodyCellGB gradeBodyCellGB ${convertBehaviorGradeColor(learnabilityGrade)}`}>
-                          {learnabilityGrade}
-                        </td>
-                        <td className={`tableCellGB tableCellBB tableBodyCellGB gradeBodyCellGB ${convertBehaviorGradeColor(cooperationGrade)}`}>
-                          {cooperationGrade}
-                        </td>
+                      <tr className="tableBodyRowGB cursor-pointer hover:opacity-80 transition-opacity duration-300" key={`studentName${iStudent}`}>
+                        {behaviors.map((behavior, index) => (
+                          <OpenModalCell
+                          cellText={behavior}
+                          modalComponent={<EditStudentBehaviorModal
+                            studentBehavior={studentBehavior}
+                            student={student}
+                          />}
+                          cssClasses={`tableCellGB tableCellBB tableBodyCellGB gradeBodyCellGB ${convertBehaviorGradeColor(behavior)}`}
+                          key={`behavior${index}`}
+                        />
+                        ))}
                         {behaviorGrade != 'N/A' ? 
                           <td className={`tableCellGB tableCellBB tableBodyCellGB finalBodyCellGB font-bold ${behaviorPriorityGradeColor}`}>{behaviorPriorityGrade}</td>
                         :
@@ -269,6 +276,51 @@ function GradeBook() {
             </div>
           </div>
           {/* Group Book */}
+          <div id="groupsConGB" className="whiteBox p-2 flex flex-col justify-flex-start items-center text-center w-[40%]">
+            <div id="tableFormatConGB">
+              <div id="tableStudentsConGB" className="">
+                <table id="tableGBS">
+                  <thead id="tableHeadGB">
+                    <tr id="tableHeadRowGB">
+                      <td className="tableCellGB tableHeadCellGB finalHeadCellGB text-lg font-bold">
+                        <h3 className="groupNameGB text-lg font-bold">Groups</h3>
+                        <OpenModalButton
+                          buttonText={<FaPlus className="text-lg" />}
+                          modalComponent={<CreateGroupModal 
+                            classId={classId} 
+                          />}
+                          cssClasses={'gradeBookButtonGB addStudentGB'}
+                        />
+                      </td>
+                      <td className="tableCellGB tableHeadCellGB finalHeadCellGB text-lg font-bold">Students</td>
+                    </tr>
+                  </thead>
+                  <tbody id="tableBodyGB">
+                    {class_.groups.map((group, index) => (
+                      <tr className="tableBodyRowGB" key={`groupName${index}`}>
+                        <OpenModalCell
+                          cellText={group.name}
+                          modalComponent={<EditGroupModal group={group}/>}
+                          cssClasses={'tableCellGB tableCellBB tableBodyCellGB groupBodyCellGB'}
+                        />
+                        <td className="tableCellGB tableCellBB tableBodyCellGB studentBodyCellGB">
+                        {group.students.map((student, index) => (
+                          <div 
+                            className="studentConGB flex justify-flex-start items-center gap-2 p-2 rounded-lg text-center bg-blue-300" key={`studentConGB${index}`}
+                            draggable="true"
+                            onDragStart={(e) => handleDragStart(e, student.id, group.id)}
+                          >  
+                            <h3 className="studentNameGB">{student.last_name}, {student.first_name}</h3>
+                         </div>
+                        ))}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
           <div id="groupsConGB" className="whiteBox p-2 flex flex-col justify-flex-start items-center text-center w-[40%]">
             <div id="classGroupConGB" className="flex justify-center items-start p-2 rounded-lg text-center">
               {class_.groups.map((group, index) => (

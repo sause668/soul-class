@@ -437,17 +437,16 @@ export const deleteGrade = (params) => async (dispatch) => {
 
 
 // Behaviors
-export const createBehavior = (params) => async (dispatch) => {
-    const { classId, studentId, attention, learnability, cooperation, notes } = params;
-	const response = await csrfFetch(`/api/classes/${classId}/behaviors`, {
+export const createStudentBehavior = (params) => async (dispatch) => {
+    const { classId, studentId, attention, learnability, cooperation} = params;
+	const response = await csrfFetch(`/api/classes/${classId}/students/${studentId}/behaviors`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            student_id: studentId,
             attention,
             learnability,
             cooperation,
-            notes
+            // notes
         })
       });
 
@@ -466,8 +465,124 @@ export const createBehavior = (params) => async (dispatch) => {
     }
 };
 
+export const editStudentBehavior = (params) => async (dispatch) => {
+    const { behaviorId, attention, learnability, cooperation } = params;
+	const response = await csrfFetch(`/api/student_behaviors/${behaviorId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            attention,
+            learnability,
+            cooperation
+        })
+      });
+
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClass(data))
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
+};
+
+export const deleteStudentBehavior = (params) => async (dispatch) => {
+    const { behaviorId } = params;
+	const response = await csrfFetch(`/api/student_behaviors/${behaviorId}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" }
+      });
+
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClass(data))
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
+};
 
 // Groups
+export const createGroup = (params) => async (dispatch) => {
+    const { classId, name } = params;
+	const response = await csrfFetch(`/api/classes/${classId}/groups`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name })
+      });
+
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClass(data))
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
+};
+
+export const editGroup = (params) => async (dispatch) => {
+    const { groupId, name } = params;
+	const response = await csrfFetch(`/api/groups/${groupId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name })
+      });
+
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClass(data))
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
+};
+
+export const deleteGroup = (params) => async (dispatch) => {
+    const { groupId } = params;
+	const response = await csrfFetch(`/api/groups/${groupId}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" }
+      });
+
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClass(data))
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
+};
+
 export const addGroupStudent = (params) => async (dispatch) => {
     const { classId, studentId, groupIdAdd } = params;
 	const response = await csrfFetch(`/api/classes/${classId}/groups/student`, {
