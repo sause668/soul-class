@@ -276,52 +276,78 @@ function GradeBook() {
             </div>
           </div>
           {/* Group Book */}
-          <div id="groupsConGB" className="whiteBox p-2 flex flex-col justify-flex-start items-center text-center w-[40%]">
-            <div id="tableFormatConGB">
-              <div id="tableStudentsConGB" className="">
-                <table id="tableGBS">
-                  <thead id="tableHeadGB">
-                    <tr id="tableHeadRowGB">
-                      <td className="tableCellGB tableHeadCellGB finalHeadCellGB text-lg font-bold">
-                        <h3 className="groupNameGB text-lg font-bold">Groups</h3>
-                        <OpenModalButton
-                          buttonText={<FaPlus className="text-lg" />}
-                          modalComponent={<CreateGroupModal 
-                            classId={classId} 
-                          />}
-                          cssClasses={'gradeBookButtonGB addStudentGB'}
-                        />
-                      </td>
-                      <td className="tableCellGB tableHeadCellGB finalHeadCellGB text-lg font-bold">Students</td>
-                    </tr>
-                  </thead>
-                  <tbody id="tableBodyGB">
-                    {class_.groups.map((group, index) => (
-                      <tr className="tableBodyRowGB" key={`groupName${index}`}>
-                        <OpenModalCell
-                          cellText={group.name}
-                          modalComponent={<EditGroupModal group={group}/>}
-                          cssClasses={'tableCellGB tableCellBB tableBodyCellGB groupBodyCellGB'}
-                        />
-                        <td className="tableCellGB tableCellBB tableBodyCellGB studentBodyCellGB">
-                        {group.students.map((student, index) => (
-                          <div 
-                            className="studentConGB flex justify-flex-start items-center gap-2 p-2 rounded-lg text-center bg-blue-300" key={`studentConGB${index}`}
-                            draggable="true"
-                            onDragStart={(e) => handleDragStart(e, student.id, group.id)}
-                          >  
-                            <h3 className="studentNameGB">{student.last_name}, {student.first_name}</h3>
-                         </div>
-                        ))}
-                        </td>
-                      </tr>
+          <div id="groupsConGB" className="whiteBox p-5 w-fit max-w-[55%]">
+            <table id="tableGBS">
+              <thead id="tableHeadGB">
+                <tr id="tableHeadRowGB">
+                  <td className="tableCellGroupHeadGB text-lg font-bold flex justify-center items-center gap-2">
+                    <h3 className="groupNameGB text-lg font-bold">Groups</h3>
+                    <OpenModalButton
+                      buttonText={<FaPlus className="text-lg" />}
+                      modalComponent={<CreateGroupModal 
+                        classId={classId} 
+                      />}
+                      cssClasses={'rounded-full p-1'}
+                    />
+                  </td>
+                  <td className="tableCellGroupGB text-center">
+                    <h3 className="groupNameGB text-lg font-bold">Students</h3>
+                  </td>
+                </tr>
+              </thead>
+              <tbody id="tableBodyGB">
+                {class_.groups.map((group, index) => (
+                  <tr className="tableBodyRowGB" key={`groupName${index}`}>
+                    <OpenModalCell
+                      cellText={group.name}
+                      modalComponent={<EditGroupModal group={group}/>}
+                      cssClasses={'tableCellGroupHeadGB text-center cursor-pointer hover:opacity-80 transition-opacity duration-300'}
+                    />
+                    <td 
+                      className="tableCellGroupGB flex flex-wrap justify-start items-center gap-2 p-2"
+                      onDragOver={(e) => e.preventDefault()}
+                      onDrop={(e) => handleDrop(e, group.id)}
+                    >
+                    {group.students.map((student, index) => (
+                      <div 
+                        className="studentConGB text-center p-2 rounded-lg bg-blue-300 cursor-pointer hover:opacity-80 transition-opacity duration-300" key={`studentConGB${index}`}
+                        draggable="true"
+                        onDragStart={(e) => handleDragStart(e, student.id, group.id)}
+                      >  
+                        <h3 className="studentNameGB">{student.last_name}, {student.first_name}</h3>
+                      </div>
                     ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+                    </td>
+                  </tr>
+                ))}
+                <tr className="tableBodyRowGB" >
+                  
+                  <td className="tableCellGB" >No Group</td>
+                  <td 
+                    className="tableCellGroupGB flex flex-wrap justify-start items-center gap-2 p-2 text-center"
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={(e) => handleDrop(e, null)}
+                  >
+                    {class_.students
+                    .filter(student => {
+                      return !student.groups.some(group => group.class_id === class_.id)
+                    })
+                    .map((student, index) => (
+                      <div 
+                        className="studentConGB p-2 rounded-lg text-center bg-slate-300 cursor-pointer hover:opacity-80 transition-opacity duration-300" 
+                        key={`studentConGB${index}`}
+                        draggable="true"
+                        onDragStart={(e) => handleDragStart(e, student.id, null)}
+                      >
+                        <h3 className="studentNameGB">{student.last_name}, {student.first_name}</h3>
+                      </div>
+                    ))}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div id="groupsConGB" className="whiteBox p-2 flex flex-col justify-flex-start items-center text-center w-[40%]">
+          {/* <div id="groupsConGB" className="whiteBox p-2 flex flex-col justify-flex-start items-center text-center w-[40%]">
             <div id="classGroupConGB" className="flex justify-center items-start p-2 rounded-lg text-center">
               {class_.groups.map((group, index) => (
                 <div className="groupConGB flex flex-col justify-flex-start items-center p-2 rounded-lg text-center" key={`groupConGB${index}`}>
@@ -368,7 +394,7 @@ function GradeBook() {
                 ))}
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
         </div>
       )}

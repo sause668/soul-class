@@ -117,8 +117,22 @@ th,td {
     text-wrap: nowrap;
 }
 
-.tableCellBB {
-    padding: 0rem 1rem;
+.tableCellGroupGB {
+    border: 1px solid #0000003b; 
+    min-width: 7rem;
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    
+}
+
+.tableCellGroupHeadGB {
+    border: 1px solid #0000003b; 
+    min-width: 7rem;
+    max-width: 100%;
+    min-height: 3.5rem;
+    width: 5rem;
+    height: auto;
 }
 
 #tableHeadGB {
