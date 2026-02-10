@@ -199,7 +199,9 @@ function ClassPage() {
             <div id="groupConC" className="whiteBox w-[80%] overflow-hidden">
               <div className="subTitleConC p-2 flex justify-between items-center bg-blue-500 text-white rounded-t-lg text-center">
                 <h2 className="subTitleC text-xl font-bold">Class Groups</h2>
-                <div id="groupEditConC" className="text-2xl bg-blue-500 text-white rounded-full p-1 cursor-pointer hover:bg-white hover:text-blue-500 transition-all duration-300">
+                <div id="groupEditConC" 
+                onClick={(e)=>{e.stopPropagation(); nav(`/gradebook/${class_.id}#groupsConGB`)}}
+                  className="text-2xl bg-blue-500 text-white rounded-full p-1 cursor-pointer hover:bg-white hover:text-blue-500 transition-all duration-300">
                   <MdEdit />
                 </div>
               </div>
