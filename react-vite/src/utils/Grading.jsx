@@ -164,7 +164,7 @@ export const convertBehaviorPriorityGradeColor = (grade) => {
 }
 
 export const getPriorityStudents = (classes) => {
-  if (!classes || classes.length === 0 || classes[0]?.behaviors?.length === 0) return { highlightStudents: [], focusStudents: [] };
+  if (!classes || classes.length === 0 || !classes[0]?.behaviors[0]) return { highlightStudents: [], focusStudents: [] };
   const highlightStudents = [];
   const focusStudents = [];
 

@@ -41,10 +41,37 @@ function GradeBook() {
 
   const handleDragOver = (e) => {
     e.preventDefault();
+    if (e.target.classList.contains('groupCellGB')) {
+      e.target.classList.add('dragOverGB');
+    } else if (e.target.parentElement.classList.contains('groupCellGB')) {
+      e.target.parentElement.classList.add('dragOverGB');
+    } 
+  }
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    if (!e.relatedTarget || !e.currentTarget.contains(e.relatedTarget)) {
+      e.target.classList.remove('dragOverGB');
+    }
   }
 
   const handleDrop = (e, groupIdAdd = null) => {
     e.preventDefault();
+    let classList = e.target.classList;
+    if (classList.contains('groupCellGB')) {
+      classList.remove('dragOverGB');
+    } else {
+      classList = e.target.parentElement.classList;
+      if (classList.contains('groupCellGB')) {
+        classList.remove('dragOverGB');
+      } else {
+        classList = e.target.parentElement.parentElement.classList;
+        if (classList.contains('groupCellGB')) {
+          classList.remove('dragOverGB');
+        }
+      }
+    }
+
     const {studentId, groupIdRemove} = groupStudent;
 
     if (!groupIdRemove) {
@@ -123,8 +150,13 @@ function GradeBook() {
           {/* Grade Book */}
           <div id="tableConGB" className="whiteBox p-2">
             <div id="tableFormatConGB" className="">
-              <div id="tableStudentsConGB" className="">
-                <table id="tableGBS" className="">
+              <div id="tableStudentsConGB" className="h-[100%]">
+                <table id="tableGBS">
+                  {/* <thead id="tableHeadGB">
+                    <tr id="tableHeadRowGB">
+                      <td className="font-bold text-center cursor-default text-2xl font-sour-gummy">Grade Book</td>
+                    </tr>
+                  </thead> */}
                   <tbody id="tableBodyGB" className="">
                     {class_.students.sort((s1, s2) => sortStudents(s1, s2)).map((student, iStudent) => (
                       <tr className="tableBodyRowBG " key={`studentName${iStudent}`}>
@@ -177,7 +209,7 @@ function GradeBook() {
                             return <OpenModalCell
                               cellText={`${grade.grade} (${letterGrade})`}
                               key={`grade${iStudent}${iAssignment}`}
-                              cssClasses={`tableCellGB tableBodyCellGB gradeBodyCellBG ${letterGrade}`}
+                              cssClasses={`tableCellGB tableBodyCellGB gradeBodyCellBG ${letterGrade} hover:opacity-80 transition-opacity duration-300`}
                               modalComponent={<EditGradeModal grade={grade}/>}
                             />
                           }
@@ -208,20 +240,25 @@ function GradeBook() {
             <div id="tableFormatConGB">
               <div id="tableStudentsConGB" className="">
                 <table id="tableGBS">
-                    <tbody id="tableBodyGB">
-                      {class_.students.sort((s1, s2) => sortStudents(s1, s2)).map((student, iStudent) => (
-                        <tr className="tableBodyRowGB" key={`studentName${iStudent}`}>
-                          <OpenModalCell
-                            cellText={`${student.last_name}, ${student.first_name}`}
-                            modalComponent={<StudentInfoModal
-                              classId={class_.id}
-                              student={student}
-                            />}
-                            cssClasses={'tableCellGB tableBodyCellBG studentBodyCellGB'}
-                          />
-                        </tr>
-                      ))}
-                    </tbody>
+                  <thead id="tableHeadGB">
+                    <tr id="tableHeadRowGB">
+                      <td className="font-bold text-center cursor-default text-xl">Behaviors</td>
+                    </tr>
+                  </thead>
+                  <tbody id="tableBodyGB">
+                    {class_.students.sort((s1, s2) => sortStudents(s1, s2)).map((student, iStudent) => (
+                      <tr className="tableBodyRowGB" key={`studentName${iStudent}`}>
+                        <OpenModalCell
+                          cellText={`${student.last_name}, ${student.first_name}`}
+                          modalComponent={<StudentInfoModal
+                            classId={class_.id}
+                            student={student}
+                          />}
+                          cssClasses={'tableCellGB tableBodyCellBG studentBodyCellGB'}
+                        />
+                      </tr>
+                    ))}
+                  </tbody>
                 </table>
               </div>
               <div id="tableGradesConGB">
@@ -229,12 +266,7 @@ function GradeBook() {
                   <thead id="tableHeadGB">
                     <tr id="tableHeadRowBB">
                       {behaviorAssignments.map((assignment, index) => (
-                        <OpenModalCell
-                          cellText={assignment.name}
-                          modalComponent={<AssignmentInfo assignment={assignment}/>}
-                          cssClasses={`tableCellGB tableCellBB tableHeadCellGB assignHeadCellGB bg-gray-200 font-bold`}
-                          key={`assignHead${index}`}
-                        />
+                        <td className="tableCellGB tableCellBB tableHeadCellGB bg-gray-200 font-bold cursor-default" key={`assignHead${index}`}>{assignment.name}</td>
                       ))}
                       <td className="tableCellGB tableCellBB tableHeadCellGB finalHeadCellGB bg-slate-300 text-lg font-bold">Priority Level</td>
                     </tr>
@@ -279,69 +311,77 @@ function GradeBook() {
           <div id="groupsConGB" className="whiteBox p-5 w-fit max-w-[55%]">
             <table id="tableGBS">
               <thead id="tableHeadGB">
-                <tr id="tableHeadRowGB">
-                  <td className="tableCellGroupHeadGB text-lg font-bold flex justify-center items-center gap-2">
-                    <h3 className="groupNameGB text-lg font-bold">Groups</h3>
-                    <OpenModalButton
-                      buttonText={<FaPlus className="text-lg" />}
-                      modalComponent={<CreateGroupModal 
-                        classId={classId} 
-                      />}
-                      cssClasses={'rounded-full p-1'}
-                    />
+                <tr id="tableHeadRowGB" className="bg-blue-500 text-white">
+                  <td className="tableCellGroupHeadGB text-lg font-bold gap-2">
+                    <div className="flex justify-center items-center gap-2 px-2 py-4"> 
+                      <h3 className="groupNameGB text-lg font-bold">Groups</h3>
+                      <OpenModalButton
+                        buttonText={<FaPlus className="text-lg" />}
+                        modalComponent={<CreateGroupModal 
+                          classId={classId} 
+                        />}
+                        cssClasses={'rounded-full p-1 bg-blue-500 border border-blue-500 text-white hover:bg-white hover:text-blue-500 transition-all duration-300 cursor-pointer'}
+                      />
+                    </div>
                   </td>
-                  <td className="tableCellGroupGB text-center">
+                  <td className="tableCellGroupHeadGB text-center ">
                     <h3 className="groupNameGB text-lg font-bold">Students</h3>
                   </td>
                 </tr>
               </thead>
               <tbody id="tableBodyGB">
-                {class_.groups.map((group, index) => (
-                  <tr className="tableBodyRowGB" key={`groupName${index}`}>
+                {class_.groups.map((group, gIndex) => (
+                  <tr className="tableBodyRowGB" key={`groupName${gIndex}`}>
                     <OpenModalCell
                       cellText={group.name}
                       modalComponent={<EditGroupModal group={group}/>}
-                      cssClasses={'tableCellGroupHeadGB text-center cursor-pointer hover:opacity-80 transition-opacity duration-300'}
+                      cssClasses={`tableCellGroupHeadGB text-center cursor-pointer hover:opacity-80 transition-opacity duration-300 ${gIndex % 2 == 0 ? 'bg-blue-200' : 'bg-blue-100'}`}
                     />
-                    <td 
-                      className="tableCellGroupGB flex flex-wrap justify-start items-center gap-2 p-2"
-                      onDragOver={(e) => e.preventDefault()}
-                      onDrop={(e) => handleDrop(e, group.id)}
-                    >
-                    {group.students.map((student, index) => (
+                    <td className="tableCellGroupGB groupCellGB">
                       <div 
-                        className="studentConGB text-center p-2 rounded-lg bg-blue-300 cursor-pointer hover:opacity-80 transition-opacity duration-300" key={`studentConGB${index}`}
-                        draggable="true"
-                        onDragStart={(e) => handleDragStart(e, student.id, group.id)}
-                      >  
-                        <h3 className="studentNameGB">{student.last_name}, {student.first_name}</h3>
+                        className={`groupCellGB flex flex-wrap justify-start items-center gap-2 p-2 ${gIndex % 2 == 0 ? 'bg-blue-100' : 'bg-blue-50'}`}
+                        onDragOver={(e) => handleDragOver(e)}
+                        onDragLeave={(e) => handleDragLeave(e)}
+                        onDrop={(e) => handleDrop(e, group.id)}
+                      >
+                        {group.students.map((student, sIndex) => (
+                          <div 
+                            className="studentConGB text-center p-2 rounded-lg bg-blue-300 cursor-pointer hover:opacity-80 transition-opacity duration-300" key={`groupStudent${gIndex}-${sIndex}`}
+                            draggable="true"
+                            onDragStart={(e) => handleDragStart(e, student.id, group.id)}
+                          >  
+                            <h3 className="studentNameGB">{student.last_name}, {student.first_name}</h3>
+                          </div>
+                        ))}
                       </div>
-                    ))}
                     </td>
                   </tr>
                 ))}
                 <tr className="tableBodyRowGB" >
                   
-                  <td className="tableCellGB" >No Group</td>
-                  <td 
-                    className="tableCellGroupGB flex flex-wrap justify-start items-center gap-2 p-2 text-center"
-                    onDragOver={(e) => e.preventDefault()}
-                    onDrop={(e) => handleDrop(e, null)}
-                  >
-                    {class_.students
-                    .filter(student => {
-                      return !student.groups.some(group => group.class_id === class_.id)
-                    })
-                    .map((student, index) => (
-                      <div 
-                        className="studentConGB p-2 rounded-lg text-center bg-slate-300 cursor-pointer hover:opacity-80 transition-opacity duration-300" 
-                        key={`studentConGB${index}`}
-                        draggable="true"
-                        onDragStart={(e) => handleDragStart(e, student.id, null)}
-                      >
-                        <h3 className="studentNameGB">{student.last_name}, {student.first_name}</h3>
-                      </div>
-                    ))}
+                  <td className="tableCellGB bg-slate-200" >No Group</td>
+                  <td className={`tableCellGroupGB groupCellGB bg-slate-100`}>
+                    <div 
+                      className="groupCellGB flex flex-wrap justify-start items-center gap-2 p-2"
+                      onDragOver={(e) => handleDragOver(e)}
+                      onDragLeave={(e) => handleDragLeave(e)}
+                      onDrop={(e) => handleDrop(e, null)}
+                    >
+                      {class_.students
+                      .filter(student => {
+                        return !student.groups.some(group => group.class_id === class_.id)
+                      })
+                      .map((student, index) => (
+                        <div 
+                          className="studentConGB p-2 rounded-lg text-center bg-slate-300 cursor-pointer hover:opacity-80 transition-opacity duration-300" 
+                          key={`studentConGB${index}`}
+                          draggable="true"
+                          onDragStart={(e) => handleDragStart(e, student.id, null)}
+                        >
+                          <h3 className="studentNameGB">{student.last_name}, {student.first_name}</h3>
+                        </div>
+                      ))}
+                    </div>
                   </td>
                 </tr>
               </tbody>

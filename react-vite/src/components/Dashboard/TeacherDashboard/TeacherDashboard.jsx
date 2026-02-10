@@ -155,7 +155,7 @@ function TeacherDashboard() {
                 ))}
               </div>
             </div>
-            <div id="highlightStudentsConDB" className="whiteBox w-full">
+            <div id="highlightStudentsConDB" className="whiteBox w-full overflow-hidden">
               <h2 id="highlightStudentsTitleDB" className="text-xl text-center font-bold bg-blue-500 text-white p-2 rounded-t-lg">Highlight Students</h2>
               <div id="highlightStudentsListDB" className="flex flex-col justify-flex-start items-flex-start">
                 {highlightStudents.map((student, index) => (
@@ -173,7 +173,7 @@ function TeacherDashboard() {
                 ))}
               </div>
             </div>
-            <div id="focusStudentsConDB" className="whiteBox w-full">
+            <div id="focusStudentsConDB" className="whiteBox w-full overflow-hidden">
               <h2 id="focusStudentsTitleDB" className="text-xl text-center font-bold bg-blue-500 text-white p-2 rounded-t-lg">Focus Students</h2>
               <div id="focusStudentsListDB" className="flex flex-col justify-flex-start items-flex-start">
                 {focusStudents.map((student, index) => (
