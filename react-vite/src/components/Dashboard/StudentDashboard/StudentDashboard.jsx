@@ -4,6 +4,7 @@ import { FiUser } from "react-icons/fi";
 
 import "../Dashboard.css";
 import { fetchStudentClasses } from "../../../redux/class";
+import { fetchAnnouncements } from "../../../redux/announcement";
 import { useNavigate } from "react-router-dom";
 import { nameToString } from "../../../utils/TypeConvertion";
 import { calcFinalGradeStudent, calcLetterGrade, convertBehaviorGrade, convertBehaviorPriorityGrade, calcBehaviorGrade, convertBehaviorPriorityGradeColor } from "../../../utils/Grading";
@@ -13,6 +14,7 @@ function StudentDashboard() {
   const navigate = useNavigate();
   const user = useSelector((state) => state.session.user);
   const classes = useSelector((state) => state.class.classes);
+  const announcements = useSelector((state) => state.announcement.announcements) || [];
 
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -43,42 +45,21 @@ function StudentDashboard() {
     },
   ]
 
-  const announcements = [
-    {
-      
-      date: '10/4/2025',
-      authorFirstName: 'Harry',
-      authorLastName: 'Potter',
-      authorType: 'Teacher',
-      title: 'Announcement 1',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      image: 'https://via.placeholder.com/150',
-    },
-    {
-      date: '10/5/2025',
-      authorFirstName: 'Hermione',
-      authorLastName: 'Granger',
-      authorType: 'Teacher',
-      title: 'Announcement 2',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    },
-    {
-      date: '10/6/2025',
-      authorFirstName: 'Ron',
-      authorLastName: 'Weasley',
-      authorType: 'Teacher',
-      title: 'Announcement 3',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      image: 'https://via.placeholder.com/150',
-    },
-  ]
+  const formatDate = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' });
+  };
 
   const handleGrades = (classId) => {
     navigate(`/grades/${classId}`)
   }
 
   useEffect(() => {
-    dispatch(fetchStudentClasses({studentId: user.student.id})).then(() => setIsLoaded(true));
+    Promise.all([
+      dispatch(fetchStudentClasses({studentId: user.student.id})),
+      dispatch(fetchAnnouncements())
+    ]).then(() => setIsLoaded(true));
   }, [dispatch, user]);
 
   
@@ -212,39 +193,43 @@ function StudentDashboard() {
                 <h3 id="announcementsTitleDB" className="text-xl font-bold">Announcements</h3>
               </div>
               <div id="announcementsListConDB" className="flex flex-col justify-flex-start items-flex-start gap-5 p-2">
-                {announcements.map((announcement, index) => (
-                  <div className={`announcementItemDB flex flex-col justify-flex-start items-flex-start gap-1 ${index > 0 ? 'border-t border-gray-300 pb-2 pt-2' : ''}`} key={`announcementItemT${index}`}>
-                    <div className="announcementProfileConDB flex justify-between items-center">
-                      <div className="announcementProfileInfoConDB flex justify-flex-start items-center gap-2">
-                        <div className="announcementProfilePicConDB">
-                          <FiUser className="announcementProfilePicDB text-2xl bg-white rounded-full"/>
+                {announcements.length === 0 ? (
+                  <div className="text-center text-gray-500 py-4">No announcements yet</div>
+                ) : (
+                  announcements.map((announcement, index) => (
+                    <div className={`announcementItemDB flex flex-col justify-flex-start items-flex-start gap-1 ${index > 0 ? 'border-t border-gray-300 pb-2 pt-2' : ''}`} key={`announcementItemS${announcement.id}`}>
+                      <div className="announcementProfileConDB flex justify-between items-center w-full">
+                        <div className="announcementProfileInfoConDB flex justify-flex-start items-center gap-2">
+                          <div className="announcementProfilePicConDB">
+                            <FiUser className="announcementProfilePicDB text-2xl bg-white rounded-full"/>
+                          </div>
+                          <div className="announcementProfileDisConDB gap-0.1">
+                            <h3 className="announcementProfileNameDB text-sm m-0 p-0">{nameToString(announcement.author_first_name, announcement.author_last_name)}</h3>
+                            <h4 className="announcementProfilePositionDB text-xs m-0 p-0 text-zinc-500">{announcement.author_type}</h4>
+                          </div>
                         </div>
-                        <div className="announcementProfileDisConDB gap-0.1">
-                          <h3 className="announcementProfileNameDB text-sm m-0 p-0">{nameToString(announcement.authorFirstName, announcement.authorLastName)}</h3>
-                          <h4 className="announcementProfilePositionDB text-xs m-0 p-0 text-zinc-500">{announcement.authorType}</h4>
+                        <div className="announcementProfileOptionsConDB">
+                          <h4 className="announcementProfileOptionsDB text-sm m-0 p-0 text-zinc-500">{formatDate(announcement.created_at)}</h4>
                         </div>
                       </div>
-                      <div className="announcementProfileOptionsConDB">
-                        <h4 className="announcementProfileOptionsDB text-sm m-0 p-0 text-zinc-500">{announcement.date}</h4>
+                      <div id="announcementContentConDB" className="flex flex-col justify-flex-start items-flex-start gap-1">
+                        <h3 id="announcementContentTitleDB">{announcement.title}</h3>
+                        <p id="announcementContentTextDB">{announcement.content}</p>
+                        {announcement.image_url && (
+                          <div id="announcementContentPicConDB">
+                            <img id="announcementContentPicDB" src={announcement.image_url} alt="Announcement picture" />
+                          </div>
+                        )}
                       </div>
                     </div>
-                    <div id="announcementContentConDB" className="flex flex-col justify-flex-start items-flex-start gap-1">
-                      <h3 id="announcementContentTitleDB">{announcement.title}</h3>
-                      <p id="announcementContentTextDB">{announcement.content}</p>
-                      {announcement.image && (
-                        <div id="announcementContentPicConDB">
-                          <img id="announcementContentPicDB" src={announcement.image} alt="Announcement 1 picture" />
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
-                </div>
-                </div>
+                  ))
+                )}
               </div>
             </div>
         </div>
-      )}
+        </div>
+      </div>
+    )}
     </>
   );
 }
