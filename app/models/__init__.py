@@ -11,4 +11,5 @@ from .grade import Grade
 from .student_behavior import StudentBehavior
 from .groups import Group
 from .students_groups import StudentsGroups
+from .announcement import Announcement
 from .db import environment, SCHEMA

@@ -20,6 +20,7 @@ class User(db.Model, UserMixin):
     teacher = db.relationship("Teacher", uselist=False, back_populates="user")
     student = db.relationship("Student", uselist=False, back_populates="user")
     admin = db.relationship("Admin", uselist=False, back_populates="user")
+    announcements = db.relationship("Announcement", uselist=True, back_populates="user", cascade="all, delete-orphan")
 
     @property
     def password(self):
