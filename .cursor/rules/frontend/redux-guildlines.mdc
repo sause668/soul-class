@@ -1,0 +1,9 @@
+---
+description: This rule provides standards for database manipulation
+alwaysApply: false
+---
+
+## When writing redux files:
+- Follow the format in `class.js`.
+- Use `csrfFetch` in **all** api calls
+<!-- - **Do not** add more actions than needed. -->

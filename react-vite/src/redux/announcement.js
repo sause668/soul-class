@@ -17,10 +17,10 @@ const removeAnnouncements = () => ({
     type: REMOVE_ANNOUNCEMENTS
 });
 
-const setAnnouncement = (announcement) => ({
-    type: SET_ANNOUNCEMENT,
-    announcement
-});
+// const setAnnouncement = (announcement) => ({
+//     type: SET_ANNOUNCEMENT,
+//     announcement
+// });
 
 // const removeAnnouncement = () => ({
 //     type: REMOVE_ANNOUNCEMENT
