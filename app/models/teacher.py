@@ -15,6 +15,7 @@ class Teacher(db.Model):
 
     user = db.relationship("User", back_populates="teacher")
     classes = db.relationship("Class", uselist=True, back_populates="teacher", cascade="all, delete-orphan")
+    appointments = db.relationship("Appointment", uselist=True, back_populates="teacher", cascade="all, delete-orphan")
 
     def to_dict(self):
         return {

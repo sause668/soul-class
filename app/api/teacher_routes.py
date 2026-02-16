@@ -11,14 +11,19 @@ teacher_routes = Blueprint('teachers', __name__)
 def teachers():
     """
     Get all teacher users
+    For admin: returns all teachers
+    For students: returns teachers for appointment scheduling
     """
 
-    if current_user.type != 'admin':
-        return jsonify({"message": "Admin Authorization Required"}), 401
-    
-    teachers = Teacher.query.all()
-
-    return jsonify([teacher.info() for teacher in teachers])
+    if current_user.type == 'admin':
+        teachers = Teacher.query.all()
+        return jsonify([teacher.info() for teacher in teachers])
+    elif current_user.type == 'student':
+        # Students can view teachers for appointment scheduling
+        teachers = Teacher.query.all()
+        return jsonify([teacher.info() for teacher in teachers])
+    else:
+        return jsonify({"message": "Unauthorized"}), 403
 
 @teacher_routes.route('/<int:teacher_id>')
 @login_required

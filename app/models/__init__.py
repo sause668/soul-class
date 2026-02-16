@@ -12,4 +12,5 @@ from .student_behavior import StudentBehavior
 from .groups import Group
 from .students_groups import StudentsGroups
 from .announcement import Announcement
+from .appointment import Appointment
 from .db import environment, SCHEMA

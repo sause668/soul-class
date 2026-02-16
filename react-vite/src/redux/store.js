@@ -12,6 +12,7 @@ import teacherReducer from "./teacher";
 import adminReducer from "./admin";
 import behaviorGradesReducer from "./behaviorGrades";
 import announcementReducer from "./announcement";
+import appointmentReducer from "./appointment";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   admin: adminReducer,
   behaviorGrades: behaviorGradesReducer,
   announcement: announcementReducer,
+  appointment: appointmentReducer,
 });
 
 let enhancer;
