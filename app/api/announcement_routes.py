@@ -92,6 +92,9 @@ def delete_announcement(announcement_id):
     """
     Delete an announcement
     """
+    if current_user.type != 'teacher':
+        return jsonify({"message": "Teacher Authorization Required"}), 401
+    
     announcement = Announcement.query.filter_by(id=announcement_id).first()
 
     if not announcement:
