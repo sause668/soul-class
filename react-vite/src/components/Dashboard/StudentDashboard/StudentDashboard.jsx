@@ -7,7 +7,7 @@ import { fetchStudentClasses } from "../../../redux/class";
 import { fetchAnnouncements } from "../../../redux/announcement";
 import { useNavigate } from "react-router-dom";
 import { nameToString } from "../../../utils/TypeConvertion";
-import { calcFinalGradeStudent, calcLetterGrade, convertBehaviorGrade, convertBehaviorPriorityGrade, calcBehaviorGrade, convertBehaviorPriorityGradeColor } from "../../../utils/Grading";
+import { calcFinalGradeStudent, calcLetterGrade, convertBehaviorPriorityGrade, calcBehaviorGrade, convertBehaviorPriorityGradeColor } from "../../../utils/Grading";
 
 function StudentDashboard() {
   const dispatch = useDispatch();
@@ -51,9 +51,9 @@ function StudentDashboard() {
     return date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' });
   };
 
-  const handleGrades = (classId) => {
-    navigate(`/grades/${classId}`)
-  }
+  // const handleGrades = (classId) => {
+  //   navigate(`/grades/${classId}`)
+  // }
 
   useEffect(() => {
     Promise.all([

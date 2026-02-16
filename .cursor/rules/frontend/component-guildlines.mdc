@@ -1,0 +1,11 @@
+---
+description: This rule provides standards for react components
+alwaysApply: false
+---
+
+## When writing component files:
+- Follow the format in `@ClassPage.jsx`.
+
+## When writing CSS:
+- Use Tailwind primarily
+- Use CSS selectors in corresponding .css file **only if** Tailwind classes create redundancy.

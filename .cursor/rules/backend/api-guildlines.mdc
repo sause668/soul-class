@@ -1,0 +1,10 @@
+---
+description: This rule provides standards for api routing
+alwaysApply: false
+---
+# Overview
+
+- Follow the format in `@class_routes.py` when writing new routes.
+- Use FlaskForm when writing CRUD routes that manipulate the database. See `@class_form.py` for context.
+
+

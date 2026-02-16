@@ -1,0 +1,16 @@
+---
+description: This rule provides standards for database manipulation 
+alwaysApply: false
+---
+
+## When writing models files:
+- Follow the format in `@class_models.py`.
+
+## When writing migration files:
+- Follow the format in `@20241202_201931_classes.py`.
+
+## When writing seed files:
+- Follow the format in `@classes.py`.
+- **Do not use randomly generated data.** manually input seed data to make data appear mor natural.
+
+
