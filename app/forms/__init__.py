@@ -6,3 +6,4 @@ from .grade_form import GradeForm
 from .student_behavior_form import StudentBehaviorForm
 from .group_form import AddGroupStudentForm, RemoveGroupStudentForm, ChangeGroupStudentForm, GroupForm  
 from .announcement_form import AnnouncementForm
+from .appointment_form import AppointmentForm

@@ -22,6 +22,11 @@ function ProfileButton() {
     setShowMenu(false);
   }
 
+  const handleNavAppointments = () => {
+    navigate(`/appointments`)
+    setShowMenu(false);
+  }
+
   const handleNavStudents = () => {
     navigate(`/students`)
     setShowMenu(false);
@@ -59,6 +64,9 @@ function ProfileButton() {
         <div className={"profile-dropdown whiteBox"} ref={ulRef}>
           <div className="navDropdownItem">
             <h3 className="navLogout" onClick={handleNavDashboard}>Dashboard</h3>
+          </div>
+          <div className="navDropdownItem">
+            <h3 className="navLogout" onClick={handleNavAppointments}>Appointments</h3>
           </div>
           <div className="navDropdownItem">
             <h3 className="navLogout" onClick={handleNavStudents}>Student Search</h3>

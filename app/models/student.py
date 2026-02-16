@@ -23,6 +23,7 @@ class Student(db.Model):
     siblings = db.relationship("User", uselist=True, secondary=_siblings)
     behaviors = db.relationship("StudentBehavior", uselist=True, back_populates="student", cascade="all, delete-orphan")
     groups = db.relationship("Group", uselist=True, secondary=students_groups, back_populates="students")
+    appointments = db.relationship("Appointment", uselist=True, back_populates="student", cascade="all, delete-orphan")
 
     def to_dict(self):
         return {

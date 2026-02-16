@@ -7,6 +7,7 @@ import StudentsPage from '../components/StudentsPage/StudentsPage';
 import StudentPage from '../components/StudentPage/StudentPage';
 import StudentGrades from '../components/StudentGrades/StudentGrades';
 import ClassPage from '../components/ClassPage/ClassPage';
+import AppointmentsPage from '../components/Appointments/AppointmentsPage';
 
 export const router = createBrowserRouter([
   {
@@ -77,6 +78,10 @@ export const router = createBrowserRouter([
             element: <ClassPage/>
           }
         ]
+      },
+      {
+        path: 'appointments',
+        element: <AppointmentsPage/>
       }
     ],
   },
