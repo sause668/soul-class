@@ -63,7 +63,7 @@ function ClassPage() {
                 </select>
               </div>
             </div>
-            <div id="studentsConC" className="whiteBox w-[80%]">
+            <div id="studentsConC" className="whiteBox w-[80%] overflow-hidden">
                 <div className="subTitleConC p-2 bg-blue-500 text-white rounded-t-lg text-center">
                   <h2 className="subTitleC text-xl font-bold">Students</h2>
                 </div>
@@ -85,7 +85,7 @@ function ClassPage() {
                     })
                 }
             </div>
-            <div id="studentsConC" className="whiteBox w-[80%]">
+            <div id="studentsConC" className="whiteBox w-[80%] overflow-hidden">
                 <div className="subTitleConC p-2 bg-blue-500 text-white rounded-t-lg text-center">
                   <h2 className="subTitleC text-xl font-bold">Behaviors</h2>
                 </div>
