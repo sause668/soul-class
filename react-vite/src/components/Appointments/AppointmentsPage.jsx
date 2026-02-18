@@ -116,7 +116,7 @@ export default function AppointmentsPage() {
                         <OpenModalButton
                           buttonText={<MdEdit className="text-xl" />}
                           modalComponent={<EditAppointmentModal appointment={appointment} />}
-                          cssClasses={'text-blue-500 hover:text-blue-700 p-2 rounded hover:bg-blue-100 transition-colors duration-300'}
+                          cssClasses={'text-white hover:text-blue-700 p-2 rounded hover:bg-blue-100 transition-colors duration-300'}
                         />
                         <OpenModalButton
                           buttonText={<MdDelete className="text-xl" />}

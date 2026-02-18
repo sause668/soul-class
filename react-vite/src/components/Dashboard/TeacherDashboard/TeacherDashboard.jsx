@@ -9,6 +9,7 @@ import { MdDelete } from "react-icons/md";
 import "../Dashboard.css";
 import { fetchTeacherClasses } from "../../../redux/class";
 import { fetchAnnouncements } from "../../../redux/announcement";
+import { fetchAppointments } from "../../../redux/appointment";
 import EditClassModal from "../EditClassModal";
 import OpenModalButton from "../../OpenModalButton/OpenModalButton";
 import CreateClassModal from "../CreateClassModal";
@@ -26,6 +27,7 @@ function TeacherDashboard() {
   const user = useSelector((state) => state.session.user);
   const classes = useSelector((state) => state.class.classes);
   const announcements = useSelector((state) => state.announcement.announcements) || [];
+  const appointments = useSelector((state) => state.appointment.appointments) || [];
   const { highlightStudents, focusStudents } = getPriorityStudents(classes);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -36,32 +38,20 @@ function TeacherDashboard() {
 
   
 
-  const appointments = [ 
-    {
-      date: '10/4/25',
-      firstName: 'Harry',
-      lastName: 'Potter',
-      time: '10:00 AM',
-    },
-    {
-      date: '10/5/25',
-      time: '11:00 AM',
-      firstName: 'Hermione',
-      lastName: 'Granger',
-    },
-    {
-      date: '10/6/25',
-      time: '12:00 PM',
-      firstName: 'Ron',
-      lastName: 'Weasley',
-    },
-    {
-      date: '10/7/25',
-      time: '1:00 PM',
-      firstName: 'Draco',
-      lastName: 'Malfoy',
-    },
-  ]
+  const formatAppointmentDate = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' });
+  };
+
+  const formatAppointmentTime = (timeString) => {
+    if (!timeString) return '';
+    const [hours, minutes] = timeString.split(':');
+    const hour = parseInt(hours);
+    const ampm = hour >= 12 ? 'PM' : 'AM';
+    const displayHour = hour % 12 || 12;
+    return `${displayHour}:${minutes} ${ampm}`;
+  };
 
   const classHeaders = [
     {
@@ -99,7 +89,8 @@ function TeacherDashboard() {
   useEffect(() => {
     Promise.all([
       dispatch(fetchTeacherClasses({teacherId: user.teacher.id})),
-      dispatch(fetchAnnouncements())
+      dispatch(fetchAnnouncements()),
+      dispatch(fetchAppointments())
     ]).then(() => setIsLoaded(true));
   }, [dispatch, user]);
 
@@ -126,18 +117,26 @@ function TeacherDashboard() {
             <div id="appsConDB" className="whiteBox w-full">
               <h2 id="appsTitleDB" className="text-xl text-center font-bold bg-blue-500 text-white p-2 rounded-t-lg">Appointments</h2>
               <div id="appsListDB" className="flex flex-col justify-flex-start items-flex-start">
-                {appointments.map((appointment, index) => (
-                  <div className=" appsItemDB flex justify-between items-center gap-2 px-2 py-1.5 hover:bg-blue-100 transition-colors duration-300 cursor-pointer" key={`appsItemT${index}`}>
-                    <div className="appsPicConDB shrink-0 grow-0">
-                      <FiUser className="appsPicDB text-2xl bg-white rounded-full"/>
-                    </div>
-                    {/* <div className="appsInfoConDB flex flex-row justify-flex-start items-flex-start gap-4"> */}
-                      <h3 className="appsDateDB text-sm font-bold shrink grow">{appointment.date}</h3>
-                      <h3 className="appsTimeDB text-sm shrink grow">{appointment.time}</h3>
-                      <h4 className="appsNameDB text-sm shrink grow">{nameToString(appointment.firstName, appointment.lastName)}</h4>
-                    {/* </div> */}
+                {appointments.length === 0 ? (
+                  <div className="text-center text-gray-500 py-4 px-2 w-full">
+                    <p className="text-sm">No appointments scheduled</p>
                   </div>
-                ))}
+                ) : (
+                  appointments.slice(0, 5).map((appointment, index) => (
+                    <div 
+                      className="appsItemDB flex justify-between items-center gap-2 px-2 py-1.5 hover:bg-blue-100 transition-colors duration-300 cursor-pointer w-full" 
+                      key={`appsItemT${appointment.id}`}
+                      onClick={() => navigate('/appointments')}
+                    >
+                      <div className="appsPicConDB shrink-0 grow-0">
+                        <FiUser className="appsPicDB text-2xl bg-white rounded-full"/>
+                      </div>
+                      <h3 className="appsDateDB text-sm font-bold shrink grow">{formatAppointmentDate(appointment.appointment_date)}</h3>
+                      <h3 className="appsTimeDB text-sm shrink grow">{formatAppointmentTime(appointment.appointment_time)}</h3>
+                      <h4 className="appsNameDB text-sm shrink grow">{nameToString(appointment.student_first_name, appointment.student_last_name)}</h4>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
             <div id="highlightStudentsConDB" className="whiteBox w-full overflow-hidden">

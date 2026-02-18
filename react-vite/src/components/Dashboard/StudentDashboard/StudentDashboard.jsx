@@ -5,6 +5,7 @@ import { FiUser } from "react-icons/fi";
 import "../Dashboard.css";
 import { fetchStudentClasses } from "../../../redux/class";
 import { fetchAnnouncements } from "../../../redux/announcement";
+import { fetchAppointments } from "../../../redux/appointment";
 import { useNavigate } from "react-router-dom";
 import { nameToString } from "../../../utils/TypeConvertion";
 import { calcFinalGradeStudent, calcLetterGrade, convertBehaviorPriorityGrade, calcBehaviorGrade, convertBehaviorPriorityGradeColor } from "../../../utils/Grading";
@@ -15,6 +16,7 @@ function StudentDashboard() {
   const user = useSelector((state) => state.session.user);
   const classes = useSelector((state) => state.class.classes);
   const announcements = useSelector((state) => state.announcement.announcements) || [];
+  const appointments = useSelector((state) => state.appointment.appointments) || [];
 
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -51,6 +53,21 @@ function StudentDashboard() {
     return date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' });
   };
 
+  const formatAppointmentDate = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' });
+  };
+
+  const formatAppointmentTime = (timeString) => {
+    if (!timeString) return '';
+    const [hours, minutes] = timeString.split(':');
+    const hour = parseInt(hours);
+    const ampm = hour >= 12 ? 'PM' : 'AM';
+    const displayHour = hour % 12 || 12;
+    return `${displayHour}:${minutes} ${ampm}`;
+  };
+
   // const handleGrades = (classId) => {
   //   navigate(`/grades/${classId}`)
   // }
@@ -58,7 +75,8 @@ function StudentDashboard() {
   useEffect(() => {
     Promise.all([
       dispatch(fetchStudentClasses({studentId: user.student.id})),
-      dispatch(fetchAnnouncements())
+      dispatch(fetchAnnouncements()),
+      dispatch(fetchAppointments())
     ]).then(() => setIsLoaded(true));
   }, [dispatch, user]);
 
@@ -101,21 +119,31 @@ function StudentDashboard() {
               
               
             </div>
-            {/* <div id="appsConDB" className="whiteBox w-full">
+            <div id="appsConDB" className="whiteBox w-full">
               <h2 id="appsTitleDB" className="text-xl text-center font-bold bg-blue-500 text-white p-2 rounded-t-lg">Appointments</h2>
               <div id="appsListDB" className="flex flex-col justify-flex-start items-flex-start">
-                {appointments.map((appointment, index) => (
-                  <div className=" appsItemDB flex justify-between items-center gap-2 px-2 py-1.5 hover:bg-gray-100 transition-colors duration-300 cursor-pointer" key={`appsItemT${index}`}>
-                    <div className="appsPicConDB shrink-0 grow-0">
-                      <FiUser className="appsPicDB text-2xl bg-white rounded-full"/>
-                    </div>
-                      <h3 className="appsDateDB text-sm font-bold shrink grow">{appointment.date}</h3>
-                      <h3 className="appsTimeDB text-sm shrink grow">{appointment.time}</h3>
-                      <h4 className="appsNameDB text-sm shrink grow">{nameToString(appointment.firstName, appointment.lastName)}</h4>
+                {appointments.length === 0 ? (
+                  <div className="text-center text-gray-500 py-4 px-2 w-full">
+                    <p className="text-sm">No appointments scheduled</p>
                   </div>
-                ))}
+                ) : (
+                  appointments.slice(0, 5).map((appointment) => (
+                    <div 
+                      className="appsItemDB flex justify-between items-center gap-2 px-2 py-1.5 hover:bg-blue-100 transition-colors duration-300 cursor-pointer w-full" 
+                      key={`appsItemS${appointment.id}`}
+                      onClick={() => navigate('/appointments')}
+                    >
+                      <div className="appsPicConDB shrink-0 grow-0">
+                        <FiUser className="appsPicDB text-2xl bg-white rounded-full"/>
+                      </div>
+                      <h3 className="appsDateDB text-sm font-bold shrink grow">{formatAppointmentDate(appointment.appointment_date)}</h3>
+                      <h3 className="appsTimeDB text-sm shrink grow">{formatAppointmentTime(appointment.appointment_time)}</h3>
+                      <h4 className="appsNameDB text-sm shrink grow">{nameToString(appointment.teacher_first_name, appointment.teacher_last_name)}</h4>
+                    </div>
+                  ))
+                )}
               </div>
-            </div> */}
+            </div>
             {/* <div id="highlightStudentsConDB" className="whiteBox w-full">
               <h2 id="highlightStudentsTitleDB" className="text-xl text-center font-bold bg-blue-500 text-white p-2 rounded-t-lg">Highlight Students</h2>
               <div id="highlightStudentsListDB" className="flex flex-col justify-flex-start items-flex-start">
